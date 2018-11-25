@@ -1,0 +1,32 @@
+/*! \mainpage RecPermissions
+
+Introduction
+============
+
+RecPermissions is an admin script. Change files and directories owner and permissions recursivily
+
+The main web page is located in <a href="https://github.com/Turulomio/recpermissions">https://github.com/Turulomio/recpermissions</a>
+
+The Pypi web page is located in <a href="https://pypi.org/project/RecPermissions/">https://pypi.org/project/recpermissions</a>
+
+Development
+===========
+- Turulomio (Idea y development)
+
+Sourceforge
+===========
+This project is hosted in Github, so you can use the next services:
+
+- <a href="https://github.com/Turulomio/recpermissions/issues" target="_blank">Issues</a>
+
+Software used to develop RecPermissions
+=======================================
+
+<a target="_blank" href="https://eric-ide.python-projects.org/index.html">Eric</a> is used as the main IDE
+
+RecPermissions depends on the following software:
+- <a target="_blank" href="https://www.python.org/">Python3</a>, as the main programming language.
+- <a target="_blank" href="https://pypi.org/project/colorama/">Colorama</a>, to give color to console output.
+
+
+*/
