@@ -1,11 +1,11 @@
-.TH RECPERMISSIONS 1 2018\-11\-20
+.TH MYMOVIEBOOK 1 2018\-11\-25
 .SH NAME
 
-.B RecPermissions:
+.B mymoviebook:
 Cambia el propietario y los permisos de ficheros y directorios recursivamente.
 .SH SYNOPSIS
 
-RecPermissions usage: recpermissions [\-h] [\-\-version] [\-\-user USER] [\-\-group GROUP]
+mymoviebook usage: mymoviebook [\-h] [\-\-version] [\-\-user USER] [\-\-group GROUP]
                       [\-\-files PERM] [\-\-directories PERM] [\-\-remove_emptydirs]
                       [\-\-only]
                       absolute_path
@@ -92,7 +92,7 @@ Para evitar errores y cambios err\('oneos, la ruta pasada debe ser absoluta
 .PP
 .RS
 .RS
-recpermissions /home/user
+mymoviebook /home/user/
 .RE
 .RE
 .PP
@@ -108,7 +108,7 @@ Este comando no hace nada
 .PP
 .RS
 .RS
-recpermissions \-\-user user \-\-files 644 /home/user/
+mymoviebook \-\-user user \-\-files 644 /home/user/
 .RE
 .RE
 .PP
@@ -124,7 +124,7 @@ Este comando solo cambia el usuario y los permisos del fichero a 644. El grupo y
 .PP
 .RS
 .RS
-recpermissions \-\-user root \-\-group root \-\-files 640 \-\-directories 750 \-\-remove_emptydirs /home/user/
+mymoviebook \-\-user root \-\-group root \-\-files 640 \-\-directories 750 \-\-remove_emptydirs /home/user/
 .RE
 .RE
 .PP
@@ -140,7 +140,7 @@ Este comando cambiar\('a el usuario a 'root' y el grupo a 'root'. Los ficheros t
 .PP
 .RS
 .RS
-recpermissions \-\-user user /home/user/README.txt \-\-only
+mymoviebook \-\-user user /home/user/README.txt \-\-only
 .RE
 .RE
 .PP

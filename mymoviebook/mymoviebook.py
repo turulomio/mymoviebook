@@ -1,6 +1,15 @@
-#!/usr/bin/python3
 # No se permiten comillas dobles en la inserción a base de datos
-import os, sys, glob, datetime, string, psycopg2, psycopg2.extras, shutil, math, argparse, getpass
+import os, sys, glob, datetime, string, psycopg2, psycopg2.extras, shutil, math, argparse
+import getpass
+import gettext
+from mymoviebook.version import __version__, __versiondate__
+
+try:
+    t=gettext.translation('mymoviebook',pkg_resources.resource_filename("mymoviebook","locale"))
+    _=t.gettext
+except:
+    _=str
+
 
 class Mem:
 	def __init__(self):
@@ -178,191 +187,194 @@ def string2tex(cadena):
 
 
 ### MAIN SCRIPT ###
-parser=argparse.ArgumentParser('Films documentation')
-group = parser.add_mutually_exclusive_group()
-group.add_argument('-i', '--insert', help='Insert films from current numbered directory', action="store_true")
-group.add_argument('-g', '--generate', help='Generate films documentation', action="store_true")
+def main(parameters=None):
+	parser=argparse.ArgumentParser(prog='mymoviebook', description=_('Generate your personal movie collection book'), epilog=_("Developed by Mariano Muñoz 2012-{}".format(__versiondate__.year)), formatter_class=argparse.RawTextHelpFormatter)
+	parser.add_argument('--version', action='version', version=__version__)
 
-group_db=parser.add_argument_group("Postgres database connection parameters")
-group_db.add_argument('--user', help='Postgresql user', default='postgres')
-group_db.add_argument('--port', help='Postgresql server port', default=5432)
-group_db.add_argument('--host', help='Postgresql server address', default='127.0.0.1')
-group_db.add_argument('--db', help='Postgresql database', default='pdffilms')
+	group = parser.add_mutually_exclusive_group()
+	group.add_argument('-i', '--insert', help='Insert films from current numbered directory', action="store_true")
+	group.add_argument('-g', '--generate', help='Generate films documentation', action="store_true")
 
+	group_db=parser.add_argument_group("Postgres database connection parameters")
+	group_db.add_argument('--user', help='Postgresql user', default='postgres')
+	group_db.add_argument('--port', help='Postgresql server port', default=5432)
+	group_db.add_argument('--host', help='Postgresql server address', default='127.0.0.1')
+	group_db.add_argument('--db', help='Postgresql database', default='pdffilms')
 
-parser.add_argument('--output', help="Path to the output document", action="append", default=[])
+	parser.add_argument('--output', help="Path to the output document", action="append", default=[])
 
-args=parser.parse_args()
+	global args
+	args=parser.parse_args(parameters)
 
+	mem=Mem()
 
-mem=Mem()
-
-print("Introduzca la contraseña para {}".format(mem.connection_string()))
-password=getpass.getpass()
-mem.connect()
-cwd=os.getcwd().split("/")
-try:
-	shutil.rmtree("/tmp/pdffilms")
-except:
-	pass
-os.mkdir("/tmp/pdffilms")
-os.system("chmod 777 /tmp/pdffilms")
-
-
-if args.insert==True:# insertar
+	print("Introduzca la contraseña para {}".format(mem.connection_string()))
+	global password
+	password=getpass.getpass()
+	mem.connect()
+	cwd=os.getcwd().split("/")
 	try:
-		id=int(cwd[len(cwd)-1])
+		shutil.rmtree("/tmp/pdffilms")
 	except:
-		print ("El directorio actual no es un directorio numérico")
-		sys.exit(100)
-
-	if Yn("El identificador del dispositivo a introducir es '" +str(id) + "'. ¿Desea continuar?")==False:
-		sys.exit(100)
+		pass
+	os.mkdir("/tmp/pdffilms")
+	os.system("chmod 777 /tmp/pdffilms")
 
 
-	print ("+ Comprobando que el nombre de los videos y las imágenes tienen el formato correcto")
-	for file in glob.glob( os.getcwd()+ "/*.jpg" ):
-		if os.path.exists(file[:-3]+"avi")==False and os.path.exists(file[:-3]+"mpg")==False and os.path.exists(file[:-3]+"mkv")==False:
-			print ("No existe un video con el mismo nombre '" +  file[:-3]+"'")
+	if args.insert==True:# insertar
+		try:
+			id=int(cwd[len(cwd)-1])
+		except:
+			print ("El directorio actual no es un directorio numérico")
 			sys.exit(100)
 
-	sf=SetFilms(mem)
-	sf.load("SELECT * FROM films WHERE id_dvd=" + str(id))
-
-	# "Chequeando si hay registros en la base de datos del dispositivo " + str(id)
-	if len(sf.arr)>0:
-		if Yn("+ ¿Desea borrar los registros del dispositivo '" +str(id) + "'?")==False:
+		if Yn("El identificador del dispositivo a introducir es '" +str(id) + "'. ¿Desea continuar?")==False:
 			sys.exit(100)
-		else:
-			print ("   - Borrando los registros...")
-			sf.delete_all_films()
-	cur=mem.con.cursor()
-	print ("+ Insertando las peliculas en la base de datos")
-	for file in glob.glob( os.getcwd()+ "/*.jpg" ):
-		f=Film(mem).init__create(datetime.date.today(), file[len(os.getcwd())+1:-4], file,id)
-		f.save()
-		print ("    - {0}".format(file[len(os.getcwd())+1:-4]))
-	cur.close()
-	mem.con.commit()
-
-elif args.generate==True:
-	# SACA LAS IMÁGENES DE LA BASE DE DATOS
-	print ("  - Sacando las imágenes")
-	if len(args.output)==0:
-		print ("    Necesita añadir al menos un documento de salida. Por ejemplo '--output peliculas.pdf'")
-		sys.exit(0)
-	sf=SetFilms(mem)
-	sf.load("SELECT * FROM films")
-	for f in sf.arr:
-		f.extract_foto()
-
-	header=""
-	header = header + "\\documentclass[12pt,a4paper]{article}\n"
-	header = header + "\\usepackage{pdflscape}\n"
-	header = header + "\\usepackage[utf8]{inputenc}\n"
-	header = header + "\\usepackage[spanish]{babel}\n"
-	header = header + "\\usepackage[T1]{fontenc}\n"
-	header = header + "\\usepackage{geometry}\n"
-	header = header + "\\usepackage{setspace}\n"
-	header = header + "\\usepackage{graphicx}\n"
-	header = header + "\\usepackage{ae,aecompl}\n"
-	header = header + "\\usepackage[bookmarksnumbered, colorlinks=true, linkcolor=blue, pdftitle={Listado de películas}, pdfauthor={Pelvis}, pdfkeywords={eric5}]{hyperref}\n"
-	header = header + "\\geometry{verbose,a4paper}\n"
-	header = header + "\\usepackage{anysize}\n"
-	header = header + "\\marginsize{1.8cm}{1.3cm}{1.5cm}{1.5cm} \n"
-	header = header + "\\usepackage{array}\n"
-	header = header + "\\begin{document}\n"
-
-	bd=""
-	bd=bd + "\\begin{center}\n"
-	bd=bd + "\\section*{Listado de películas}\n\n"
-	bd=bd + "\\addcontentsline{toc}{section}{Listado de películas}\n"
-	bd=bd + "Este listado tiene {0} películas y fue generado el día {1}\n".format(sf.length(), datetime.date.today())
-	bd=bd + "\\end{center}\n"
-	bd=bd +"\\tableofcontents{ }\n"
-	bd=bd +"\\newpage\n"
 
 
-	print ("  - Listado por página")
-	# LISTADO DE DVD POR PAGINA
-	bd = bd + "\section{Carátulas grandes}\n"
-	for id_dvd in reversed(sf.distinct_id_dvd()):
-		# Son necesarias las dos
-		bd=bd + "\\subsection*{Índice "+str(id_dvd)+"}\n" 
-		bd=bd + "\\label{{sec:{0}}}\n".format(id_dvd)
-		bd=bd + "\\addcontentsline{toc}{subsection}{Índice "+str(id_dvd)+"}\n" 
-		bd=bd + "\\begin{tabular}{c c}\n"
-		for i, fi in enumerate(sf.films_in_id_dvd(id_dvd).arr):
-			bd=bd+"\\begin{tabular}{p{7.1cm}}\n" #Tabla foto name interior
-			bd=bd+ fi.tex_foto(7,7) + "\\\\\n"
-			bd=bd+ string2tex(fi.name) +"\\\\\n"
-			bd=bd+"\\end{tabular} &"
-			if i % 2==1:
-				bd=bd[:-2]+"\\\\\n"
-		bd = bd + "\\end{tabular}\n"
-		bd=bd +"\n\\newpage\n\n"
+		print ("+ Comprobando que el nombre de los videos y las imágenes tienen el formato correcto")
+		for file in glob.glob( os.getcwd()+ "/*.jpg" ):
+			if os.path.exists(file[:-3]+"avi")==False and os.path.exists(file[:-3]+"mpg")==False and os.path.exists(file[:-3]+"mkv")==False:
+				print ("No existe un video con el mismo nombre '" +  file[:-3]+"'")
+				sys.exit(100)
+
+		sf=SetFilms(mem)
+		sf.load("SELECT * FROM films WHERE id_dvd=" + str(id))
+
+		# "Chequeando si hay registros en la base de datos del dispositivo " + str(id)
+		if len(sf.arr)>0:
+			if Yn("+ ¿Desea borrar los registros del dispositivo '" +str(id) + "'?")==False:
+				sys.exit(100)
+			else:
+				print ("   - Borrando los registros...")
+				sf.delete_all_films()
+		global cur
+		cur=mem.con.cursor()
+		print ("+ Insertando las peliculas en la base de datos")
+		for file in glob.glob( os.getcwd()+ "/*.jpg" ):
+			f=Film(mem).init__create(datetime.date.today(), file[len(os.getcwd())+1:-4], file,id)
+			f.save()
+			print ("    - {0}".format(file[len(os.getcwd())+1:-4]))
+		cur.close()
+		mem.con.commit()
+
+	elif args.generate==True:
+		# SACA LAS IMÁGENES DE LA BASE DE DATOS
+		print ("  - Sacando las imágenes")
+		if len(args.output)==0:
+			print ("    Necesita añadir al menos un documento de salida. Por ejemplo '--output peliculas.pdf'")
+			sys.exit(0)
+		sf=SetFilms(mem)
+		sf.load("SELECT * FROM films")
+		for f in sf.arr:
+			f.extract_foto()
+
+		header=""
+		header = header + "\\documentclass[12pt,a4paper]{article}\n"
+		header = header + "\\usepackage{pdflscape}\n"
+		header = header + "\\usepackage[utf8]{inputenc}\n"
+		header = header + "\\usepackage[spanish]{babel}\n"
+		header = header + "\\usepackage[T1]{fontenc}\n"
+		header = header + "\\usepackage{geometry}\n"
+		header = header + "\\usepackage{setspace}\n"
+		header = header + "\\usepackage{graphicx}\n"
+		header = header + "\\usepackage{ae,aecompl}\n"
+		header = header + "\\usepackage[bookmarksnumbered, colorlinks=true, linkcolor=blue, pdftitle={Listado de películas}, pdfauthor={Pelvis}, pdfkeywords={eric5}]{hyperref}\n"
+		header = header + "\\geometry{verbose,a4paper}\n"
+		header = header + "\\usepackage{anysize}\n"
+		header = header + "\\marginsize{1.8cm}{1.3cm}{1.5cm}{1.5cm} \n"
+		header = header + "\\usepackage{array}\n"
+		header = header + "\\begin{document}\n"
+
+		bd=""
+		bd=bd + "\\begin{center}\n"
+		bd=bd + "\\section*{Listado de películas}\n\n"
+		bd=bd + "\\addcontentsline{toc}{section}{Listado de películas}\n"
+		bd=bd + "Este listado tiene {0} películas y fue generado el día {1}\n".format(sf.length(), datetime.date.today())
+		bd=bd + "\\end{center}\n"
+		bd=bd +"\\tableofcontents{ }\n"
+		bd=bd +"\\newpage\n"
+
+		print ("  - Listado por página")
+		# LISTADO DE DVD POR PAGINA
+		bd = bd + "\section{Carátulas grandes}\n"
+		for id_dvd in reversed(sf.distinct_id_dvd()):
+			# Son necesarias las dos
+			bd=bd + "\\subsection*{Índice "+str(id_dvd)+"}\n" 
+			bd=bd + "\\label{{sec:{0}}}\n".format(id_dvd)
+			bd=bd + "\\addcontentsline{toc}{subsection}{Índice "+str(id_dvd)+"}\n" 
+			bd=bd + "\\begin{tabular}{c c}\n"
+			for i, fi in enumerate(sf.films_in_id_dvd(id_dvd).arr):
+				bd=bd+"\\begin{tabular}{p{7.1cm}}\n" #Tabla foto name interior
+				bd=bd+ fi.tex_foto(7,7) + "\\\\\n"
+				bd=bd+ string2tex(fi.name) +"\\\\\n"
+				bd=bd+"\\end{tabular} &"
+				if i % 2==1:
+					bd=bd[:-2]+"\\\\\n"
+			bd = bd + "\\end{tabular}\n"
+			bd=bd +"\n\\newpage\n\n"
 
 
-	print ("  - Listado de carátulas en pequeño")
-	# LISTADO DE CARATULAS JUNTAS
-	bd=bd + "\section{Carátulas pequeñas}\n"
-	for id_dvd in reversed(sf.distinct_id_dvd()):
-		bd=bd + "\\begin{tabular}{m{2.1cm} m{2.1cm} m{2.1cm} m{2.1cm} m{2.1cm} m{2.1cm} m{2.1cm}}\n"
-		bd=bd + "Índice " +str(id_dvd) + " & "
-		for fi in sf.films_in_id_dvd(id_dvd).arr:
-			bd=bd + fi.tex_foto(2.1,2.1) + " &" 
-		bd = bd[:-2]  + "\\\\\n"
-		bd = bd + "\\end{tabular} \\\\\n\n"
-	bd=bd +"\n\\newpage\n\n"
-
-
-	print ("  - Listado ordenado alfabéticamente")
-	# ORDENADAS ALFABETICAMENTE
-	bd=bd + "\section{Ordenadas alfabéticamente}\n"
-	sf.sort_by_name()
-	for f in sf.arr:
-		bd=bd + "\\subsection*{{{0}}}\n".format(string2tex(f.name))
-		bd=bd + "\\addcontentsline{{toc}}{{subsection}}{{{0}}}\n".format(string2tex(f.name))
-		bd=bd + "\\begin{tabular}{m{2.3cm} m{15cm}}\n"
-		bd=bd + f.tex_foto(2.2,2.2) + " & ~\\nameref{{sec:{0}}}\\\\\n".format(f.id_dvd)#Reference to DVD page
-		bd = bd + "\\end{tabular}\n\n"
-	bd=bd +"\\newpage\n\n"
-
-
-	print ("  - Listado ordenado por años")
-	# ORDENADAS POR AÑO
-	bd=bd + "\section{Ordenadas por año}\n"
-	for year in reversed(sf.distinct_years()):
-		if year=="None":
-			bd=bd + "\\subsection*{Año desconocido}\n" 
-			bd=bd + "\\addcontentsline{toc}{subsection}{Año desconocido}\n" 
-		else:
-			bd=bd + "\\subsection*{Año "+year +"}\n" 
-			bd=bd + "\\addcontentsline{toc}{subsection}{Año "+year+"}\n" 
-		for fi in sf.films_in_year(year).arr:
-			bd=bd + "\\begin{tabular}{m{2.3cm} m{15cm}}\n"
-			bd=bd + "{0} & {1}. (~\\nameref{{sec:{2}}} )\\\\\n".format(fi.tex_foto(2.2,2.2), string2tex(fi.name), fi.id_dvd)
+		print ("  - Listado de carátulas en pequeño")
+		# LISTADO DE CARATULAS JUNTAS
+		bd=bd + "\section{Carátulas pequeñas}\n"
+		for id_dvd in reversed(sf.distinct_id_dvd()):
+			bd=bd + "\\begin{tabular}{m{2.1cm} m{2.1cm} m{2.1cm} m{2.1cm} m{2.1cm} m{2.1cm} m{2.1cm}}\n"
+			bd=bd + "Índice " +str(id_dvd) + " & "
+			for fi in sf.films_in_id_dvd(id_dvd).arr:
+				bd=bd + fi.tex_foto(2.1,2.1) + " &" 
+			bd = bd[:-2]  + "\\\\\n"
 			bd = bd + "\\end{tabular} \\\\\n\n"
 		bd=bd +"\n\\newpage\n\n"
 
-	footer=" \
-	\end{document} \
-	"
 
-	doc = header + bd + footer
+		print ("  - Listado ordenado alfabéticamente")
+		# ORDENADAS ALFABETICAMENTE
+		bd=bd + "\section{Ordenadas alfabéticamente}\n"
+		sf.sort_by_name()
+		for f in sf.arr:
+			bd=bd + "\\subsection*{{{0}}}\n".format(string2tex(f.name))
+			bd=bd + "\\addcontentsline{{toc}}{{subsection}}{{{0}}}\n".format(string2tex(f.name))
+			bd=bd + "\\begin{tabular}{m{2.3cm} m{15cm}}\n"
+			bd=bd + f.tex_foto(2.2,2.2) + " & ~\\nameref{{sec:{0}}}\\\\\n".format(f.id_dvd)#Reference to DVD page
+			bd = bd + "\\end{tabular}\n\n"
+		bd=bd +"\\newpage\n\n"
 
-	d=open("/tmp/pdffilms/peliculas.tex","w")
-	d.write(doc)
-	d.close()
 
-	os.system("cd /tmp/pdffilms;pdflatex /tmp/pdffilms/peliculas.tex;  &>/dev/null;pdflatex /tmp/pdffilms/peliculas.tex; pdflatex /tmp/pdffilms/peliculas.tex")
-	for output in args.output:
-		os.system("cp /tmp/pdffilms/peliculas.pdf {}".format(output))
+		print ("  - Listado ordenado por años")
+		# ORDENADAS POR AÑO
+		bd=bd + "\section{Ordenadas por año}\n"
+		for year in reversed(sf.distinct_years()):
+			if year=="None":
+				bd=bd + "\\subsection*{Año desconocido}\n" 
+				bd=bd + "\\addcontentsline{toc}{subsection}{Año desconocido}\n" 
+			else:
+				bd=bd + "\\subsection*{Año "+year +"}\n" 
+				bd=bd + "\\addcontentsline{toc}{subsection}{Año "+year+"}\n" 
+			for fi in sf.films_in_year(year).arr:
+				bd=bd + "\\begin{tabular}{m{2.3cm} m{15cm}}\n"
+				bd=bd + "{0} & {1}. (~\\nameref{{sec:{2}}} )\\\\\n".format(fi.tex_foto(2.2,2.2), string2tex(fi.name), fi.id_dvd)
+				bd = bd + "\\end{tabular} \\\\\n\n"
+			bd=bd +"\n\\newpage\n\n"
 
-else:
-	parser.print_help()
+		footer=" \
+		\end{document} \
+		"
 
-mem.disconnect()
+		doc = header + bd + footer
 
-shutil.rmtree("/tmp/pdffilms")
+		d=open("/tmp/pdffilms/peliculas.tex","w")
+		d.write(doc)
+		d.close()
+
+		os.system("cd /tmp/pdffilms;pdflatex /tmp/pdffilms/peliculas.tex;  &>/dev/null;pdflatex /tmp/pdffilms/peliculas.tex; pdflatex /tmp/pdffilms/peliculas.tex")
+		for output in args.output:
+			os.system("cp /tmp/pdffilms/peliculas.pdf {}".format(output))
+
+	else:
+		parser.print_help()
+
+	mem.disconnect()
+
+	shutil.rmtree("/tmp/pdffilms")
 

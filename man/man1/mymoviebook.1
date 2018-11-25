@@ -1,11 +1,11 @@
-.TH RECPERMISSIONS 1 2018\-11\-20
+.TH MYMOVIEBOOK 1 2018\-11\-25
 .SH NAME
 
-.B RecPermissions:
+.B mymoviebook:
 Change files and directories owner and permissions recursively.
 .SH SYNOPSIS
 
-RecPermissions usage: recpermissions [\-h] [\-\-version] [\-\-user USER] [\-\-group GROUP]
+mymoviebook usage: mymoviebook [\-h] [\-\-version] [\-\-user USER] [\-\-group GROUP]
                       [\-\-files PERM] [\-\-directories PERM] [\-\-remove_emptydirs]
                       [\-\-only]
                       absolute_path
@@ -92,7 +92,7 @@ To avoid errors and wrong changes, path must be an absolute one.
 .PP
 .RS
 .RS
-recpermissions /home/user/
+mymoviebook /home/user/
 .RE
 .RE
 .PP
@@ -108,7 +108,7 @@ This comand does nothing
 .PP
 .RS
 .RS
-recpermissions \-\-user user \-\-files 644 /home/user/
+mymoviebook \-\-user user \-\-files 644 /home/user/
 .RE
 .RE
 .PP
@@ -124,7 +124,7 @@ This command only changes user permissions and files permissions to 644. Group a
 .PP
 .RS
 .RS
-recpermissions \-\-user root \-\-group root \-\-files 640 \-\-directories 750 \-\-remove_emptydirs /home/user/
+mymoviebook \-\-user root \-\-group root \-\-files 640 \-\-directories 750 \-\-remove_emptydirs /home/user/
 .RE
 .RE
 .PP
@@ -140,7 +140,7 @@ This command will change user and group to root user and group. Files will have 
 .PP
 .RS
 .RS
-recpermissions \-\-user user /home/user/README.txt \-\-only
+mymoviebook \-\-user user /home/user/README.txt \-\-only
 .RE
 .RE
 .PP

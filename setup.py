@@ -5,7 +5,7 @@ import os
 import platform
 import site
 
-gettext.install('recpermissions', 'recpermissions/locale')
+gettext.install('mymoviebook', 'mymoviebook/locale')
 
 class Doxygen(Command):
     description = "Create/update doxygen documentation in doc/html"
@@ -24,7 +24,7 @@ class Doxygen(Command):
         os.system("rm -Rf build")
         os.chdir("doc")
         os.system("doxygen Doxyfile")
-        os.system("rsync -avzP -e 'ssh -l turulomio' html/ frs.sourceforge.net:/home/users/t/tu/turulomio/userweb/htdocs/doxygen/recpermissions/ --delete-after")
+        os.system("rsync -avzP -e 'ssh -l turulomio' html/ frs.sourceforge.net:/home/users/t/tu/turulomio/userweb/htdocs/doxygen/mymoviebook/ --delete-after")
         os.chdir("..")
 
 class Procedure(Command):
@@ -48,7 +48,7 @@ class Procedure(Command):
         print("  * python setup.py doxygen")
         print("  * mcedit doc/ttyrec/howto.py")
         print("  * python setup.py video" + ". " + _("If changed restart from first python setup.py doc"))
-        print("  * git commit -a -m 'recpermissions-X.X.X'")
+        print("  * git commit -a -m 'mymoviebook-X.X.X'")
         print("  * git push")
         print(_("  * Make a new tag in github"))
         print("  * python setup.py sdist upload -r pypi")
@@ -67,10 +67,10 @@ class Uninstall(Command):
 
     def run(self):
         if platform.system()=="Linux":
-            os.system("rm -Rf {}/recpermissions*".format(site.getsitepackages()[0]))
-            os.system("rm /usr/bin/recpermissions")
-            os.system("rm /usr/share/man/man1/recpermissions.1")
-            os.system("rm /usr/share/man/es/man1/recpermissions.1")
+            os.system("rm -Rf {}/mymoviebook*".format(site.getsitepackages()[0]))
+            os.system("rm /usr/bin/mymoviebook")
+            os.system("rm /usr/share/man/man1/mymoviebook.1")
+            os.system("rm /usr/share/man/es/man1/mymoviebook.1")
         else:
             print(_("Uninstall command only works in Linux"))
 
@@ -86,11 +86,11 @@ class Doc(Command):
 
     def run(self):
         #es
-        os.system("xgettext -L Python --no-wrap --no-location --from-code='UTF-8' -o locale/recpermissions.pot *.py recpermissions/*.py doc/ttyrec/*.py")
-        os.system("msgmerge -N --no-wrap -U locale/es.po locale/recpermissions.pot")
-        os.system("msgmerge -N --no-wrap -U locale/fr.po locale/recpermissions.pot")
-        os.system("msgfmt -cv -o recpermissions/locale/es/LC_MESSAGES/recpermissions.mo locale/es.po")
-        os.system("msgfmt -cv -o recpermissions/locale/fr/LC_MESSAGES/recpermissions.mo locale/fr.po")
+        os.system("xgettext -L Python --no-wrap --no-location --from-code='UTF-8' -o locale/mymoviebook.pot *.py mymoviebook/*.py doc/ttyrec/*.py")
+        os.system("msgmerge -N --no-wrap -U locale/es.po locale/mymoviebook.pot")
+        os.system("msgmerge -N --no-wrap -U locale/fr.po locale/mymoviebook.pot")
+        os.system("msgfmt -cv -o mymoviebook/locale/es/LC_MESSAGES/mymoviebook.mo locale/es.po")
+        os.system("msgfmt -cv -o mymoviebook/locale/fr/LC_MESSAGES/mymoviebook.mo locale/fr.po")
 
         for language in ["en", "es", "fr"]:
             self.mangenerator(language)
@@ -101,16 +101,16 @@ class Doc(Command):
         """
         from mangenerator import Man
         if language=="en":
-            lang1=gettext.install('recpermissions', 'badlocale')
-            man=Man("man/man1/recpermissions")
+            lang1=gettext.install('mymoviebook', 'badlocale')
+            man=Man("man/man1/mymoviebook")
         else:
-            lang1=gettext.translation('recpermissions', 'recpermissions/locale', languages=[language])
+            lang1=gettext.translation('mymoviebook', 'mymoviebook/locale', languages=[language])
             lang1.install()
-            man=Man("man/{}/man1/recpermissions".format(language))
+            man=Man("man/{}/man1/mymoviebook".format(language))
         print("  - DESCRIPTION in {} is {}".format(language, _("DESCRIPTION")))
 
-        man.setMetadata("RecPermissions",  1,   datetime.date.today(), "Mariano Muñoz", _("Change files and directories owner and permissions recursively."))
-        man.setSynopsis("""usage: recpermissions [-h] [--version] [--user USER] [--group GROUP]
+        man.setMetadata("mymoviebook",  1,   datetime.date.today(), "Mariano Muñoz", _("Change files and directories owner and permissions recursively."))
+        man.setSynopsis("""usage: mymoviebook [-h] [--version] [--user USER] [--group GROUP]
                       [--files PERM] [--directories PERM] [--remove_emptydirs]
                       [--only]
                       absolute_path""")
@@ -132,16 +132,16 @@ class Doc(Command):
         man.paragraph(_("To avoid errors and wrong changes, path must be an absolute one."), 3)  
         man.header(_("EXAMPLES"), 1)
         man.paragraph(_("Null Example"), 2, True)
-        man.paragraph(_("recpermissions /home/user/"), 3)
+        man.paragraph(_("mymoviebook /home/user/"), 3)
         man.paragraph(_("This comand does nothing"), 3)
         man.paragraph(_("Partial Example"), 2, True)
-        man.paragraph(_("recpermissions --user user --files 644 /home/user/"), 3)
+        man.paragraph(_("mymoviebook --user user --files 644 /home/user/"), 3)
         man.paragraph(_("This command only changes user permissions and files permissions to 644. Group and directory permissions are not changed:"), 3)
         man.paragraph(_("Full Example"), 2, True)
-        man.paragraph(_("recpermissions --user root --group root --files 640 --directories 750 --remove_emptydirs /home/user/"), 3)
+        man.paragraph(_("mymoviebook --user root --group root --files 640 --directories 750 --remove_emptydirs /home/user/"), 3)
         man.paragraph(_("This command will change user and group to root user and group. Files will have rw-r----- permisions and directories rwxr-x--- permisions. If the script finds empty dirs it will remove them:"), 3)
         man.paragraph(_("Only Example"), 2, True)
-        man.paragraph(_("recpermissions --user user /home/user/README.txt --only"), 3)
+        man.paragraph(_("mymoviebook --user user /home/user/README.txt --only"), 3)
         man.paragraph(_("This command will change user ownership to the file /home/usr/README.txt only"),  3)
         man.save()
 
@@ -158,8 +158,8 @@ class Video(Command):
     def run(self):
         print(_("You need ttyrecgenerator installed to generate videos"))
         os.chdir("doc/ttyrec")
-        os.system("ttyrecgenerator --output recpermissions_howto_es 'python3 howto.py' --lc_all es_ES.UTF-8")
-        os.system("ttyrecgenerator --output recpermissions_howto_en 'python3 howto.py' --lc_all C")
+        os.system("ttyrecgenerator --output mymoviebook_howto_es 'python3 howto.py' --lc_all es_ES.UTF-8")
+        os.system("ttyrecgenerator --output mymoviebook_howto_en 'python3 howto.py' --lc_all C")
         os.chdir("../..")
 
     ########################################################################
@@ -167,7 +167,7 @@ class Video(Command):
 
 ## Version of modele captured from version to avoid problems with package dependencies
 __version__= None
-with open('recpermissions/version.py', encoding='utf-8') as f:
+with open('mymoviebook/version.py', encoding='utf-8') as f:
     for line in f.readlines():
         if line.find("__version__ =")!=-1:
             __version__=line.split("'")[1]
@@ -177,15 +177,15 @@ with open('README.md', encoding='utf-8') as f:
     long_description = f.read()
 
 if platform.system()=="Linux":
-    data_files=[('/usr/share/man/man1/', ['man/man1/recpermissions.1']), 
-                ('/usr/share/man/es/man1/', ['man/es/man1/recpermissions.1'])
+    data_files=[('/usr/share/man/man1/', ['man/man1/mymoviebook.1']), 
+                ('/usr/share/man/es/man1/', ['man/es/man1/mymoviebook.1'])
                ]
 else:
     data_files=[]
 
-setup(name='recpermissions',
+setup(name='mymoviebook',
     version=__version__,
-    description='Change files and directories permisions and owner recursivily from current directory',
+    description='Generate your own personal movie collection book',
     long_description=long_description,
     long_description_content_type='text/markdown',
     classifiers=['Development Status :: 4 - Beta',
@@ -194,13 +194,13 @@ setup(name='recpermissions',
                  'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
                  'Programming Language :: Python :: 3',
                 ],
-    keywords='change permissions ownner files directories',
-    url='https://github.com/Turulomio/recpermissions',
+    keywords='movie collection book',
+    url='https://github.com/Turulomio/mymoviebook',
     author='Turulomio',
     author_email='turulomio@yahoo.es',
     license='GPL-3',
-    packages=['recpermissions'],
-    entry_points = {'console_scripts': ['recpermissions=recpermissions.core:main',
+    packages=['mymoviebook'],
+    entry_points = {'console_scripts': ['mymoviebook=mymoviebook.mymoviebook:main',
                                        ],
                    },
     install_requires=['colorama','setuptools'],
