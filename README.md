@@ -48,6 +48,10 @@ Dependencies
 
 Changelog
 =========
+1.0.0
+-----
+- Created a python package from my pdffilms.py script
+
 
 0.10.0
 ------
