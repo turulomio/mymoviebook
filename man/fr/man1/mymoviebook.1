@@ -1,18 +1,39 @@
-.TH MYMOVIEBOOK 1 2018\-11\-25
+.TH MYMOVIEBOOK 1 2018\-12\-01
 .SH NAME
 
 .B mymoviebook:
 Changer le propri\('etaire et les permissions des fichiers et des r\('epertoires r\('ecursivement.
 .SH SYNOPSIS
 
-mymoviebook usage: mymoviebook [\-h] [\-\-version] [\-\-user USER] [\-\-group GROUP]
-                      [\-\-files PERM] [\-\-directories PERM] [\-\-remove_emptydirs]
-                      [\-\-only]
-                      absolute_path
+mymoviebook usage: mymoviebook [\-h] [\-\-version] [\-\-insert | \-\-generate] [\-\-user USER]
+                   [\-\-port PORT] [\-\-host HOST] [\-\-db DB] [\-\-output OUTPUT]
+                   [\-\-format {PDF,ODT}]
 .SH LA DESCRIPTION
 
 .PP
 Cette application a les paramètres obligatoires suivants :
+.PP
+.RS
+.B \-\-insert
+.RE
+.PP
+.RS
+.RS
+Inserts a directory with movies with the index of the last directory numeric name.
+.RE
+.RE
+.PP
+.RS
+.B \-\-generate
+.RE
+.PP
+.RS
+.RS
+Generates the movie collection document
+.RE
+.RE
+.PP
+Postgresql database connection parameters:
 .PP
 .RS
 .B \-\-user
@@ -20,132 +41,90 @@ Cette application a les paramètres obligatoires suivants :
 .PP
 .RS
 .RS
-Utilisateur utilis\('e pour changer le propri\('etaire des fichiers. Ca ne fait rien si ce n'est pas d\('efini
+User of the database. By default 'postgres'.
 .RE
 .RE
 .PP
 .RS
-.B \-\-group
+.B \-\-port
 .RE
 .PP
 .RS
 .RS
-Groupe utilis\('e pour changer le groupe propri\('etaire des fichiers. Ca ne fait rien si ce n'est pas d\('efini
+Database port. By default '5432'
 .RE
 .RE
 .PP
 .RS
-.B \-\-files
+.B \-\-host
 .RE
 .PP
 .RS
 .RS
-Permissions du fichier en octal à utiliser. Ca ne fait rien si ce n'est pas d\('efini
+Database server. By default '127.0.0.1'.
 .RE
 .RE
 .PP
 .RS
-.B \-\-directories
+.B \-\-db
 .RE
 .PP
 .RS
 .RS
-Permissions du r\('epertoire en octal à utiliser. Ca ne fait rien si ce n'est pas d\('efini
+Database name. By default 'mymoviebook'.
 .RE
 .RE
 .PP
 .RS
-.B \-\-remove_emptydirs
+.B \-\-output
 .RE
 .PP
 .RS
 .RS
-A l'utilisation par un script, retire r\('ecursivement tous les r\('epertoires vides dans le path.
+Path where the movie book it's going to be generated. You can use this parameter as many times as you with.
 .RE
 .RE
 .PP
 .RS
-.B \-\-only
+.B \-\-format
 .RE
 .PP
 .RS
 .RS
-Change seulement les permissions du fichier ou du r\('epertoire pass\('e dans le paramètre absolute_path.
-.RE
-.RE
-.PP
-.RS
-.B absolute_path
-.RE
-.PP
-.RS
-.RS
-Pour \('eviter les erreurs et les changements erron\('es, le path doit être absolu.
+You can choose PDF or ODT arguments. PDF is used by default.
 .RE
 .RE
 .SH EXEMPLES
 
 .PP
 .RS
-.B Exemple nul
+.B Insert movies with index 23
 .RE
 .PP
 .RS
 .RS
-mymoviebook /home/user/
-.RE
-.RE
-.PP
-.RS
-.RS
-Cette commande ne fait rien
-.RE
-.RE
-.PP
-.RS
-.B Exemple partiel
-.RE
-.PP
-.RS
-.RS
-mymoviebook \-\-user user \-\-files 644 /home/user/
+mymoviebook \-\-insert /path/to/my/movies/23
 .RE
 .RE
 .PP
 .RS
 .RS
-Cette commande ne change à 644 que les permissions utilisateur et les permissions des fichiers. Les permissions de groupe et de r\('epertoire ne sont pas modifi\('ees :
+This comand insert in database all movies (up to 6) in 23 directory. Each film must have it's cover with the same filename.
 .RE
 .RE
 .PP
 .RS
-.B Exemple total
+.B Generate a book with all films in the database
 .RE
 .PP
 .RS
 .RS
-mymoviebook \-\-user root \-\-group root \-\-files 640 \-\-directories 750 \-\-remove_emptydirs /home/user/
-.RE
-.RE
-.PP
-.RS
-.RS
-Cette commande va transformer l'utilisateur et le groupe en utilisateur root et groupe root. Les fichiers auront les permissions rw\-r\-\-\-\-\- et les r\('epertoires auront les permissions rwxr\-x\-\-\-. Si le script trouve des r\('epertoires vides, il les enlèvera :
-.RE
-.RE
-.PP
-.RS
-.B Exemple de Only
-.RE
-.PP
-.RS
-.RS
-mymoviebook \-\-user user /home/user/README.txt \-\-only
+mymoviebook \-\-generate \-\-output /home/user/mymoviecollection.pdf
 .RE
 .RE
 .PP
 .RS
 .RS
-Cette commande ne changera la possession de l'utilisateur seulement du fichier /home/usr/README.txt
+This comand generates a movie book in the output path.
 .RE
 .RE

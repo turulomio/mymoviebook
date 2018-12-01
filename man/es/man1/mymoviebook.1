@@ -1,18 +1,39 @@
-.TH MYMOVIEBOOK 1 2018\-11\-25
+.TH MYMOVIEBOOK 1 2018\-12\-01
 .SH NAME
 
 .B mymoviebook:
 Cambia el propietario y los permisos de ficheros y directorios recursivamente.
 .SH SYNOPSIS
 
-mymoviebook usage: mymoviebook [\-h] [\-\-version] [\-\-user USER] [\-\-group GROUP]
-                      [\-\-files PERM] [\-\-directories PERM] [\-\-remove_emptydirs]
-                      [\-\-only]
-                      absolute_path
+mymoviebook usage: mymoviebook [\-h] [\-\-version] [\-\-insert | \-\-generate] [\-\-user USER]
+                   [\-\-port PORT] [\-\-host HOST] [\-\-db DB] [\-\-output OUTPUT]
+                   [\-\-format {PDF,ODT}]
 .SH DESCRIPCI\('ON
 
 .PP
 Esta aplicaci\('on tiene los siguientes par\('ametros obligatorios
+.PP
+.RS
+.B \-\-insert
+.RE
+.PP
+.RS
+.RS
+Inserts a directory with movies with the index of the last directory numeric name.
+.RE
+.RE
+.PP
+.RS
+.B \-\-generate
+.RE
+.PP
+.RS
+.RS
+Generates the movie collection document
+.RE
+.RE
+.PP
+Postgresql database connection parameters:
 .PP
 .RS
 .B \-\-user
@@ -20,132 +41,90 @@ Esta aplicaci\('on tiene los siguientes par\('ametros obligatorios
 .PP
 .RS
 .RS
-Usuario usado para cambiar el propietario de los ficheros No hace nada si no se ha establecido
+User of the database. By default 'postgres'.
 .RE
 .RE
 .PP
 .RS
-.B \-\-group
+.B \-\-port
 .RE
 .PP
 .RS
 .RS
-Grupo usado para cambiar el grupo del propietario del fichero No hace nada si no se ha establecido
+Database port. By default '5432'
 .RE
 .RE
 .PP
 .RS
-.B \-\-files
+.B \-\-host
 .RE
 .PP
 .RS
 .RS
-Permisos del fichero en octal a usar No hace nada si no se ha establecido
+Database server. By default '127.0.0.1'.
 .RE
 .RE
 .PP
 .RS
-.B \-\-directories
+.B \-\-db
 .RE
 .PP
 .RS
 .RS
-Permisos del directorio en octal a usar No hace nada si no se ha establecido
+Database name. By default 'mymoviebook'.
 .RE
 .RE
 .PP
 .RS
-.B \-\-remove_emptydirs
+.B \-\-output
 .RE
 .PP
 .RS
 .RS
-Cuando se usa en el script, borra todos los directorios vacios rescursivamente desde la ruta
+Path where the movie book it's going to be generated. You can use this parameter as many times as you with.
 .RE
 .RE
 .PP
 .RS
-.B \-\-only
+.B \-\-format
 .RE
 .PP
 .RS
 .RS
-Solo cambia los permisos del fichero o directorio pasado en el par\('ametro absolute_path.
-.RE
-.RE
-.PP
-.RS
-.B absolute_path
-.RE
-.PP
-.RS
-.RS
-Para evitar errores y cambios err\('oneos, la ruta pasada debe ser absoluta
+You can choose PDF or ODT arguments. PDF is used by default.
 .RE
 .RE
 .SH EJEMPLOS
 
 .PP
 .RS
-.B Ejemplo nulo
+.B Insert movies with index 23
 .RE
 .PP
 .RS
 .RS
-mymoviebook /home/user/
-.RE
-.RE
-.PP
-.RS
-.RS
-Este comando no hace nada
-.RE
-.RE
-.PP
-.RS
-.B Ejemplo parcial
-.RE
-.PP
-.RS
-.RS
-mymoviebook \-\-user user \-\-files 644 /home/user/
+mymoviebook \-\-insert /path/to/my/movies/23
 .RE
 .RE
 .PP
 .RS
 .RS
-Este comando solo cambia el usuario y los permisos del fichero a 644. El grupo y los permisos de los directorios no son cambiados:
+This comand insert in database all movies (up to 6) in 23 directory. Each film must have it's cover with the same filename.
 .RE
 .RE
 .PP
 .RS
-.B Ejemplo completo
+.B Generate a book with all films in the database
 .RE
 .PP
 .RS
 .RS
-mymoviebook \-\-user root \-\-group root \-\-files 640 \-\-directories 750 \-\-remove_emptydirs /home/user/
-.RE
-.RE
-.PP
-.RS
-.RS
-Este comando cambiar\('a el usuario a 'root' y el grupo a 'root'. Los ficheros tendr\('an los permisos rw\-r\-\-\-\-\- y los directorios los permisos rwxr\-x\-\-\-. Si el script encontrara directorios vacios los borrar\('a:
-.RE
-.RE
-.PP
-.RS
-.B Ejemplo Only
-.RE
-.PP
-.RS
-.RS
-mymoviebook \-\-user user /home/user/README.txt \-\-only
+mymoviebook \-\-generate \-\-output /home/user/mymoviecollection.pdf
 .RE
 .RE
 .PP
 .RS
 .RS
-Este comando cambiar\('a \('unicamente el propietario del fichero /home/usr/README.txt
+This comand generates a movie book in the output path.
 .RE
 .RE

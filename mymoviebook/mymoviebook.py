@@ -1,4 +1,3 @@
-# No se permiten comillas dobles en la inserción a base de datos
 import os, sys, glob, datetime, psycopg2, psycopg2.extras, shutil
 import pkg_resources
 import argparse
@@ -43,9 +42,8 @@ class Film:
         self.pathfoto=None
         self.id_dvd=None
         self.year=None
-
     def init__create(self,savedate, name, pathfoto, id_dvd):
-        """Introduce pathfoto, ya que deberá luego hacer un insert, id siempre es None, year es None, pero lo parsea en la función"""
+        """Introduce pathfoto, ya que debera luego hacer un insert, id siempre es None, year es None, pero lo parsea en la funcion"""
         self.savedate=savedate
         self.name=name
         self.id_dvd=id_dvd
@@ -263,12 +261,6 @@ class SetFilms:
                 
         odt.save()
 
-
-#        os.system("cd /tmp/pdffilms;pdflatex /tmp/pdffilms/peliculas.tex;  &>/dev/null;pdflatex /tmp/pdffilms/peliculas.tex; pdflatex /tmp/pdffilms/peliculas.tex")
-#        for output in args.output:
-#            os.system("cp /tmp/pdffilms/peliculas.pdf {}".format(output))
-
-
     def length(self):
         return len(self.arr)
 
@@ -353,16 +345,16 @@ def main(parameters=None):
     parser.add_argument('--version', action='version', version=__version__)
 
     group = parser.add_mutually_exclusive_group()
-    group.add_argument('-i', '--insert', help='Insert films from current numbered directory', action="store_true")
-    group.add_argument('-g', '--generate', help='Generate films documentation', action="store_true")
+    group.add_argument('--insert', help=_('Insert films from current numbered directory'), action="store_true")
+    group.add_argument('--generate', help=_('Generate films documentation'), action="store_true")
 
-    group_db=parser.add_argument_group("Postgres database connection parameters")
-    group_db.add_argument('--user', help='Postgresql user', default='postgres')
-    group_db.add_argument('--port', help='Postgresql server port', default=5432)
-    group_db.add_argument('--host', help='Postgresql server address', default='127.0.0.1')
-    group_db.add_argument('--db', help='Postgresql database', default='pdffilms')
+    group_db=parser.add_argument_group(_("Postgres database connection parameters"))
+    group_db.add_argument('--user', help=_('Postgresql user'), default='postgres')
+    group_db.add_argument('--port', help=_('Postgresql server port'), default=5432)
+    group_db.add_argument('--host', help=_('Postgresql server address'), default='127.0.0.1')
+    group_db.add_argument('--db', help=_('Postgresql database'), default='mymoviebook')
 
-    parser.add_argument('--output', help="Path to the output document", action="append", default=[])
+    parser.add_argument('--output', help=_("Path to the output document"), action="append", default=[])
     parser.add_argument('--format', help=_("select output format. Default is PDF"), action="store", choices=['PDF', 'ODT'],  default='PDF')
 
     global args
@@ -370,7 +362,7 @@ def main(parameters=None):
 
     mem=Mem()
 
-    print("Introduzca la contraseña para {}".format(mem.connection_string()))
+    print(_("Write the password for {}").format(mem.connection_string()))
     global password
     password=getpass.getpass()
     mem.connect()
@@ -387,7 +379,7 @@ def main(parameters=None):
         try:
             id=int(cwd[len(cwd)-1])
         except:
-            print ("El directorio actual no es un directorio numérico")
+            print (_("Current directory is not numeric"))
             sys.exit(100)
 
         if Yn("El identificador del dispositivo a introducir es '" +str(id) + "'. ¿Desea continuar?")==False:
@@ -439,4 +431,3 @@ def main(parameters=None):
     mem.disconnect()
 
     shutil.rmtree("/tmp/pdffilms")
-
