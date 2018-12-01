@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RecPermissions\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-25 07:24+0100\n"
+"POT-Creation-Date: 2018-12-01 05:09+0100\n"
 "PO-Revision-Date: 2018-11-03 07:11+0100\n"
 "Last-Translator: root <turulomio@yahoo.es>\n"
 "Language-Team: French\n"
@@ -50,77 +50,173 @@ msgstr "Changer le propriétaire et les permissions des fichiers et des réperto
 msgid "This app has the following mandatory parameters:"
 msgstr "Cette application a les paramètres obligatoires suivants :"
 
-msgid "User used to change files owner."
-msgstr "Utilisateur utilisé pour changer le propriétaire des fichiers."
+msgid "Inserts a directory with movies with the index of the last directory numeric name."
+msgstr ""
 
-msgid "It does nothing if it's not set"
-msgstr "Ca ne fait rien si ce n'est pas défini"
+msgid "Generates the movie collection document"
+msgstr ""
 
-msgid "Group used to change files owner group."
-msgstr "Groupe utilisé pour changer le groupe propriétaire des fichiers."
+msgid "Postgresql database connection parameters:"
+msgstr ""
 
-msgid "File permissions in octal to be used."
-msgstr "Permissions du fichier en octal à utiliser."
+msgid "User of the database. By default 'postgres'."
+msgstr ""
 
-msgid "Directory permissions in octal to be used."
-msgstr "Permissions du répertoire en octal à utiliser."
+msgid "Database port. By default '5432'"
+msgstr ""
 
-msgid "When used in script, removes all empty dirs recursively from path."
-msgstr "A l'utilisation par un script, retire récursivement tous les répertoires vides dans le path."
+msgid "Database server. By default '127.0.0.1'."
+msgstr ""
 
-msgid "Only changes permissions to the file or directory passed in absolute_path parameter."
-msgstr "Change seulement les permissions du fichier ou du répertoire passé dans le paramètre absolute_path."
+msgid "Database name. By default 'mymoviebook'."
+msgstr ""
 
-msgid "To avoid errors and wrong changes, path must be an absolute one."
-msgstr "Pour éviter les erreurs et les changements erronés, le path doit être absolu."
+msgid "Path where the movie book it's going to be generated. You can use this parameter as many times as you with."
+msgstr ""
+
+msgid "You can choose PDF or ODT arguments. PDF is used by default."
+msgstr ""
 
 msgid "EXAMPLES"
 msgstr "EXEMPLES"
 
-msgid "Null Example"
-msgstr "Exemple nul"
-
-msgid "mymoviebook /home/user/"
+msgid "Insert movies with index 23"
 msgstr ""
 
-msgid "This comand does nothing"
-msgstr "Cette commande ne fait rien"
-
-msgid "Partial Example"
-msgstr "Exemple partiel"
-
-msgid "mymoviebook --user user --files 644 /home/user/"
+msgid "mymoviebook --insert /path/to/my/movies/23"
 msgstr ""
 
-msgid "This command only changes user permissions and files permissions to 644. Group and directory permissions are not changed:"
-msgstr "Cette commande ne change à 644 que les permissions utilisateur et les permissions des fichiers. Les permissions de groupe et de répertoire ne sont pas modifiées :"
-
-msgid "Full Example"
-msgstr "Exemple total"
-
-msgid "mymoviebook --user root --group root --files 640 --directories 750 --remove_emptydirs /home/user/"
+msgid "This comand insert in database all movies (up to 6) in 23 directory. Each film must have it's cover with the same filename."
 msgstr ""
 
-msgid "This command will change user and group to root user and group. Files will have rw-r----- permisions and directories rwxr-x--- permisions. If the script finds empty dirs it will remove them:"
-msgstr "Cette commande va transformer l'utilisateur et le groupe en utilisateur root et groupe root. Les fichiers auront les permissions rw-r----- et les répertoires auront les permissions rwxr-x---. Si le script trouve des répertoires vides, il les enlèvera :"
-
-msgid "Only Example"
-msgstr "Exemple de Only"
-
-msgid "mymoviebook --user user /home/user/README.txt --only"
+msgid "Generate a book with all films in the database"
 msgstr ""
 
-msgid "This command will change user ownership to the file /home/usr/README.txt only"
-msgstr "Cette commande ne changera la possession de l'utilisateur seulement du fichier /home/usr/README.txt"
+msgid "mymoviebook --generate --output /home/user/mymoviecollection.pdf"
+msgstr ""
+
+msgid "This comand generates a movie book in the output path."
+msgstr ""
 
 msgid "You need ttyrecgenerator installed to generate videos"
 msgstr "Il faut installer ttyrecgenerator pour générer des vidéos"
 
+msgid "Movie list"
+msgstr ""
+
+msgid "This list has {} films and was generated at {} with MyMovieBook-{}"
+msgstr ""
+
+msgid "Big covers"
+msgstr ""
+
+msgid "Index {}"
+msgstr ""
+
+msgid "Small covers"
+msgstr ""
+
+msgid "Order by name"
+msgstr ""
+
+msgid "Order by year"
+msgstr ""
+
+msgid "Unknown year"
+msgstr ""
+
+msgid "Year {}"
+msgstr ""
+
 msgid "Generate your personal movie collection book"
+msgstr ""
+
+msgid "Developed by Mariano Muñoz 2012-{}"
+msgstr ""
+
+msgid "Insert films from current numbered directory"
+msgstr ""
+
+msgid "Generate films documentation"
+msgstr ""
+
+msgid "Postgres database connection parameters"
+msgstr ""
+
+msgid "Postgresql user"
+msgstr ""
+
+msgid "Postgresql server port"
+msgstr ""
+
+msgid "Postgresql server address"
+msgstr ""
+
+msgid "Postgresql database"
+msgstr ""
+
+msgid "Path to the output document"
+msgstr ""
+
+msgid "select output format. Default is PDF"
+msgstr ""
+
+msgid "Write the password for {}"
+msgstr ""
+
+msgid "Current directory is not numeric"
 msgstr ""
 
 msgid "This is a video to show how to use 'mymoviebook' command"
 msgstr ""
+
+#~ msgid "User used to change files owner."
+#~ msgstr "Utilisateur utilisé pour changer le propriétaire des fichiers."
+
+#~ msgid "It does nothing if it's not set"
+#~ msgstr "Ca ne fait rien si ce n'est pas défini"
+
+#~ msgid "Group used to change files owner group."
+#~ msgstr "Groupe utilisé pour changer le groupe propriétaire des fichiers."
+
+#~ msgid "File permissions in octal to be used."
+#~ msgstr "Permissions du fichier en octal à utiliser."
+
+#~ msgid "Directory permissions in octal to be used."
+#~ msgstr "Permissions du répertoire en octal à utiliser."
+
+#~ msgid "When used in script, removes all empty dirs recursively from path."
+#~ msgstr "A l'utilisation par un script, retire récursivement tous les répertoires vides dans le path."
+
+#~ msgid "Only changes permissions to the file or directory passed in absolute_path parameter."
+#~ msgstr "Change seulement les permissions du fichier ou du répertoire passé dans le paramètre absolute_path."
+
+#~ msgid "To avoid errors and wrong changes, path must be an absolute one."
+#~ msgstr "Pour éviter les erreurs et les changements erronés, le path doit être absolu."
+
+#~ msgid "Null Example"
+#~ msgstr "Exemple nul"
+
+#~ msgid "This comand does nothing"
+#~ msgstr "Cette commande ne fait rien"
+
+#~ msgid "Partial Example"
+#~ msgstr "Exemple partiel"
+
+#~ msgid "This command only changes user permissions and files permissions to 644. Group and directory permissions are not changed:"
+#~ msgstr "Cette commande ne change à 644 que les permissions utilisateur et les permissions des fichiers. Les permissions de groupe et de répertoire ne sont pas modifiées :"
+
+#~ msgid "Full Example"
+#~ msgstr "Exemple total"
+
+#~ msgid "This command will change user and group to root user and group. Files will have rw-r----- permisions and directories rwxr-x--- permisions. If the script finds empty dirs it will remove them:"
+#~ msgstr "Cette commande va transformer l'utilisateur et le groupe en utilisateur root et groupe root. Les fichiers auront les permissions rw-r----- et les répertoires auront les permissions rwxr-x---. Si le script trouve des répertoires vides, il les enlèvera :"
+
+#~ msgid "Only Example"
+#~ msgstr "Exemple de Only"
+
+#~ msgid "This command will change user ownership to the file /home/usr/README.txt only"
+#~ msgstr "Cette commande ne changera la possession de l'utilisateur seulement du fichier /home/usr/README.txt"
 
 #~ msgid "recpermissions /home/user/"
 #~ msgstr "recpermissions /home/user/"
