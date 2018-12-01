@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RecPermissions\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-01 05:09+0100\n"
+"POT-Creation-Date: 2018-12-01 05:23+0100\n"
 "PO-Revision-Date: 2018-10-22 18:51+0100\n"
 "Last-Translator: root <turulomio@yahoo.es>\n"
 "Language-Team: Spanish\n"
@@ -55,13 +55,13 @@ msgid "Inserts a directory with movies with the index of the last directory nume
 msgstr ""
 
 msgid "Generates the movie collection document"
-msgstr ""
+msgstr "Genera el documento con la colección de películas"
 
 msgid "Postgresql database connection parameters:"
-msgstr ""
+msgstr "Parámetros de conexión a la base de datos Postgresql"
 
 msgid "User of the database. By default 'postgres'."
-msgstr ""
+msgstr "Usuario de la base de datos. Por defecto 'postgres'."
 
 msgid "Database port. By default '5432'"
 msgstr ""
@@ -90,7 +90,7 @@ msgstr ""
 msgid "This comand insert in database all movies (up to 6) in 23 directory. Each film must have it's cover with the same filename."
 msgstr ""
 
-msgid "Generate a book with all films in the database"
+msgid "Generate a book with all movies in the database"
 msgstr ""
 
 msgid "mymoviebook --generate --output /home/user/mymoviecollection.pdf"
@@ -103,13 +103,13 @@ msgid "You need ttyrecgenerator installed to generate videos"
 msgstr "Necesitas instalar 'ttyrecgenerator' para generar videos"
 
 msgid "Movie list"
-msgstr ""
+msgstr "Listado de películas"
 
 msgid "This list has {} films and was generated at {} with MyMovieBook-{}"
 msgstr ""
 
 msgid "Big covers"
-msgstr ""
+msgstr "Carátulas grandes"
 
 msgid "Index {}"
 msgstr ""
@@ -118,16 +118,16 @@ msgid "Small covers"
 msgstr ""
 
 msgid "Order by name"
-msgstr ""
+msgstr "Ordenado por nombre"
 
 msgid "Order by year"
 msgstr ""
 
 msgid "Unknown year"
-msgstr ""
+msgstr "Año desconocido"
 
 msgid "Year {}"
-msgstr ""
+msgstr "Año {}"
 
 msgid "Generate your personal movie collection book"
 msgstr ""
@@ -145,7 +145,7 @@ msgid "Postgres database connection parameters"
 msgstr ""
 
 msgid "Postgresql user"
-msgstr ""
+msgstr "Usuario de Postgresql"
 
 msgid "Postgresql server port"
 msgstr ""
@@ -157,16 +157,16 @@ msgid "Postgresql database"
 msgstr ""
 
 msgid "Path to the output document"
-msgstr ""
+msgstr "Ruta al documento generado"
 
 msgid "select output format. Default is PDF"
 msgstr ""
 
 msgid "Write the password for {}"
-msgstr ""
+msgstr "Escribe la contraseña para {}"
 
 msgid "Current directory is not numeric"
-msgstr ""
+msgstr "El directorio actual no es numérico"
 
 msgid "This is a video to show how to use 'mymoviebook' command"
 msgstr ""
