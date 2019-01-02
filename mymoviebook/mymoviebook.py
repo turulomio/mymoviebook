@@ -132,7 +132,6 @@ class SetFilms:
         header = header + "\\begin{document}\n"
         header = header + "\\title{" + _("My movie book") + "}\n"
 
- 
         header = header + "\\setlength{\\parindent}{1cm}\n"
         header = header + "\\setlength{\\parskip}{0.2cm}\n"
 
@@ -169,11 +168,13 @@ class SetFilms:
 
 
         print ("  - Listado de carátulas en pequeño")
+
+        bd = bd + "\\setlength{\\parindent}{0cm}\n"
         # LISTADO DE CARATULAS JUNTAS
-        bd=bd + "\section{Carátulas pequeñas}\n"
+        bd=bd + "\section{"+ _("Small covers") +"}\n"
         for id_dvd in reversed(self.distinct_id_dvd()):
             bd=bd + "\\begin{tabular}{m{2.1cm} m{2.1cm} m{2.1cm} m{2.1cm} m{2.1cm} m{2.1cm} m{2.1cm}}\n"
-            bd=bd + "Índice " +str(id_dvd) + " & "
+            bd=bd + _("Index") + " " +str(id_dvd) + " & "
             for fi in self.films_in_id_dvd(id_dvd).arr:
                 bd=bd + fi.tex_foto(2.1,2.1) + " &" 
             bd = bd[:-2]  + "\\\\\n"
