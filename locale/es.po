@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RecPermissions\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-02 17:26+0100\n"
+"POT-Creation-Date: 2019-01-02 21:26+0100\n"
 "PO-Revision-Date: 2018-10-22 18:51+0100\n"
 "Last-Translator: root <turulomio@yahoo.es>\n"
 "Language-Team: Spanish\n"
@@ -64,7 +64,7 @@ msgid "User of the database. By default 'postgres'."
 msgstr "Usuario de la base de datos. Por defecto 'postgres'."
 
 msgid "Database port. By default '5432'"
-msgstr ""
+msgstr "Puerto de la base de datos. Por defecto '5432'"
 
 msgid "Database server. By default '127.0.0.1'."
 msgstr ""
@@ -120,20 +120,32 @@ msgstr "Este libro tiene {} películas y se generó a las {}"
 msgid "Table of contents"
 msgstr "Tabla de contenidos"
 
-msgid "Small covers"
-msgstr "Pequeñas carátulas"
+msgid "Big covers"
+msgstr "Carátulas grandes"
 
 msgid "Index"
 msgstr "Índice"
+
+msgid "Small covers"
+msgstr "Pequeñas carátulas"
+
+msgid "Order by movie title"
+msgstr "Ordenadas por el título de la película"
+
+msgid "Order by movie year"
+msgstr "Ordenadas por el año de la película"
+
+msgid "Unknown year"
+msgstr "Año desconocido"
+
+msgid "Year"
+msgstr "Año"
 
 msgid "Movie list"
 msgstr "Listado de películas"
 
 msgid "This list has {} films and was generated at {} with MyMovieBook-{}"
 msgstr ""
-
-msgid "Big covers"
-msgstr "Carátulas grandes"
 
 msgid "Index {}"
 msgstr "Índice {}"
@@ -143,9 +155,6 @@ msgstr "Ordenado por nombre"
 
 msgid "Order by year"
 msgstr "Ordenado por año"
-
-msgid "Unknown year"
-msgstr "Año desconocido"
 
 msgid "Year {}"
 msgstr "Año {}"
@@ -169,19 +178,19 @@ msgid "Postgresql user"
 msgstr "Usuario de Postgresql"
 
 msgid "Postgresql server port"
-msgstr ""
+msgstr "Puerto del servidor Postgresql"
 
 msgid "Postgresql server address"
 msgstr ""
 
 msgid "Postgresql database"
-msgstr ""
+msgstr "Base de datos Postgresql"
 
 msgid "Path to the output document"
 msgstr "Ruta al documento generado"
 
 msgid "select output format. Default is PDF"
-msgstr ""
+msgstr "Selecciona un formato de salida. Por defecto es PDF"
 
 msgid "Write the password for {}"
 msgstr "Escribe la contraseña para {}"
@@ -190,5 +199,4 @@ msgid "Current directory is not numeric"
 msgstr "El directorio actual no es numérico"
 
 msgid "This is a video to show how to use 'mymoviebook' command"
-msgstr ""
-
+msgstr "Este video muestra cómo usar el comando 'mymoviebook'"

@@ -149,12 +149,12 @@ class SetFilms:
 
         print ("  - Listado por página")
         # LISTADO DE DVD POR PAGINA
-        bd = bd + "\section{Carátulas grandes}\n"
+        bd = bd + "\section{"+ _("Big covers") +"}\n"
         for id_dvd in reversed(self.distinct_id_dvd()):
             # Son necesarias las dos
-            bd=bd + "\\subsection*{Índice "+str(id_dvd)+"}\n" 
+            bd=bd + "\\subsection*{"+ _("Index") + " " + str(id_dvd)+"}\n" 
             bd=bd + "\\label{{sec:{0}}}\n".format(id_dvd)
-            bd=bd + "\\addcontentsline{toc}{subsection}{Índice "+str(id_dvd)+"}\n" 
+            bd=bd + "\\addcontentsline{toc}{subsection}{"+ _("Index") + " " + str(id_dvd)+"}\n" 
             bd=bd + "\\begin{tabular}{c c}\n"
             for i, fi in enumerate(self.films_in_id_dvd(id_dvd).arr):
                 bd=bd+"\\begin{tabular}{p{7.1cm}}\n" #Tabla foto name interior
@@ -184,7 +184,7 @@ class SetFilms:
 
         print ("  - Listado ordenado alfabéticamente")
         # ORDENADAS ALFABETICAMENTE
-        bd=bd + "\section{Ordenadas alfabéticamente}\n"
+        bd=bd + "\section{"+_("Order by movie title") +"}\n"
         self.sort_by_name()
         for f in self.arr:
             bd=bd + "\\subsection*{{{0}}}\n".format(string2tex(f.name))
@@ -197,14 +197,14 @@ class SetFilms:
 
         print ("  - Listado ordenado por años")
         # ORDENADAS POR AÑO
-        bd=bd + "\section{Ordenadas por año}\n"
+        bd=bd + "\section{"+ _("Order by movie year") + "}\n"
         for year in reversed(self.distinct_years()):
             if year=="None":
-                bd=bd + "\\subsection*{Año desconocido}\n" 
-                bd=bd + "\\addcontentsline{toc}{subsection}{Año desconocido}\n" 
+                bd=bd + "\\subsection*{" + _("Unknown year") + "}\n" 
+                bd=bd + "\\addcontentsline{toc}{subsection}{" + _("Unknown year") + "}\n" 
             else:
-                bd=bd + "\\subsection*{Año "+year +"}\n" 
-                bd=bd + "\\addcontentsline{toc}{subsection}{Año "+year+"}\n" 
+                bd=bd + "\\subsection*{"+ _("Year") + " " + year +"}\n" 
+                bd=bd + "\\addcontentsline{toc}{subsection}{" + _("Year") + " " + year + "}\n" 
             for fi in self.films_in_year(year).arr:
                 bd=bd + "\\begin{tabular}{m{2.3cm} m{15cm}}\n"
                 bd=bd + "{0} & {1}. (~\\nameref{{sec:{2}}} )\\\\\n".format(fi.tex_foto(2.2,2.2), string2tex(fi.name), fi.id_dvd)
@@ -217,13 +217,13 @@ class SetFilms:
 
         doc = header + bd + footer
 
-        d=open("/tmp/mymoviebook/peliculas.tex","w")
+        d=open("/tmp/mymoviebook/mymoviebook.tex","w")
         d.write(doc)
         d.close()
 
-        os.system("cd /tmp/mymoviebook;pdflatex /tmp/mymoviebook/peliculas.tex;  &>/dev/null;pdflatex /tmp/mymoviebook/peliculas.tex; pdflatex /tmp/mymoviebook/peliculas.tex")
+        os.system("cd /tmp/mymoviebook;pdflatex /tmp/mymoviebook/mymoviebook.tex;  &>/dev/null;pdflatex /tmp/mymoviebook/mymoviebook.tex; pdflatex /tmp/mymoviebook/mymoviebook.tex")
         for output in args.output:
-            os.system("cp /tmp/mymoviebook/peliculas.pdf {}".format(output))
+            os.system("cp /tmp/mymoviebook/mymoviebook.pdf {}".format(output))
 
     def generate_odt(self):
         odt=ODT_Standard("mymoviebook.odt")
@@ -425,7 +425,7 @@ def main(parameters=None):
         # SACA LAS IMÁGENES DE LA BASE DE DATOS
         print ("  - Sacando las imágenes")
         if len(args.output)==0:
-            print ("    Necesita añadir al menos un documento de salida. Por ejemplo '--output peliculas.pdf'")
+            print ("    Necesita añadir al menos un documento de salida. Por ejemplo '--output mymoviebook.pdf'")
             sys.exit(0)
         sf=SetFilms(mem)
         sf.load("SELECT * FROM films")

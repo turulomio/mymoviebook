@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-02 17:28+0100\n"
+"POT-Creation-Date: 2019-01-02 21:28+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -119,19 +119,31 @@ msgstr ""
 msgid "Table of contents"
 msgstr ""
 
-msgid "Small covers"
+msgid "Big covers"
 msgstr ""
 
 msgid "Index"
+msgstr ""
+
+msgid "Small covers"
+msgstr ""
+
+msgid "Order by movie title"
+msgstr ""
+
+msgid "Order by movie year"
+msgstr ""
+
+msgid "Unknown year"
+msgstr ""
+
+msgid "Year"
 msgstr ""
 
 msgid "Movie list"
 msgstr ""
 
 msgid "This list has {} films and was generated at {} with MyMovieBook-{}"
-msgstr ""
-
-msgid "Big covers"
 msgstr ""
 
 msgid "Index {}"
@@ -141,9 +153,6 @@ msgid "Order by name"
 msgstr ""
 
 msgid "Order by year"
-msgstr ""
-
-msgid "Unknown year"
 msgstr ""
 
 msgid "Year {}"
