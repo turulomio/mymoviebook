@@ -82,7 +82,7 @@ class Film:
 
     def extract_foto(self):
         """Extracts and assign self.pathfoto"""
-        self.pathfoto='/tmp/pdffilms/{0}.jpg'.format(self.foto)
+        self.pathfoto='/tmp/mymoviebook/{0}.jpg'.format(self.foto)
         cur=self.mem.con.cursor()
         sql="select lo_export({0}, '{1}');".format(self.foto,self.pathfoto)
         cur.execute(sql)
@@ -124,19 +124,27 @@ class SetFilms:
         header = header + "\\usepackage{setspace}\n"
         header = header + "\\usepackage{graphicx}\n"
         header = header + "\\usepackage{ae,aecompl}\n"
-        header = header + "\\usepackage[bookmarksnumbered, colorlinks=true, linkcolor=blue, pdftitle={Listado de películas}, pdfauthor={Pelvis}, pdfkeywords={eric5}]{hyperref}\n"
+        header = header + "\\usepackage[bookmarksnumbered, colorlinks=true, linkcolor=blue, pdftitle={"+ _("My movie book") +"}, pdfauthor={MyMovieBook-"+ __version__ +"}, pdfkeywords={movie book}]{hyperref}\n"
         header = header + "\\geometry{verbose,a4paper}\n"
         header = header + "\\usepackage{anysize}\n"
         header = header + "\\marginsize{1.8cm}{1.3cm}{1.5cm}{1.5cm} \n"
         header = header + "\\usepackage{array}\n"
         header = header + "\\begin{document}\n"
+        header = header + "\\title{" + _("My movie book") + "}\n"
+
+ 
+        header = header + "\\setlength{\\parindent}{1cm}\n"
+        header = header + "\\setlength{\\parskip}{0.2cm}\n"
+
 
         bd=""
-        bd=bd + "\\begin{center}\n"
-        bd=bd + "\\section*{Listado de películas}\n\n"
-        bd=bd + "\\addcontentsline{toc}{section}{Listado de películas}\n"
-        bd=bd + "Este listado tiene {0} películas y fue generado el día {1}\n".format(self.length(), datetime.date.today())
-        bd=bd + "\\end{center}\n"
+        bd=bd + "\\maketitle\n"
+        bd=bd + _("This movie book has been generated using MyMovieBook.") +" " + _("It's an opensource application published under GPL-3 license.") + "\\par\n"
+        bd=bd + _("The main page of the project is in \href{https://github.com/turulomio/mymoviebook}{GitHub}.")+ "\\par\n"
+        bd=bd + _("This book has {} movies and it was generated at {}").format(self.length(), datetime.datetime.now()) +"\\par\n"
+        bd=bd +"\\newpage\n"
+
+        bd=bd + "\\addcontentsline{toc}{section}{"+ _("Table of contents") +"}\n"
         bd=bd +"\\tableofcontents{ }\n"
         bd=bd +"\\newpage\n"
 
@@ -208,13 +216,13 @@ class SetFilms:
 
         doc = header + bd + footer
 
-        d=open("/tmp/pdffilms/peliculas.tex","w")
+        d=open("/tmp/mymoviebook/peliculas.tex","w")
         d.write(doc)
         d.close()
 
-        os.system("cd /tmp/pdffilms;pdflatex /tmp/pdffilms/peliculas.tex;  &>/dev/null;pdflatex /tmp/pdffilms/peliculas.tex; pdflatex /tmp/pdffilms/peliculas.tex")
+        os.system("cd /tmp/mymoviebook;pdflatex /tmp/mymoviebook/peliculas.tex;  &>/dev/null;pdflatex /tmp/mymoviebook/peliculas.tex; pdflatex /tmp/mymoviebook/peliculas.tex")
         for output in args.output:
-            os.system("cp /tmp/pdffilms/peliculas.pdf {}".format(output))
+            os.system("cp /tmp/mymoviebook/peliculas.pdf {}".format(output))
 
     def generate_odt(self):
         odt=ODT_Standard("mymoviebook.odt")
@@ -368,11 +376,11 @@ def main(parameters=None):
     mem.connect()
     cwd=os.getcwd().split("/")
     try:
-        shutil.rmtree("/tmp/pdffilms")
+        shutil.rmtree("/tmp/mymoviebook")
     except:
         pass
-    os.mkdir("/tmp/pdffilms")
-    os.system("chmod 777 /tmp/pdffilms")
+    os.mkdir("/tmp/mymoviebook")
+    os.system("chmod 777 /tmp/mymoviebook")
 
 
     if args.insert==True:# insertar
@@ -430,4 +438,4 @@ def main(parameters=None):
 
     mem.disconnect()
 
-    shutil.rmtree("/tmp/pdffilms")
+    shutil.rmtree("/tmp/mymoviebook")
