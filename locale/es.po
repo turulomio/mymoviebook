@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RecPermissions\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-02 21:26+0100\n"
+"POT-Creation-Date: 2019-01-02 21:44+0100\n"
 "PO-Revision-Date: 2018-10-22 18:51+0100\n"
 "Last-Translator: root <turulomio@yahoo.es>\n"
 "Language-Team: Spanish\n"
@@ -104,6 +104,9 @@ msgstr "Necesitas instalar 'ttyrecgenerator' para generar videos"
 
 msgid "My movie book"
 msgstr "Mi libro de películas"
+
+msgid "Title"
+msgstr "Título"
 
 msgid "This movie book has been generated using MyMovieBook."
 msgstr "Este libro de películas ha sido generado usando MyMovieBook."
