@@ -85,9 +85,9 @@ class Film:
 
     def delete(self):
         cur=self.mem.con.cursor()
-        sqldel="delete from films where id_films=" + str(self.id) + ";"
+        sqldel="delete from films where id_films=" + str(self.id)
         cur.execute(sqldel)
-        sqldel="delete from covers where id_films=" + str(self.id) + ";"
+        sqldel="delete from covers where films_id=" + str(self.id)
         cur.execute(sqldel)
         cur.close()
 
@@ -124,7 +124,7 @@ class Film:
             cur=self.mem.con.cursor()
             cur.execute("insert into films (savedate, name, id_dvd) values (%s, %s, %s) returning id_films",(self.savedate, name, self.id_dvd))
             self.id=cur.fetchone()[0]
-            cur.execute("insert into covers (films_id, cover) values (%s, %s)",(self.id, cover_file2db(self.coverpath)))
+            cur.execute("insert into covers (films_id, cover) values (%s, %s)",(self.id, self.cover_file2db(self.coverpath)))
             cur.close()
             return True
 
@@ -184,7 +184,7 @@ class SetFilms:
             bd=bd + "\\begin{tabular}{c c}\n"
             for i, fi in enumerate(self.films_in_id_dvd(id_dvd).arr):
                 bd=bd+"\\begin{tabular}{p{7.1cm}}\n" #Tabla foto name interior
-                bd=bd+ fi.tex_foto(6.7,6.7) + "\\\\\n"
+                bd=bd+ fi.tex_cover(6.7,6.7) + "\\\\\n"
                 bd=bd+ string2tex(fi.name) +"\\\\\n"
                 bd=bd+"\\end{tabular} &"
                 if i % 2==1:

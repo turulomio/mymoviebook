@@ -35,7 +35,6 @@ class UpdateDB:
         self.dbversion=valor
 
     def need_update(self):
-        print(self.dbversion, self.lastcodeupdate)
         if self.dbversion==None or self.dbversion<self.lastcodeupdate:
             if self.mem.is_superuser():
                 self.run()
