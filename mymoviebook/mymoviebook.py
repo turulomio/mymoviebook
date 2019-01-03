@@ -102,12 +102,6 @@ class Film:
         cur.close()
         return False
 
-    def cover_file2db(self, filename):
-        bytea=open(filename,  "rb").read()        
-        cur=self.mem.con.cursor()
-        cur.execute("update covers set cover=%s where films_id=%s", (bytea, self.id))
-        cur.close()
-
     ## Path to cover in /tmp directory
     def coverpath_in_tmp(self):
         return '/tmp/mymoviebook/{}.jpg'.format(self.id)
@@ -124,7 +118,8 @@ class Film:
             cur=self.mem.con.cursor()
             cur.execute("insert into films (savedate, name, id_dvd) values (%s, %s, %s) returning id_films",(self.savedate, name, self.id_dvd))
             self.id=cur.fetchone()[0]
-            cur.execute("insert into covers (films_id, cover) values (%s, %s)",(self.id, self.cover_file2db(self.coverpath)))
+            bytea=open(self.coverpath, "rb").read()
+            cur.execute("insert into covers (films_id, cover) values (%s, %s)",(self.id, bytea))
             cur.close()
             return True
 

@@ -75,8 +75,7 @@ $_$ LANGUAGE sql STRICT;""")
             cur.execute("Select * from films;")
             for row in cur:
                 cur2.execute("insert into covers(films_id,cover) values(%s, lo_readall(%s))", (row['id_films'], row['foto']))
-                print (".", )
-            cur.execute("alter table films drop column foto;")      #SHOURLD RUN vacuumlo -U postgres didyoreadme in a console
+            cur.execute("alter table films drop column foto;")      #SHOURLD RUN vacuumlo -U postgres mymoviebook in a console to delete orphaned large objects
             cur.close()
             cur2.close()
             self.set_database_version(201901030929)
