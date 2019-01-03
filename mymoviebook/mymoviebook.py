@@ -169,11 +169,11 @@ class SetFilms:
         bd=bd + _("This book has {} movies and it was generated at {}").format(self.length(), datetime.datetime.now()) +"\\par\n"
         bd=bd +"\\newpage\n"
 
-        bd=bd +"\\tableofcontents{ }\n"
+        bd=bd +"\\tableofcontents\n"
         bd=bd + "\\addcontentsline{toc}{section}{"+ _("Table of contents") +"}\n"
         bd=bd +"\\newpage\n"
 
-        print ("  - Listado por página")
+        print ("  - " + _("List by index"))
         # LISTADO DE DVD POR PAGINA
         bd = bd + "\section{"+ _("Big covers") +"}\n"
         for id_dvd in reversed(self.distinct_id_dvd()):
@@ -183,8 +183,8 @@ class SetFilms:
             bd=bd + "\\addcontentsline{toc}{subsection}{"+ _("Index") + " " + str(id_dvd)+"}\n" 
             bd=bd + "\\begin{tabular}{c c}\n"
             for i, fi in enumerate(self.films_in_id_dvd(id_dvd).arr):
-                bd=bd+"\\begin{tabular}{p{7.1cm}}\n" #Tabla cover name interior
-                bd=bd+ fi.tex_cover(7,7) + "\\\\\n"
+                bd=bd+"\\begin{tabular}{p{7.1cm}}\n" #Tabla foto name interior
+                bd=bd+ fi.tex_foto(6.7,6.7) + "\\\\\n"
                 bd=bd+ string2tex(fi.name) +"\\\\\n"
                 bd=bd+"\\end{tabular} &"
                 if i % 2==1:
