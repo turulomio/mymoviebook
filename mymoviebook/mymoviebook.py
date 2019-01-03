@@ -51,16 +51,16 @@ class Film:
         self.id=None
         self.savedate=None
         self.name=None
-        self.foto=None
-        self.pathfoto=None
+        self.coverpath=None
         self.id_dvd=None
         self.year=None
-    def init__create(self,savedate, name, pathfoto, id_dvd):
-        """Introduce pathfoto, ya que debera luego hacer un insert, id siempre es None, year es None, pero lo parsea en la funcion"""
+
+    def init__create(self,savedate, name, coverpath, id_dvd):
+        """Introduce pathcover, ya que debera luego hacer un insert, id siempre es None, year es None, pero lo parsea en la funcion"""
         self.savedate=savedate
         self.name=name
+        self.coverpath=coverpath
         self.id_dvd=id_dvd
-        self.pathfoto=pathfoto
         self.parse_name()
         return self
 
@@ -68,8 +68,6 @@ class Film:
         self.id=row['id_films']
         self.savedate=row['savedate']
         self.name=row['name']
-        self.foto=row['foto']#oid
-        self.pathfoto=None
         self.id_dvd=row['id_dvd']
         self.parse_name()
         return self
@@ -87,22 +85,35 @@ class Film:
 
     def delete(self):
         cur=self.mem.con.cursor()
-        sqllo0="select lo_unlink("+str(self.foto)+");"
-        cur.execute(sqllo0)
         sqldel="delete from films where id_films=" + str(self.id) + ";"
+        cur.execute(sqldel)
+        sqldel="delete from covers where id_films=" + str(self.id) + ";"
         cur.execute(sqldel)
         cur.close()
 
-    def extract_foto(self):
-        """Extracts and assign self.pathfoto"""
-        self.pathfoto='/tmp/mymoviebook/{0}.jpg'.format(self.foto)
+
+    def cover_db2file(self):
         cur=self.mem.con.cursor()
-        sql="select lo_export({0}, '{1}');".format(self.foto,self.pathfoto)
-        cur.execute(sql)
+        cur.execute("SELECT cover FROM covers where films_id=%s", (self.id, ))#Si es null peta el open, mejor que devuelva fals3ee3 que pasar a variable
+        if cur.rowcount==1:
+            open(self.coverpath_in_tmp(), "wb").write(cur.fetchone()[0])
+            cur.close()
+            return True
+        cur.close()
+        return False
+
+    def cover_file2db(self, filename):
+        bytea=open(filename,  "rb").read()        
+        cur=self.mem.con.cursor()
+        cur.execute("update covers set cover=%s where films_id=%s", (bytea, self.id))
         cur.close()
 
-    def tex_foto(self,width,height):
-        return  "\\includegraphics[width={0}cm,height={1}cm]{{{2}.jpg}}".format(width,height,self.foto)
+    ## Path to cover in /tmp directory
+    def coverpath_in_tmp(self):
+        return '/tmp/mymoviebook/{}.jpg'.format(self.id)
+
+    def tex_cover(self,width,height):
+        return  "\\includegraphics[width={0}cm,height={1}cm]{{{2}.jpg}}".format(width,height,self.id)
 
     def save(self):
         if self.id==None:
@@ -110,11 +121,12 @@ class Film:
                 name=self.name
             else:
                 name="{}. {}".format(self.name,self.year)
-            cur.execute("insert into films (savedate, name, foto, id_dvd) values (%s, %s, lo_import(%s), %s) returning id_films;",(self.savedate,name,self.pathfoto, self.id_dvd))
+            cur=self.mem.con.cursor()
+            cur.execute("insert into films (savedate, name, id_dvd) values (%s, %s, %s) returning id_films",(self.savedate, name, self.id_dvd))
             self.id=cur.fetchone()[0]
+            cur.execute("insert into covers (films_id, cover) values (%s, %s)",(self.id, cover_file2db(self.coverpath)))
+            cur.close()
             return True
-
-
 
 class SetFilms:
     def __init__(self, mem):
@@ -123,7 +135,7 @@ class SetFilms:
         
     def extract_photos(self):
         for f in self.arr:
-            f.extract_foto()
+            f.cover_db2file()
 
     def generate_pdf(self):
 
@@ -171,8 +183,8 @@ class SetFilms:
             bd=bd + "\\addcontentsline{toc}{subsection}{"+ _("Index") + " " + str(id_dvd)+"}\n" 
             bd=bd + "\\begin{tabular}{c c}\n"
             for i, fi in enumerate(self.films_in_id_dvd(id_dvd).arr):
-                bd=bd+"\\begin{tabular}{p{7.1cm}}\n" #Tabla foto name interior
-                bd=bd+ fi.tex_foto(7,7) + "\\\\\n"
+                bd=bd+"\\begin{tabular}{p{7.1cm}}\n" #Tabla cover name interior
+                bd=bd+ fi.tex_cover(7,7) + "\\\\\n"
                 bd=bd+ string2tex(fi.name) +"\\\\\n"
                 bd=bd+"\\end{tabular} &"
                 if i % 2==1:
@@ -190,7 +202,7 @@ class SetFilms:
             bd=bd + "\\begin{tabular}{m{2.1cm} m{2.1cm} m{2.1cm} m{2.1cm} m{2.1cm} m{2.1cm} m{2.1cm}}\n"
             bd=bd + _("Index") + " " +str(id_dvd) + " & "
             for fi in self.films_in_id_dvd(id_dvd).arr:
-                bd=bd + fi.tex_foto(2.1,2.1) + " &" 
+                bd=bd + fi.tex_cover(2.1,2.1) + " &" 
             bd = bd[:-2]  + "\\\\\n"
             bd = bd + "\\end{tabular} \\\\\n\n"
         bd=bd +"\n\\newpage\n\n"
@@ -204,7 +216,7 @@ class SetFilms:
             bd=bd + "\\subsection*{{{0}}}\n".format(string2tex(f.name))
             bd=bd + "\\addcontentsline{{toc}}{{subsection}}{{{0}}}\n".format(string2tex(f.name))
             bd=bd + "\\begin{tabular}{m{2.3cm} m{15cm}}\n"
-            bd=bd + f.tex_foto(2.2,2.2) + " & ~\\nameref{{sec:{0}}}\\\\\n".format(f.id_dvd)#Reference to DVD page
+            bd=bd + f.tex_cover(2.2,2.2) + " & ~\\nameref{{sec:{0}}}\\\\\n".format(f.id_dvd)#Reference to DVD page
             bd = bd + "\\end{tabular}\n\n"
         bd=bd +"\\newpage\n\n"
 
@@ -221,7 +233,7 @@ class SetFilms:
                 bd=bd + "\\addcontentsline{toc}{subsection}{" + _("Year") + " " + year + "}\n" 
             for fi in self.films_in_year(year).arr:
                 bd=bd + "\\begin{tabular}{m{2.3cm} m{15cm}}\n"
-                bd=bd + "{0} & {1}. (~\\nameref{{sec:{2}}} )\\\\\n".format(fi.tex_foto(2.2,2.2), string2tex(fi.name), fi.id_dvd)
+                bd=bd + "{0} & {1}. (~\\nameref{{sec:{2}}} )\\\\\n".format(fi.tex_cover(2.2,2.2), string2tex(fi.name), fi.id_dvd)
                 bd = bd + "\\end{tabular} \\\\\n\n"
             bd=bd +"\n\\newpage\n\n"
 
@@ -246,7 +258,7 @@ class SetFilms:
         
         #Add photos to document
         for f in self.arr:
-            odt.addImage(f.pathfoto, str(f.id))
+            odt.addImage(f.pathcover, str(f.id))
         
         print ("  - Listado por página")
         odt.header(_("Big covers"), 1)
@@ -419,7 +431,7 @@ def main(parameters=None):
                 sys.exit(100)
 
         sf=SetFilms(mem)
-        sf.load("SELECT * FROM films WHERE id_dvd=" + str(id))
+        sf.load("SELECT id_films, savedate, name, id_dvd, cover FROM films, covers WHERE covers.films_id=films.id_films and id_dvd=" + str(id))
 
         # "Chequeando si hay registros en la base de datos del dispositivo " + str(id)
         if len(sf.arr)>0:
