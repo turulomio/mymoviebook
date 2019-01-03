@@ -5,6 +5,7 @@ import getpass
 import gettext
 from mymoviebook.version import __version__, __versiondate__
 from officegenerator import ODT_Standard
+from mymoviebook.dbupdates import UpdateDB
 
 try:
     t=gettext.translation('mymoviebook',pkg_resources.resource_filename("mymoviebook","locale"))
@@ -31,6 +32,18 @@ class Mem:
 
     def connection_string(self):
         return "psql://{}@{}:{}/{}".format(args.user, args.host, args.port, args.db)
+
+
+    def is_superuser(self):
+        """Checks if the user has superuser role"""
+        res=False
+        cur=self.con.cursor()
+        cur.execute("SELECT rolsuper FROM pg_roles where rolname=%s;", (args.user, ))
+        if cur.rowcount==1:
+            if cur.fetchone()[0]==True:
+                res=True
+        cur.close()
+        return res
 
 class Film:
     def __init__(self, mem):
@@ -376,6 +389,9 @@ def main(parameters=None):
     global password
     password=getpass.getpass()
     mem.connect()
+
+    UpdateDB(mem)
+
     cwd=os.getcwd().split("/")
     try:
         shutil.rmtree("/tmp/mymoviebook")
