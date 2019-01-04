@@ -48,6 +48,15 @@ Dependencies
 
 Changelog
 =========
+1.1.0
+-----
+- Add cover to the generated book
+- Removing large objects from database. Covers are now in a bytes field.
+- Added database update system
+- Changed project icons
+- Improved gettext translations
+- Basic ODT format support
+
 1.0.0
 -----
 - Created a python package from my pdffilms.py script

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-02 21:44+0100\n"
+"POT-Creation-Date: 2019-01-04 05:37+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -101,13 +101,19 @@ msgstr ""
 msgid "You need ttyrecgenerator installed to generate videos"
 msgstr ""
 
+msgid "MyMovieBook database needs to be updated. Please login with a superuser role."
+msgstr ""
+
+msgid "MyMovieBook app is older than database. Please update it."
+msgstr ""
+
 msgid "My movie book"
 msgstr ""
 
 msgid "Title"
 msgstr ""
 
-msgid "This movie book has been generated using MyMovieBook."
+msgid "This movie book has been generated using version {} of MyMovieBook."
 msgstr ""
 
 msgid "It's an opensource application published under GPL-3 license."
@@ -120,6 +126,9 @@ msgid "This book has {} movies and it was generated at {}"
 msgstr ""
 
 msgid "Table of contents"
+msgstr ""
+
+msgid "List by index"
 msgstr ""
 
 msgid "Big covers"

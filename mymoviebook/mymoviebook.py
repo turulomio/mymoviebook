@@ -258,13 +258,13 @@ class SetFilms:
             os.system("cp /tmp/mymoviebook/mymoviebook.pdf {}".format(output))
 
     def generate_odt(self):
-        odt=ODT_Standard("mymoviebook.odt")
+        odt=ODT_Standard(args.output[0])
         odt.title(_("Movie list"), 1)
         odt.simpleParagraph(_("This list has {} films and was generated at {} with MyMovieBook-{}").format(self.length(), datetime.date.today(), __version__))
         
         #Add photos to document
         for f in self.arr:
-            odt.addImage(f.pathcover, str(f.id))
+            odt.addImage(f.coverpath_in_tmp(), str(f.id))
         
         print ("  - Listado por página")
         odt.header(_("Big covers"), 1)

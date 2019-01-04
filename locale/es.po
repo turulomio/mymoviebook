@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RecPermissions\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-02 21:44+0100\n"
+"POT-Creation-Date: 2019-01-04 05:32+0100\n"
 "PO-Revision-Date: 2018-10-22 18:51+0100\n"
 "Last-Translator: root <turulomio@yahoo.es>\n"
 "Language-Team: Spanish\n"
@@ -67,22 +67,22 @@ msgid "Database port. By default '5432'"
 msgstr "Puerto de la base de datos. Por defecto '5432'"
 
 msgid "Database server. By default '127.0.0.1'."
-msgstr ""
+msgstr "Servidor de la base de datos. Por defecto '127.0.0.1'"
 
 msgid "Database name. By default 'mymoviebook'."
-msgstr ""
+msgstr "Nombre de la base de datos. Por defecto 'mymoviebook'"
 
 msgid "Path where the movie book it's going to be generated. You can use this parameter as many times as you with."
 msgstr ""
 
 msgid "You can choose PDF or ODT arguments. PDF is used by default."
-msgstr ""
+msgstr "Puedes elegir PDF ó ODT como argumentos. PDF es usado por defecto."
 
 msgid "EXAMPLES"
 msgstr "EJEMPLOS"
 
 msgid "Insert movies with index 23"
-msgstr ""
+msgstr "Añade películas con el índice 23"
 
 msgid "mymoviebook --insert /path/to/my/movies/23"
 msgstr ""
@@ -102,14 +102,20 @@ msgstr ""
 msgid "You need ttyrecgenerator installed to generate videos"
 msgstr "Necesitas instalar 'ttyrecgenerator' para generar videos"
 
+msgid "MyMovieBook database needs to be updated. Please login with a superuser role."
+msgstr "La base de datos de MyMovieBook necesita ser actualizada. Por favor autentícate con un perfil de administrador."
+
+msgid "MyMovieBook app is older than database. Please update it."
+msgstr "La aplicación MyMovieBook es más antigua que la base de datos. Por favor actualízala."
+
 msgid "My movie book"
 msgstr "Mi libro de películas"
 
 msgid "Title"
 msgstr "Título"
 
-msgid "This movie book has been generated using MyMovieBook."
-msgstr "Este libro de películas ha sido generado usando MyMovieBook."
+msgid "This movie book has been generated using version {} of MyMovieBook."
+msgstr "Este libro de películas ha sido generado usando la versión {} de MyMovieBook."
 
 msgid "It's an opensource application published under GPL-3 license."
 msgstr "Es una aplicación de código abierto publicada bajo licencia GPL-3"
@@ -122,6 +128,9 @@ msgstr "Este libro tiene {} películas y se generó a las {}"
 
 msgid "Table of contents"
 msgstr "Tabla de contenidos"
+
+msgid "List by index"
+msgstr "Listado por índice"
 
 msgid "Big covers"
 msgstr "Carátulas grandes"
@@ -148,7 +157,7 @@ msgid "Movie list"
 msgstr "Listado de películas"
 
 msgid "This list has {} films and was generated at {} with MyMovieBook-{}"
-msgstr ""
+msgstr "Este listado tiene {} películas y ha sido generado a las {} con MyMovieBook-{}"
 
 msgid "Index {}"
 msgstr "Índice {}"
@@ -169,22 +178,22 @@ msgid "Developed by Mariano Muñoz 2012-{}"
 msgstr "Desarrollado por Mariano Muñoz 2012-{}"
 
 msgid "Insert films from current numbered directory"
-msgstr ""
+msgstr "Añade las películas del directorio numerado actual"
 
 msgid "Generate films documentation"
 msgstr "Genera la documentación"
 
 msgid "Postgres database connection parameters"
-msgstr ""
+msgstr "Parámetros de conexión de la base de datos Postgres"
 
 msgid "Postgresql user"
 msgstr "Usuario de Postgresql"
 
 msgid "Postgresql server port"
-msgstr "Puerto del servidor Postgresql"
+msgstr "Puerto del servidor Postgres"
 
 msgid "Postgresql server address"
-msgstr ""
+msgstr "Dirección del servidor Postgres"
 
 msgid "Postgresql database"
 msgstr "Base de datos Postgresql"
@@ -203,3 +212,4 @@ msgstr "El directorio actual no es numérico"
 
 msgid "This is a video to show how to use 'mymoviebook' command"
 msgstr "Este video muestra cómo usar el comando 'mymoviebook'"
+
