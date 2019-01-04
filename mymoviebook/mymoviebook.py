@@ -133,6 +133,8 @@ class SetFilms:
             f.cover_db2file()
 
     def generate_pdf(self):
+        icon=pkg_resources.resource_filename("mymoviebook","images/mymoviebook.png")
+
 
         header=""
         header = header + "\\documentclass[12pt,a4paper]{article}\n"
@@ -144,13 +146,13 @@ class SetFilms:
         header = header + "\\usepackage{setspace}\n"
         header = header + "\\usepackage{graphicx}\n"
         header = header + "\\usepackage{ae,aecompl}\n"
-        header = header + "\\usepackage[bookmarksnumbered, colorlinks=true, linkcolor=blue, pdftitle={"+ _("My movie book") +"}, pdfauthor={MyMovieBook-"+ __version__ +"}, pdfkeywords={movie book}]{hyperref}\n"
+        header = header + "\\usepackage[bookmarksnumbered, colorlinks=true, urlcolor=blue, linkcolor=blue, pdftitle={"+ _("My movie book") +"}, pdfauthor={MyMovieBook-"+ __version__ +"}, pdfkeywords={movie book}]{hyperref}\n"
         header = header + "\\geometry{verbose,a4paper}\n"
         header = header + "\\usepackage{anysize}\n"
-        header = header + "\\marginsize{1.8cm}{1.3cm}{1.5cm}{1.5cm} \n"
+        header = header + "\\marginsize{1.5cm}{1.5cm}{1.5cm}{1.5cm} \n"
         header = header + "\\usepackage{array}\n"
         header = header + "\\begin{document}\n"
-        header = header + "\\title{" + _("My movie book") + "}\n"
+        header = header + "\\title{\\textbf{" + _("My movie book") + "}}\n"
 
         header = header + "\\setlength{\\parindent}{1cm}\n"
         header = header + "\\setlength{\\parskip}{0.2cm}\n"
@@ -158,10 +160,19 @@ class SetFilms:
 
         bd=""
         bd=bd + "\\maketitle\n"
+
+
         bd=bd + "\\addcontentsline{toc}{section}{"+ _("Title") +"}\n"
+
+        bd=bd + "\\begin{center}\n"
+        bd=bd + "\\includegraphics[width=3cm,height=3cm]{{{0}}}\n".format(icon)
+        bd=bd + "\\end{center}\n"
+        bd=bd + "\\par\n"
+        bd=bd + "\\vspace{1cm}\n"
+
         bd=bd + _("This movie book has been generated using MyMovieBook.") +" " + _("It's an opensource application published under GPL-3 license.") + "\\par\n"
         bd=bd + _("The main page of the project is in \href{https://github.com/turulomio/mymoviebook}{GitHub}.")+ "\\par\n"
-        bd=bd + _("This book has {} movies and it was generated at {}").format(self.length(), datetime.datetime.now()) +"\\par\n"
+        bd=bd + _("This book has {} movies and it was generated at {}").format(self.length(), datetime.datetime.now().time()) +"\\par\n"
         bd=bd +"\\newpage\n"
 
         bd=bd +"\\tableofcontents\n"
