@@ -170,7 +170,7 @@ class SetFilms:
         bd=bd + "\\par\n"
         bd=bd + "\\vspace{1cm}\n"
 
-        bd=bd + _("This movie book has been generated using MyMovieBook.") +" " + _("It's an opensource application published under GPL-3 license.") + "\\par\n"
+        bd=bd + _("This movie book has been generated using version {} of MyMovieBook.").format(__version__) +" " + _("It's an opensource application published under GPL-3 license.") + "\\par\n"
         bd=bd + _("The main page of the project is in \href{https://github.com/turulomio/mymoviebook}{GitHub}.")+ "\\par\n"
         bd=bd + _("This book has {} movies and it was generated at {}").format(self.length(), datetime.datetime.now().time()) +"\\par\n"
         bd=bd +"\\newpage\n"
