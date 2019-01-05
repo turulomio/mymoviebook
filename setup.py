@@ -130,17 +130,17 @@ class Doc(Command):
         man.paragraph("--db", 2, True)
         man.paragraph(_("Database name. By default 'mymoviebook'."), 3)
         man.paragraph("--output", 2, True)
-        man.paragraph(_("Path where the movie book it's going to be generated. You can use this parameter as many times as you with."), 3)
+        man.paragraph(_("Path where the movie book it's going to be generated. You can use this parameter as many times as you want."), 3)
         man.paragraph("--format", 2, True)
         man.paragraph(_("You can choose PDF or ODT arguments. PDF is used by default."), 3)
 
         man.header(_("EXAMPLES"), 1)
         man.paragraph(_("Insert movies with index 23"), 2, True)
-        man.paragraph(_("mymoviebook --insert /path/to/my/movies/23"), 3)
-        man.paragraph(_("This comand insert in database all movies (up to 6) in 23 directory. Each film must have it's cover with the same filename."), 3)
+        man.paragraph("mymoviebook --insert /path/to/my/movies/23", 3)
+        man.paragraph(_("This command insert in database all movies (up to 6) in 23 directory. Each film must have it's cover with the same filename."), 3)
         man.paragraph(_("Generate a book with all movies in the database"), 2, True)
-        man.paragraph(_("mymoviebook --generate --output /home/user/mymoviecollection.pdf"), 3)
-        man.paragraph(_("This comand generates a movie book in the output path."), 3)
+        man.paragraph("mymoviebook --generate --output /home/user/mymoviecollection.pdf", 3)
+        man.paragraph(_("This command generates a movie book in the output path."), 3)
         man.save()
 
 

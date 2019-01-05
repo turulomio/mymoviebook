@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RecPermissions\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-04 05:32+0100\n"
+"POT-Creation-Date: 2019-01-05 08:27+0100\n"
 "PO-Revision-Date: 2018-11-03 07:11+0100\n"
 "Last-Translator: root <turulomio@yahoo.es>\n"
 "Language-Team: French\n"
@@ -71,7 +71,7 @@ msgstr ""
 msgid "Database name. By default 'mymoviebook'."
 msgstr ""
 
-msgid "Path where the movie book it's going to be generated. You can use this parameter as many times as you with."
+msgid "Path where the movie book it's going to be generated. You can use this parameter as many times as you want."
 msgstr ""
 
 msgid "You can choose PDF or ODT arguments. PDF is used by default."
@@ -83,19 +83,13 @@ msgstr "EXEMPLES"
 msgid "Insert movies with index 23"
 msgstr ""
 
-msgid "mymoviebook --insert /path/to/my/movies/23"
-msgstr ""
-
-msgid "This comand insert in database all movies (up to 6) in 23 directory. Each film must have it's cover with the same filename."
+msgid "This command insert in database all movies (up to 6) in 23 directory. Each film must have it's cover with the same filename."
 msgstr ""
 
 msgid "Generate a book with all movies in the database"
 msgstr ""
 
-msgid "mymoviebook --generate --output /home/user/mymoviecollection.pdf"
-msgstr ""
-
-msgid "This comand generates a movie book in the output path."
+msgid "This command generates a movie book in the output path."
 msgstr ""
 
 msgid "You need ttyrecgenerator installed to generate videos"
@@ -195,6 +189,9 @@ msgid "Postgresql server address"
 msgstr ""
 
 msgid "Postgresql database"
+msgstr ""
+
+msgid "Generate command parameters"
 msgstr ""
 
 msgid "Path to the output document"

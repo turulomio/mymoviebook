@@ -351,7 +351,7 @@ def main(parameters=None):
     parser=argparse.ArgumentParser(prog='mymoviebook', description=_('Generate your personal movie collection book'), epilog=_("Developed by Mariano Muñoz 2012-{}".format(__versiondate__.year)), formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument('--version', action='version', version=__version__)
 
-    group = parser.add_mutually_exclusive_group()
+    group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument('--insert', help=_('Insert films from current numbered directory'), action="store_true")
     group.add_argument('--generate', help=_('Generate films documentation'), action="store_true")
 
@@ -361,8 +361,9 @@ def main(parameters=None):
     group_db.add_argument('--server', help=_('Postgresql server address'), default='127.0.0.1')
     group_db.add_argument('--db', help=_('Postgresql database'), default='mymoviebook')
 
-    parser.add_argument('--output', help=_("Path to the output document"), action="append", default=[])
-    parser.add_argument('--format', help=_("select output format. Default is PDF"), action="store", choices=['PDF', 'ODT'],  default='PDF')
+    group_generate=parser.add_argument_group(_("Generate command parameters"))
+    group_generate.add_argument('--output', help=_("Path to the output document"), action="append", default=[])
+    group_generate.add_argument('--format', help=_("select output format. Default is PDF"), action="store", choices=['PDF', 'ODT'],  default='PDF')
 
     global args
     args=parser.parse_args(parameters)

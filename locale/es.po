@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RecPermissions\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-04 05:32+0100\n"
+"POT-Creation-Date: 2019-01-05 08:27+0100\n"
 "PO-Revision-Date: 2018-10-22 18:51+0100\n"
 "Last-Translator: root <turulomio@yahoo.es>\n"
 "Language-Team: Spanish\n"
@@ -72,8 +72,8 @@ msgstr "Servidor de la base de datos. Por defecto '127.0.0.1'"
 msgid "Database name. By default 'mymoviebook'."
 msgstr "Nombre de la base de datos. Por defecto 'mymoviebook'"
 
-msgid "Path where the movie book it's going to be generated. You can use this parameter as many times as you with."
-msgstr ""
+msgid "Path where the movie book it's going to be generated. You can use this parameter as many times as you want."
+msgstr "Ruta donde se va a crear el libro de películas. Puedes usar este parámetro tantas veces como quieras."
 
 msgid "You can choose PDF or ODT arguments. PDF is used by default."
 msgstr "Puedes elegir PDF ó ODT como argumentos. PDF es usado por defecto."
@@ -84,20 +84,14 @@ msgstr "EJEMPLOS"
 msgid "Insert movies with index 23"
 msgstr "Añade películas con el índice 23"
 
-msgid "mymoviebook --insert /path/to/my/movies/23"
-msgstr ""
-
-msgid "This comand insert in database all movies (up to 6) in 23 directory. Each film must have it's cover with the same filename."
-msgstr ""
+msgid "This command insert in database all movies (up to 6) in 23 directory. Each film must have it's cover with the same filename."
+msgstr "Este comando añade a la base de datos hasta 6 películas del directorio 23. Cada película debe tener su carátula con el mismo nombre."
 
 msgid "Generate a book with all movies in the database"
-msgstr ""
+msgstr "Genera un libro con todas las películas en la base de datos"
 
-msgid "mymoviebook --generate --output /home/user/mymoviecollection.pdf"
-msgstr ""
-
-msgid "This comand generates a movie book in the output path."
-msgstr ""
+msgid "This command generates a movie book in the output path."
+msgstr "Este comando genera un libro de películas en la ruta de salida."
 
 msgid "You need ttyrecgenerator installed to generate videos"
 msgstr "Necesitas instalar 'ttyrecgenerator' para generar videos"
@@ -198,6 +192,9 @@ msgstr "Dirección del servidor Postgres"
 msgid "Postgresql database"
 msgstr "Base de datos Postgresql"
 
+msgid "Generate command parameters"
+msgstr "Parámetros para el comando '--generate'"
+
 msgid "Path to the output document"
 msgstr "Ruta al documento generado"
 
@@ -213,3 +210,5 @@ msgstr "El directorio actual no es numérico"
 msgid "This is a video to show how to use 'mymoviebook' command"
 msgstr "Este video muestra cómo usar el comando 'mymoviebook'"
 
+#~ msgid "Path where the movie book it's going to be generated. You can use this parameter as many times as you with."
+#~ msgstr "Ruta donde se va a generar el libro de películas"
