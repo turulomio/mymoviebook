@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RecPermissions\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-05 08:27+0100\n"
+"POT-Creation-Date: 2019-01-05 10:37+0100\n"
 "PO-Revision-Date: 2018-10-22 18:51+0100\n"
 "Last-Translator: root <turulomio@yahoo.es>\n"
 "Language-Team: Spanish\n"
@@ -112,16 +112,13 @@ msgid "This movie book has been generated using version {} of MyMovieBook."
 msgstr "Este libro de películas ha sido generado usando la versión {} de MyMovieBook."
 
 msgid "It's an opensource application published under GPL-3 license."
-msgstr "Es una aplicación de código abierto publicada bajo licencia GPL-3"
+msgstr "Es una aplicación de código abierto publicada bajo licencia GPL-3."
 
 msgid "The main page of the project is in \\href{https://github.com/turulomio/mymoviebook}{GitHub}."
 msgstr "La página principal del proyecto se encuentra en \\href{https://github.com/turulomio/mymoviebook}{GitHub}."
 
-msgid "This book has {} movies and it was generated at {}"
-msgstr "Este libro tiene {} películas y se generó a las {}"
-
-msgid "Table of contents"
-msgstr "Tabla de contenidos"
+msgid "This book has {} movies and it was generated at {}."
+msgstr "Este libro tiene {} películas y se generó a las {}."
 
 msgid "List by index"
 msgstr "Listado por índice"
@@ -209,6 +206,9 @@ msgstr "El directorio actual no es numérico"
 
 msgid "This is a video to show how to use 'mymoviebook' command"
 msgstr "Este video muestra cómo usar el comando 'mymoviebook'"
+
+#~ msgid "Table of contents"
+#~ msgstr "Tabla de contenidos"
 
 #~ msgid "Path where the movie book it's going to be generated. You can use this parameter as many times as you with."
 #~ msgstr "Ruta donde se va a generar el libro de películas"

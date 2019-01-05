@@ -174,8 +174,6 @@ class SetFilms(ObjectManager_With_IdName):
 
         bd=""
         bd=bd + "\\maketitle\n"
-
-
         bd=bd + "\\addcontentsline{toc}{section}{"+ _("Title") +"}\n"
 
         bd=bd + "\\begin{center}\n"
@@ -186,11 +184,7 @@ class SetFilms(ObjectManager_With_IdName):
 
         bd=bd + _("This movie book has been generated using version {} of MyMovieBook.").format(__version__) +" " + _("It's an opensource application published under GPL-3 license.") + "\\par\n"
         bd=bd + _("The main page of the project is in \href{https://github.com/turulomio/mymoviebook}{GitHub}.")+ "\\par\n"
-        bd=bd + _("This book has {} movies and it was generated at {}").format(self.length(), datetime.datetime.now().time()) +"\\par\n"
-        bd=bd +"\\newpage\n"
-
-        bd=bd +"\\tableofcontents\n"
-        bd=bd + "\\addcontentsline{toc}{section}{"+ _("Table of contents") +"}\n"
+        bd=bd + _("This book has {} movies and it was generated at {}.").format(self.length(), datetime.datetime.now().time()) +"\\par\n"
         bd=bd +"\\newpage\n"
 
         print ("  - " + _("List by index"))
