@@ -293,7 +293,7 @@ class SetFilms(ObjectManager_With_IdName):
             
         print ("  - Listado ordenado alfabéticamente")
         odt.header(_("Order by name"), 1)
-        self.sort_by_name()
+        self.order_by_name()
         for f in self.arr:
             odt.header(f.name, 2)
             odt.illustration([str(f.id), ], 3, 3, str(f.id))
