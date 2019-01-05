@@ -61,7 +61,7 @@ class Film:
     ## Converts the film name to a list without rare characters
     def name2list_without_rare_characters(self):
         #Replace special char
-        name=self.name
+        name=self.name.lower()
         name=name.replace("á","a")
         name=name.replace("é","e")
         name=name.replace("í","i")
@@ -70,13 +70,13 @@ class Film:
         name=name.replace("ñ","ñ")
 
         #Removes special chars
-        name=""
-        for letter in self.name.lower():
-            if letter in "abcdefghijklmnopqrstuvwxyz ":
-                name=name+letter
+        n=""
+        for letter in name:
+            if letter in "1234567890abcdefghijklmnopqrstuvwxyz ":
+                n=n+letter
 
         r=[]
-        for word in name.split(" "):
+        for word in n.split(" "):
             r.append(word)
         return r
 
