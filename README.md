@@ -48,6 +48,10 @@ Dependencies
 
 Changelog
 =========
+1.2.1
+-----
+- Added png to MANIFEST
+
 1.2.0
 -----
 - Spanish translation finished
