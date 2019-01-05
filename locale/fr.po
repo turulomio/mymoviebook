@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RecPermissions\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-05 10:37+0100\n"
+"POT-Creation-Date: 2019-01-05 12:25+0100\n"
 "PO-Revision-Date: 2018-11-03 07:11+0100\n"
 "Last-Translator: root <turulomio@yahoo.es>\n"
 "Language-Team: French\n"
@@ -117,6 +117,9 @@ msgid "The main page of the project is in \\href{https://github.com/turulomio/my
 msgstr ""
 
 msgid "This book has {} movies and it was generated at {}."
+msgstr ""
+
+msgid "If you make click over a film cover, you'll be redirected to FilmAffinity portal to try to get information of the movie."
 msgstr ""
 
 msgid "List by index"
