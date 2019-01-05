@@ -6,6 +6,8 @@ import gettext
 from mymoviebook.version import __version__, __versiondate__
 from officegenerator import ODT_Standard
 from mymoviebook.dbupdates import UpdateDB
+from mymoviebook.connection_pg import Connection
+from mymoviebook.libmanagers import ObjectManager_With_IdName
 
 try:
     t=gettext.translation('mymoviebook',pkg_resources.resource_filename("mymoviebook","locale"))
@@ -16,34 +18,7 @@ except:
 
 class Mem:
     def __init__(self):
-        self.con=None
-
-    def connect(self):
-        strmq="dbname='{}' port='{}' user='{}' host='{}' password='{}'".format(args.db, args.port, args.user, args.host, password)
-        try:
-            self.con=psycopg2.extras.DictConnection(strmq)
-        except psycopg2.Error:
-            print("Error conecting database")
-            sys.exit(112)
-        return self.con
-
-    def disconnect(self):
-        self.con.close()
-
-    def connection_string(self):
-        return "psql://{}@{}:{}/{}".format(args.user, args.host, args.port, args.db)
-
-
-    def is_superuser(self):
-        """Checks if the user has superuser role"""
-        res=False
-        cur=self.con.cursor()
-        cur.execute("SELECT rolsuper FROM pg_roles where rolname=%s;", (args.user, ))
-        if cur.rowcount==1:
-            if cur.fetchone()[0]==True:
-                res=True
-        cur.close()
-        return res
+        self.con=Connection()
 
 class Film:
     def __init__(self, mem):
@@ -123,11 +98,11 @@ class Film:
             cur.close()
             return True
 
-class SetFilms:
+class SetFilms(ObjectManager_With_IdName):
     def __init__(self, mem):
-        self.arr=[]
+        ObjectManager_With_IdName.__init__(self)
         self.mem=mem
-        
+
     def extract_photos(self):
         for f in self.arr:
             f.cover_db2file()
@@ -217,7 +192,7 @@ class SetFilms:
         print ("  - Listado ordenado alfabéticamente")
         # ORDENADAS ALFABETICAMENTE
         bd=bd + "\section{"+_("Order by movie title") +"}\n"
-        self.sort_by_name()
+        self.order_by_name()
         for f in self.arr:
             bd=bd + "\\subsection*{{{0}}}\n".format(string2tex(f.name))
             bd=bd + "\\addcontentsline{{toc}}{{subsection}}{{{0}}}\n".format(string2tex(f.name))
@@ -299,11 +274,8 @@ class SetFilms:
                 odt.header(_("Year {}").format(year), 2)
             for fi in self.films_in_year(year).arr:
                 odt.illustration([str(fi.id), ], 3, 3, str(fi.id))
-                
-        odt.save()
 
-    def length(self):
-        return len(self.arr)
+        odt.save()
 
     def load(self,sql):
         cur=self.mem.con.cursor()
@@ -325,7 +297,6 @@ class SetFilms:
         l=list(s)
         return sorted(l)
 
-
     def distinct_years(self):
         """Returns a ordered list with distinct id_dvd in the set"""
         s=set([])
@@ -340,7 +311,7 @@ class SetFilms:
         for f in self.arr:
             if f.id_dvd==id_dvd:
                 result.arr.append(f)
-        result.sort_by_name()
+        result.order_by_name()
         return result
 
     def films_in_year(self, year):
@@ -348,18 +319,13 @@ class SetFilms:
         result=SetFilms(self.mem)
         for f in self.arr:
             if str(f.year)==year:
-                result.arr.append(f)
-        result.sort_by_name()
+                result.append(f)
+        result.order_by_name()
         return result
-
-    def sort_by_name(self):
-        self.arr=sorted(self.arr, key=lambda f: f.name, reverse=False)
-
 
 def string2shell(cadena):
     cadena=cadena.replace("'","\\'")
     return cadena
-
 
 def Yn(pregunta):
     while True:
@@ -392,7 +358,7 @@ def main(parameters=None):
     group_db=parser.add_argument_group(_("Postgres database connection parameters"))
     group_db.add_argument('--user', help=_('Postgresql user'), default='postgres')
     group_db.add_argument('--port', help=_('Postgresql server port'), default=5432)
-    group_db.add_argument('--host', help=_('Postgresql server address'), default='127.0.0.1')
+    group_db.add_argument('--server', help=_('Postgresql server address'), default='127.0.0.1')
     group_db.add_argument('--db', help=_('Postgresql database'), default='mymoviebook')
 
     parser.add_argument('--output', help=_("Path to the output document"), action="append", default=[])
@@ -403,10 +369,14 @@ def main(parameters=None):
 
     mem=Mem()
 
-    print(_("Write the password for {}").format(mem.connection_string()))
-    global password
-    password=getpass.getpass()
-    mem.connect()
+    mem.con.user=args.user
+    mem.con.server=args.server
+    mem.con.port=args.port
+    mem.con.db=args.db
+
+    print(_("Write the password for {}").format(mem.con.url_string()))
+    mem.con.password=getpass.getpass()
+    mem.con.connect()
 
     UpdateDB(mem)
 
@@ -472,6 +442,6 @@ def main(parameters=None):
     else:
         parser.print_help()
 
-    mem.disconnect()
+    mem.con.disconnect()
 
     shutil.rmtree("/tmp/mymoviebook")
