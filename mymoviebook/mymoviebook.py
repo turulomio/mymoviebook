@@ -58,6 +58,41 @@ class Film:
         except:
             self.year=None
 
+    ## Converts the film name to a list without rare characters
+    def name2list_without_rare_characters(self):
+        #Removes special chars
+        name=""
+        for letter in self.name.lower():
+            if letter not in ",.;()[]:":
+                name=name+letter
+
+        #Replace special char
+        name=name.replace("á","a")
+        name=name.replace("é","e")
+        name=name.replace("í","i")
+        name=name.replace("ó","o")
+        name=name.replace("ú","u")
+        name=name.replace("ñ","ñ")
+
+        r=[]
+        for word in name.split(" "):
+            r.append(word)
+        return r
+
+    ## Returns a Internet url to query this film in sensacine.com
+    def name2query_sensacine(self):
+        r=""
+        for word in self.name2list_without_rare_characters():
+            r=r+word + "+"
+        return "http://www.sensacine.com/busqueda/?q={}".format(r[:-1])
+
+    ## Returns a Internet url to query this film in filmaffinity.com
+    def name2query_filmaffinity(self):
+        r=""
+        for word in self.name2list_without_rare_characters():
+            r=r+word + "+"
+        return "https://www.filmaffinity.com/es/search.php?stext={}".format(r[:-1])
+
     def delete(self):
         cur=self.mem.con.cursor()
         sqldel="delete from films where id_films=" + str(self.id)
@@ -81,8 +116,12 @@ class Film:
     def coverpath_in_tmp(self):
         return '/tmp/mymoviebook/{}.jpg'.format(self.id)
 
+    ## Includes the cover in latex. Remember that to scape {} in python strings, you need to double them {{}}
+    ## @param width Float with the width of the cover
+    ## @param height Float with the height of the cover
+    ## @return string
     def tex_cover(self,width,height):
-        return  "\\includegraphics[width={0}cm,height={1}cm]{{{2}.jpg}}".format(width,height,self.id)
+        return  "\\href{{{0}}}{{ \\includegraphics[width={1}cm,height={2}cm]{{{3}.jpg}}}}".format(self.name2query_filmaffinity(), width, height, self.id)
 
     def save(self):
         if self.id==None:
@@ -164,10 +203,10 @@ class SetFilms(ObjectManager_With_IdName):
             bd=bd + "\\addcontentsline{toc}{subsection}{"+ _("Index") + " " + str(id_dvd)+"}\n" 
             bd=bd + "\\begin{tabular}{c c}\n"
             for i, fi in enumerate(self.films_in_id_dvd(id_dvd).arr):
-                bd=bd+"\\begin{tabular}{p{7.1cm}}\n" #Tabla foto name interior
+                bd=bd+ "\\begin{tabular}{p{7.1cm}}\n" #Tabla foto name interior
                 bd=bd+ fi.tex_cover(6.7,6.7) + "\\\\\n"
                 bd=bd+ string2tex(fi.name) +"\\\\\n"
-                bd=bd+"\\end{tabular} &"
+                bd=bd+ "\\end{tabular} &"
                 if i % 2==1:
                     bd=bd[:-2]+"\\\\\n"
             bd = bd + "\\end{tabular}\n"
