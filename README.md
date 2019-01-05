@@ -48,6 +48,12 @@ Dependencies
 
 Changelog
 =========
+1.2.0
+-----
+- Spanish translation finished
+- Removed table of contents from book
+- Added filmaffinity querys clicking in covers
+
 1.1.0
 -----
 - Add cover to the generated book
