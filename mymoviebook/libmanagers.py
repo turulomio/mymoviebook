@@ -1,6 +1,6 @@
 ## @brief Module with objects managers as list or as dictionary.
 ##
-## THIS FILE HAS BEEN DOWNLOADED AT 2019-01-05 07:46:53.518021 FROM https://github.com/Turulomio/xulpymoney/xulpymoney/libmanagers.py.
+## THIS FILE HAS BEEN DOWNLOADED AT 2019-01-08 15:13:10.770013 FROM https://github.com/Turulomio/xulpymoney/xulpymoney/libmanagers.py.
 ## This file is from Xulpymoney project. Do not edit, It will be overriden.
 ##
 ## You have to use list objects if you are going to make selections and secuential access.

@@ -163,8 +163,10 @@ class Compile(Command):
         os.remove("connection_pg.py")
         os.system("wget https://raw.githubusercontent.com/turulomio/xulpymoney/master/xulpymoney/libmanagers.py  --no-clobber")
         os.system("wget https://raw.githubusercontent.com/turulomio/xulpymoney/master/xulpymoney/connection_pg.py  --no-clobber")
+        os.system("wget https://raw.githubusercontent.com/turulomio/xulpymoney/master/xulpymoney/admin_pg.py  --no-clobber")
         os.system("sed -i -e '3i ## THIS FILE HAS BEEN DOWNLOADED AT {} FROM https://github.com/Turulomio/xulpymoney/xulpymoney/libmanagers.py.' libmanagers.py".format(datetime.datetime.now()))
         os.system("sed -i -e '3i ## THIS FILE HAS BEEN DOWNLOADED AT {} FROM https://github.com/Turulomio/xulpymoney/xulpymoney/connection_pg.py.' connection_pg.py".format(datetime.datetime.now()))
+        os.system("sed -i -e '3i ## THIS FILE HAS BEEN DOWNLOADED AT {} FROM https://github.com/Turulomio/xulpymoney/xulpymoney/admin_pg.py.' admin_pg.py".format(datetime.datetime.now()))
 
 
 class Video(Command):

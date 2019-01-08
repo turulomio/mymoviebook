@@ -1,6 +1,6 @@
 ## @brief Package to manage postgresql connection functionss
 ## THIS IS FROM XULPYMONEY PACKAGE IF YOU NEED THIS MODULE PLEASE SYNC IT FROM THERE, FOR EXAMPLE
-## THIS FILE HAS BEEN DOWNLOADED AT 2019-01-05 07:46:53.523660 FROM https://github.com/Turulomio/xulpymoney/xulpymoney/connection_pg.py.
+## THIS FILE HAS BEEN DOWNLOADED AT 2019-01-08 15:13:10.772271 FROM https://github.com/Turulomio/xulpymoney/xulpymoney/connection_pg.py.
 ## @code
 ##       print ("Copying libmanagers.py from Xulpymoney project")
 ##        os.chdir("your directory)

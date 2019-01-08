@@ -387,8 +387,9 @@ def main(parameters=None):
     parser.add_argument('--version', action='version', version=__version__)
 
     group = parser.add_mutually_exclusive_group(required=True)
-    group.add_argument('--insert', help=_('Insert films from current numbered directory'), action="store_true")
-    group.add_argument('--generate', help=_('Generate films documentation'), action="store_true")
+    group.add_argument('--insert', help=_('Insert films from current numbered directory'), action="store_true", default=False)
+    group.add_argument('--generate', help=_('Generate films documentation'), action="store_true", default=False)
+    group.add_argument('--createdb', help=_("Creates a new postgresql database, checking if already exists. Copy MyMovieBook schema on it"), action="store_true", default=False)
 
     group_db=parser.add_argument_group(_("Postgres database connection parameters"))
     group_db.add_argument('--user', help=_('Postgresql user'), default='postgres')
