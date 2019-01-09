@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RecPermissions\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-05 12:25+0100\n"
+"POT-Creation-Date: 2019-01-09 08:18+0100\n"
 "PO-Revision-Date: 2018-10-22 18:51+0100\n"
 "Last-Translator: root <turulomio@yahoo.es>\n"
 "Language-Team: Spanish\n"
@@ -177,6 +177,9 @@ msgstr "Añade las películas del directorio numerado actual"
 msgid "Generate films documentation"
 msgstr "Genera la documentación"
 
+msgid "Creates a new postgresql database, checking if already exists. Copy MyMovieBook schema on it"
+msgstr "Crea una nueva base de datos en postgresql, si no existiera. Copia el esquema de MyMovieBook en ella"
+
 msgid "Postgres database connection parameters"
 msgstr "Parámetros de conexión de la base de datos Postgres"
 
@@ -204,14 +207,15 @@ msgstr "Selecciona un formato de salida. Por defecto es PDF"
 msgid "Write the password for {}"
 msgstr "Escribe la contraseña para {}"
 
+msgid "I can't create '{}' database because it already exists."
+msgstr "No puede crear la base de datos '{}' porque ya existe."
+
+msgid "MyMovieBook it's ready for use"
+msgstr "MyMovieBook está preparada para ser usada"
+
 msgid "Current directory is not numeric"
 msgstr "El directorio actual no es numérico"
 
 msgid "This is a video to show how to use 'mymoviebook' command"
 msgstr "Este video muestra cómo usar el comando 'mymoviebook'"
 
-#~ msgid "Table of contents"
-#~ msgstr "Tabla de contenidos"
-
-#~ msgid "Path where the movie book it's going to be generated. You can use this parameter as many times as you with."
-#~ msgstr "Ruta donde se va a generar el libro de películas"

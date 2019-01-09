@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RecPermissions\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-05 12:25+0100\n"
+"POT-Creation-Date: 2019-01-09 08:18+0100\n"
 "PO-Revision-Date: 2018-11-03 07:11+0100\n"
 "Last-Translator: root <turulomio@yahoo.es>\n"
 "Language-Team: French\n"
@@ -176,6 +176,9 @@ msgstr ""
 msgid "Generate films documentation"
 msgstr ""
 
+msgid "Creates a new postgresql database, checking if already exists. Copy MyMovieBook schema on it"
+msgstr ""
+
 msgid "Postgres database connection parameters"
 msgstr ""
 
@@ -201,6 +204,12 @@ msgid "select output format. Default is PDF"
 msgstr ""
 
 msgid "Write the password for {}"
+msgstr ""
+
+msgid "I can't create '{}' database because it already exists."
+msgstr ""
+
+msgid "MyMovieBook it's ready for use"
 msgstr ""
 
 msgid "Current directory is not numeric"

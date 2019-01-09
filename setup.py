@@ -169,7 +169,6 @@ class Compile(Command):
         os.system("sed -i -e '3i ## THIS FILE HAS BEEN DOWNLOADED AT {} FROM https://github.com/Turulomio/xulpymoney/xulpymoney/connection_pg.py.' connection_pg.py".format(datetime.datetime.now()))
         os.system("sed -i -e '3i ## THIS FILE HAS BEEN DOWNLOADED AT {} FROM https://github.com/Turulomio/xulpymoney/xulpymoney/admin_pg.py.' admin_pg.py".format(datetime.datetime.now()))
 
-
 class Video(Command):
     description = "Create video/GIF from console ouput"
     user_options = []

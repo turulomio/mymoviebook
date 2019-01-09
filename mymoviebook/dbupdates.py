@@ -36,7 +36,7 @@ class UpdateDB:
 
     def need_update(self):
         if self.dbversion==None or self.dbversion<self.lastcodeupdate:
-            if self.mem.is_superuser():
+            if self.mem.con.is_superuser():
                 self.run()
             else:
                 print(_("MyMovieBook database needs to be updated. Please login with a superuser role."))

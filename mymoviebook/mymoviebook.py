@@ -8,6 +8,7 @@ from officegenerator import ODT_Standard
 from mymoviebook.dbupdates import UpdateDB
 from mymoviebook.connection_pg import Connection
 from mymoviebook.libmanagers import ObjectManager_With_IdName
+from mymoviebook.admin_pg import AdminPG
 
 try:
     t=gettext.translation('mymoviebook',pkg_resources.resource_filename("mymoviebook","locale"))
@@ -404,6 +405,7 @@ def main(parameters=None):
     global args
     args=parser.parse_args(parameters)
 
+
     mem=Mem()
 
     mem.con.user=args.user
@@ -412,7 +414,24 @@ def main(parameters=None):
     mem.con.db=args.db
 
     print(_("Write the password for {}").format(mem.con.url_string()))
-    mem.con.password=getpass.getpass()
+    password=getpass.getpass()
+
+
+    if args.createdb==True:
+        admin=AdminPG(args.user, password, args.server, args.port)
+        if admin.db_exists(args.db):
+            print(_("I can't create '{}' database because it already exists.").format(args.db))
+        else:
+            admin.create_db(args.db)
+            con=admin.connect_to_database(args.db)
+            con.load_script(pkg_resources.resource_filename("mymoviebook","sql/mymoviebook.sql"))
+            con.commit()
+            print(_("MyMovieBook it's ready for use"))
+        sys.exit(0)
+
+
+    mem.con.password=password
+
     mem.con.connect()
 
     UpdateDB(mem)
