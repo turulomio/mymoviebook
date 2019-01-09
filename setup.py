@@ -161,6 +161,7 @@ class Compile(Command):
         os.chdir("mymoviebook")
         os.remove("libmanagers.py")
         os.remove("connection_pg.py")
+        os.remove("admin_pg.py")
         os.system("wget https://raw.githubusercontent.com/turulomio/xulpymoney/master/xulpymoney/libmanagers.py  --no-clobber")
         os.system("wget https://raw.githubusercontent.com/turulomio/xulpymoney/master/xulpymoney/connection_pg.py  --no-clobber")
         os.system("wget https://raw.githubusercontent.com/turulomio/xulpymoney/master/xulpymoney/admin_pg.py  --no-clobber")

@@ -1,6 +1,6 @@
 ## @brief Package to manage postgresql connection functionss
 ## THIS IS FROM XULPYMONEY PACKAGE IF YOU NEED THIS MODULE PLEASE SYNC IT FROM THERE, FOR EXAMPLE
-## THIS FILE HAS BEEN DOWNLOADED AT 2019-01-08 15:13:10.772271 FROM https://github.com/Turulomio/xulpymoney/xulpymoney/connection_pg.py.
+## THIS FILE HAS BEEN DOWNLOADED AT 2019-01-09 05:07:22.447650 FROM https://github.com/Turulomio/xulpymoney/xulpymoney/connection_pg.py.
 ## @code
 ##       print ("Copying libmanagers.py from Xulpymoney project")
 ##        os.chdir("your directory)
@@ -41,12 +41,22 @@ class Connection:
         cur.close()
         return  s
 
+    def setAutocommit(self, b):
+        self._con.autocommit = b
+
+
     def cursor_one_row(self, sql, arr=[]):
         cur=self._con.cursor()
         cur.execute(sql, arr)
         row=cur.fetchone()
         cur.close()
         return row
+
+    def load_script(self, file):
+        cur= self._con.cursor()
+        procedures  = open(file,'r').read() 
+        cur.execute(procedures)
+        cur.close()       
 
     def cursor_one_column(self, sql, arr=[]):
         """Returns un array with the results of the column"""
