@@ -31,6 +31,12 @@ class Film:
         self.id_dvd=None
         self.year=None
 
+    def __repr__(self):
+        if self.year==None:
+            return self.name
+        else:
+            return "{} ({})".format(self.name, self.year)
+
     def init__create(self,savedate, name, coverpath, id_dvd):
         """Introduce pathcover, ya que debera luego hacer un insert, id siempre es None, year es None, pero lo parsea en la funcion"""
         self.savedate=savedate
@@ -202,7 +208,7 @@ class SetFilms(ObjectManager_With_IdName):
             for i, fi in enumerate(self.films_in_id_dvd(id_dvd).arr):
                 bd=bd+ "\\begin{tabular}{p{7.1cm}}\n" #Tabla foto name interior
                 bd=bd+ fi.tex_cover(6.7,6.7) + "\\\\\n"
-                bd=bd+ string2tex(fi.name) +"\\\\\n"
+                bd=bd+ string2tex(fi) +"\\\\\n"
                 bd=bd+ "\\end{tabular} &"
                 if i % 2==1:
                     bd=bd[:-2]+"\\\\\n"
@@ -230,8 +236,8 @@ class SetFilms(ObjectManager_With_IdName):
         bd=bd + "\section{"+_("Order by movie title") +"}\n"
         self.order_by_name()
         for f in self.arr:
-            bd=bd + "\\subsection*{{{0}}}\n".format(string2tex(f.name))
-            bd=bd + "\\addcontentsline{{toc}}{{subsection}}{{{0}}}\n".format(string2tex(f.name))
+            bd=bd + "\\subsection*{"+ string2tex(f) + "} \n"
+            bd=bd + "\\addcontentsline{{toc}}{{subsection}}{{{0}}}\n".format(string2tex(f))
             bd=bd + "\\begin{tabular}{m{2.3cm} m{15cm}}\n"
             bd=bd + f.tex_cover(2.2,2.2) + " & ~\\nameref{{sec:{0}}}\\\\\n".format(f.id_dvd)#Reference to DVD page
             bd = bd + "\\end{tabular}\n\n"
@@ -360,6 +366,7 @@ class SetFilms(ObjectManager_With_IdName):
         return result
 
 def string2shell(cadena):
+    cadena=str(cadena)
     cadena=cadena.replace("'","\\'")
     return cadena
 
@@ -374,6 +381,7 @@ def Yn(pregunta):
             print ("Please enter 'Y', 'n'")
 
 def string2tex(cadena):
+    cadena=str(cadena)
     cadena=cadena.replace('[','$ [ $')
     cadena=cadena.replace(']','$ ] $')
     cadena=cadena.replace('&','\&')
