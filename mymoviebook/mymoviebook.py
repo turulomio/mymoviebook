@@ -9,6 +9,7 @@ from mymoviebook.dbupdates import UpdateDB
 from mymoviebook.connection_pg import Connection
 from mymoviebook.libmanagers import ObjectManager_With_IdName
 from mymoviebook.admin_pg import AdminPG
+from urllib.parse import urlencode
 
 try:
     t=gettext.translation('mymoviebook',pkg_resources.resource_filename("mymoviebook","locale"))
@@ -65,41 +66,15 @@ class Film:
         except:
             self.year=None
 
-    ## Converts the film name to a list without rare characters
-    def name2list_without_rare_characters(self):
-        #Replace special char
-        name=self.name.lower()
-        name=name.replace("á","a")
-        name=name.replace("é","e")
-        name=name.replace("í","i")
-        name=name.replace("ó","o")
-        name=name.replace("ú","u")
-        name=name.replace("ñ","ñ")
-
-        #Removes special chars
-        n=""
-        for letter in name:
-            if letter in "1234567890abcdefghijklmnopqrstuvwxyz ":
-                n=n+letter
-
-        r=[]
-        for word in n.split(" "):
-            r.append(word)
-        return r
-
     ## Returns a Internet url to query this film in sensacine.com
     def name2query_sensacine(self):
-        r=""
-        for word in self.name2list_without_rare_characters():
-            r=r+word + "+"
-        return "http://www.sensacine.com/busqueda/?q={}".format(r[:-1])
+        query={"q": self.name,}
+        return "http://www.sensacine.com/busqueda/?{}".format(urlencode(query))
 
     ## Returns a Internet url to query this film in filmaffinity.com
     def name2query_filmaffinity(self):
-        r=""
-        for word in self.name2list_without_rare_characters():
-            r=r+word + "+"
-        return "https://www.filmaffinity.com/es/search.php?stext={}".format(r[:-1])
+        query={"stext": self.name,}
+        return "https://www.filmaffinity.com/es/search.php?{}".format(urlencode(query))
 
     def delete(self):
         cur=self.mem.con.cursor()
