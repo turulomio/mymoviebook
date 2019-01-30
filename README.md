@@ -48,6 +48,13 @@ Dependencies
 
 Changelog
 =========
+1.3.0
+-----
+- Added the number of films in report for each year. Fixes #12.
+- Now fimaffinity url is correctly encoded from name. Fixes #14.
+- Printing film title shows the year too
+- Added --createdb parameter to create a new database and load schema. Fixes #8.
+
 1.2.1
 -----
 - Added png to MANIFEST
