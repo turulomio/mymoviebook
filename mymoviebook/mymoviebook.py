@@ -221,6 +221,8 @@ class SetFilms(ObjectManager_With_IdName):
 
         print ("  - Listado ordenado por años")
         # ORDENADAS POR AÑO
+
+        bd = bd + "\\setlength{\\parindent}{1cm}\n"
         bd=bd + "\section{"+ _("Order by movie year") + "}\n"
         for year in reversed(self.distinct_years()):
             if year=="None":
@@ -229,7 +231,14 @@ class SetFilms(ObjectManager_With_IdName):
             else:
                 bd=bd + "\\subsection*{"+ _("Year") + " " + year +"}\n" 
                 bd=bd + "\\addcontentsline{toc}{subsection}{" + _("Year") + " " + year + "}\n" 
-            for fi in self.films_in_year(year).arr:
+            year_films=self.films_in_year(year)
+            if year_films.length()==1:
+                bd = bd + _("There is only one collection film in this year:") + "\\par\n"
+            elif year_films.length()>1:
+                bd = bd + _("There are {} collection films in this year:").format(year_films.length()) + "\\par\n"
+            bd=bd + "\\vspace{0.5cm}\n"
+
+            for fi in year_films.arr:
                 bd=bd + "\\begin{tabular}{m{2.3cm} m{15cm}}\n"
                 bd=bd + "{0} & {1}. (~\\nameref{{sec:{2}}} )\\\\\n".format(fi.tex_cover(2.2,2.2), string2tex(fi.name), fi.id_dvd)
                 bd = bd + "\\end{tabular} \\\\\n\n"
