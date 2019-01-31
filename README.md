@@ -9,7 +9,7 @@ It uses postgres as your movie database
 Usage
 =====
 
-MyMovieBook uses PostgreSQL database as its backend, so we must create a new database. To do it we just have to input the next command:
+MyMovieBook uses PostgreSQL database as its backend, so we must create a new database and load the schema needed. To do it we just have to input the next command:
 
 `mymoviebook --createdb`
 
@@ -21,24 +21,24 @@ By default it uses mymoviebook database, but we can change database connection p
 
 MyMovieBook it's prepared to create big books with thousands of films. So, in order to do this managemente easy, It's very important that movies are placed in numbered directories with 6 movies and its 6 covers. Although it's optional, I recommend to apped the year of the film to the end of the title.
 
-For example, this is the content of a directory named /Films/1/
+For example, this is the content of a directory named /Films/7/
 
--rw-r--r-- 1 keko keko 3096243290 ene  2 18:37 'Descalzos por el parque. 1967.avi'
--rw-r--r-- 1 keko keko      98977 ene  2 09:08 'Descalzos por el parque. 1967.jpg'
--rw-r--r-- 1 keko keko     101423 ene  2 09:07 'El diablo dijo no. 1943.jpg'
--rw-r--r-- 1 keko keko 2066396474 ene  2 19:28 'El diablo dijo no. 1943.mkv'
--rw-r--r-- 1 keko keko     136564 ene  2 10:43 'El disputado voto del señor Cayo. 1985.jpg'
--rw-r--r-- 1 keko keko 1777303444 ene  2 19:32 'El disputado voto del señor Cayo. 1985.mkv'
--rw-r--r-- 1 keko keko 1856114688 ene  2 20:00 'El estado de la unión. 1948.avi'
--rw-r--r-- 1 keko keko      80461 ene  2 09:39 'El estado de la unión. 1948.jpg'
--rw-r--r-- 1 keko keko      68861 ene  2 08:54 'El manantial. 1949.jpg'
--rw-r--r-- 1 keko keko 2460711108 ene  2 18:29 'El manantial. 1949.mkv'
--rw-r--r-- 1 keko keko 2026502144 ene  2 19:35 'En un lugar solitario. 1950.avi'
--rw-r--r-- 1 keko keko      97493 ene  2 09:26 'En un lugar solitario. 1950.jpg'
+    -rw-r--r-- 1 keko keko 3096243290 ene  2 18:37 'Descalzos por el parque. 1967.avi' 
+    -rw-r--r-- 1 keko keko      98977 ene  2 09:08 'Descalzos por el parque. 1967.jpg'
+    -rw-r--r-- 1 keko keko     101423 ene  2 09:07 'El diablo dijo no. 1943.jpg'
+    -rw-r--r-- 1 keko keko 2066396474 ene  2 19:28 'El diablo dijo no. 1943.mkv'
+    -rw-r--r-- 1 keko keko     136564 ene  2 10:43 'El disputado voto del señor Cayo. 1985.jpg'
+    -rw-r--r-- 1 keko keko 1777303444 ene  2 19:32 'El disputado voto del señor Cayo. 1985.mkv'
+    -rw-r--r-- 1 keko keko 1856114688 ene  2 20:00 'El estado de la unión. 1948.avi'
+    -rw-r--r-- 1 keko keko      80461 ene  2 09:39 'El estado de la unión. 1948.jpg'
+    -rw-r--r-- 1 keko keko      68861 ene  2 08:54 'El manantial. 1949.jpg'
+    -rw-r--r-- 1 keko keko 2460711108 ene  2 18:29 'El manantial. 1949.mkv'
+    -rw-r--r-- 1 keko keko 2026502144 ene  2 19:35 'En un lugar solitario. 1950.avi'
+    -rw-r--r-- 1 keko keko      97493 ene  2 09:26 'En un lugar solitario. 1950.jpg'
 
 We enter in the directory with
 
-`cd /Films/1`
+`cd /Films/7`
 
 we add the directory to the database with. If we need other parameters to connect to our database we can use them too.
 
