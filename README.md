@@ -9,9 +9,20 @@ It uses postgres as your movie database
 Usage
 =====
 
-Here you have a console video example:
+MyMovieBook uses PostgreSQL database as its backend, so we must create a new database. To do it we just have to input the next command:
 
-![English howto](https://raw.githubusercontent.com/Turulomio/mymoviebook/master/doc/ttyrec/mymoviebook_howto_en.gif)
+`mymoviebook --createdb`
+
+By default it uses mymoviebook database, but we can change database connection parameters with:
+*  --user USER         Postgresql user
+*  --port PORT         Postgresql server port
+*  --server SERVER     Postgresql server address
+*  --db DB             Postgresql database
+
+MyMovieBook it's prepared to create big books with thousands of films. So, in order to do this managemente easy, It's very important that movies are placed in numbered directories with 6 movies and its 6 covers.
+
+
+
 
 Once installed, you can see man documentation with
 
