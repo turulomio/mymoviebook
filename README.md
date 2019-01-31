@@ -7,7 +7,7 @@ This book is interactive and lets you find your movies quickly in a book with yo
 Linux installation
 ==================
 
-If you use Gentoo, you can find the ebuild in https://sourceforge.net/p/xulpymoney/code/HEAD/tree/myportage/media-video/mymoviebook/
+If you use Gentoo, you can find the ebuild in https://github.com/turulomio/myportage/tree/master/media-video/mymoviebook
 
 Or you can install with pypi, writing:
 
