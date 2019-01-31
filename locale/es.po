@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RecPermissions\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-30 06:11+0100\n"
+"POT-Creation-Date: 2019-01-31 08:57+0100\n"
 "PO-Revision-Date: 2018-10-22 18:51+0100\n"
 "Last-Translator: root <turulomio@yahoo.es>\n"
 "Language-Team: Spanish\n"
@@ -221,6 +221,30 @@ msgstr "MyMovieBook está preparada para ser usada"
 
 msgid "Current directory is not numeric"
 msgstr "El directorio actual no es numérico"
+
+msgid "The id of the directory to add is '{}'. Do you want to continue?"
+msgstr "El identificador del directorio a añadir es '{}'. ¿Quieres continuar?"
+
+msgid "Checking that the movies have the correct format..."
+msgstr "Comprobando que las películas tienen el formato correcto..."
+
+msgid "There isn't a movie with the same name '{}'"
+msgstr "No hay una película con el mismo nombre '{}'"
+
+msgid "Do you want to overwrite the information of directory '{}'?"
+msgstr "¿Quieres sobreescribir la información del directorio '{}'?"
+
+msgid "Deleting information..."
+msgstr "Borrando la información..."
+
+msgid "Adding movies to the database"
+msgstr "Añadiendo películas a la base de datos"
+
+msgid "Getting images"
+msgstr "Extrayendo las imágenes"
+
+msgid "You need to add at least one output document. For example: '--output mymoviebook.pdf'"
+msgstr "Necesitas añadir por lo menos un documento de salida. Por ejemplo: '--output mymoviebook.pdf'"
 
 msgid "This is a video to show how to use 'mymoviebook' command"
 msgstr "Este video muestra cómo usar el comando 'mymoviebook'"
