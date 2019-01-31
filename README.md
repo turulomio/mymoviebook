@@ -4,8 +4,6 @@ It's a script to generate your personal movie collection book.
 
 This book is interactive and lets you find your movies quickly in a book with your prefered movie images.
 
-It uses postgres as your movie database
-
 Linux installation
 ==================
 
@@ -39,24 +37,24 @@ MyMovieBook it's prepared to create big books with thousands of films. So, in or
 
 For example, this is the content of a directory named /Films/7/
 
-    -rw-r--r-- 1 keko keko 3096243290 ene  2 18:37 'Descalzos por el parque. 1967.avi' 
-    -rw-r--r-- 1 keko keko      98977 ene  2 09:08 'Descalzos por el parque. 1967.jpg'
-    -rw-r--r-- 1 keko keko     101423 ene  2 09:07 'El diablo dijo no. 1943.jpg'
-    -rw-r--r-- 1 keko keko 2066396474 ene  2 19:28 'El diablo dijo no. 1943.mkv'
-    -rw-r--r-- 1 keko keko     136564 ene  2 10:43 'El disputado voto del señor Cayo. 1985.jpg'
-    -rw-r--r-- 1 keko keko 1777303444 ene  2 19:32 'El disputado voto del señor Cayo. 1985.mkv'
-    -rw-r--r-- 1 keko keko 1856114688 ene  2 20:00 'El estado de la unión. 1948.avi'
-    -rw-r--r-- 1 keko keko      80461 ene  2 09:39 'El estado de la unión. 1948.jpg'
-    -rw-r--r-- 1 keko keko      68861 ene  2 08:54 'El manantial. 1949.jpg'
-    -rw-r--r-- 1 keko keko 2460711108 ene  2 18:29 'El manantial. 1949.mkv'
-    -rw-r--r-- 1 keko keko 2026502144 ene  2 19:35 'En un lugar solitario. 1950.avi'
-    -rw-r--r-- 1 keko keko      97493 ene  2 09:26 'En un lugar solitario. 1950.jpg'
+    -rw-r--r-- 1 user user 3096243290 ene  2 18:37 'Descalzos por el parque. 1967.avi' 
+    -rw-r--r-- 1 user user      98977 ene  2 09:08 'Descalzos por el parque. 1967.jpg'
+    -rw-r--r-- 1 user user     101423 ene  2 09:07 'El diablo dijo no. 1943.jpg'
+    -rw-r--r-- 1 user user 2066396474 ene  2 19:28 'El diablo dijo no. 1943.mkv'
+    -rw-r--r-- 1 user user     136564 ene  2 10:43 'El disputado voto del señor Cayo. 1985.jpg'
+    -rw-r--r-- 1 user user 1777303444 ene  2 19:32 'El disputado voto del señor Cayo. 1985.mkv'
+    -rw-r--r-- 1 user user 1856114688 ene  2 20:00 'El estado de la unión. 1948.avi'
+    -rw-r--r-- 1 user user      80461 ene  2 09:39 'El estado de la unión. 1948.jpg'
+    -rw-r--r-- 1 user user      68861 ene  2 08:54 'El manantial. 1949.jpg'
+    -rw-r--r-- 1 user user 2460711108 ene  2 18:29 'El manantial. 1949.mkv'
+    -rw-r--r-- 1 user user 2026502144 ene  2 19:35 'En un lugar solitario. 1950.avi'
+    -rw-r--r-- 1 user user      97493 ene  2 09:26 'En un lugar solitario. 1950.jpg'
 
 We enter in the directory with
 
 `cd /Films/7`
 
-We add the directory to the database with the following command;
+We add the directory movie information to the database automatically, with the following command
 
 `mymoviebook --insert`
 
@@ -71,31 +69,21 @@ If our latex is working, after executing
 we get our movie collection book. This is the ![demo movie book](https://raw.githubusercontent.com/Turulomio/mymoviebook/master/doc/demo.pdf).
 
 
-License
-=======
-GPL-3
-
 Links
 =====
-
-Source code & Development:
-    https://github.com/Turulomio/mymoviebook
 
 Doxygen documentation:
     http://turulomio.users.sourceforge.net/doxygen/mymoviebook/
 
-Main developer web page:
-    http://turulomio.users.sourceforge.net/en/proyectos.html
-    
 Pypi web page:
     https://pypi.org/project/mymoviebook/
-
 
 Dependencies
 ============
 * https://www.python.org/, as the main programming language.
 * https://pypi.org/project/colorama/, to give console colors.
-* Latex
+* https://www.latex-project.org/, to generate PDF documents
+* https://github.com/turulomio/officegenerator/, to generate ODT documents (Beta)
 
 Changelog
 =========
