@@ -444,14 +444,14 @@ def main(parameters=None):
             print (_("Current directory is not numeric"))
             sys.exit(100)
 
-        if Yn("El identificador del dispositivo a introducir es '" +str(id) + "'. ¿Desea continuar?")==False:
+        if Yn(_("The id of the directory to add is '{}'. Do you want to continue?").format(id))==False:
             sys.exit(100)
 
 
-        print ("+ Comprobando que el nombre de los videos y las imágenes tienen el formato correcto")
+        print ("+ " + _("Checking that the movies have the correct format..."))
         for file in glob.glob( os.getcwd()+ "/*.jpg" ):
             if os.path.exists(file[:-3]+"avi")==False and os.path.exists(file[:-3]+"mpg")==False and os.path.exists(file[:-3]+"mkv")==False:
-                print ("No existe un video con el mismo nombre '" +  file[:-3]+"'")
+                print (_("There isn't a movie with the same name '{}'").format(file[:-3]))
                 sys.exit(100)
 
         sf=SetFilms(mem)
@@ -459,14 +459,14 @@ def main(parameters=None):
 
         # "Chequeando si hay registros en la base de datos del dispositivo " + str(id)
         if len(sf.arr)>0:
-            if Yn("+ ¿Desea borrar los registros del dispositivo '" +str(id) + "'?")==False:
+            if Yn("+ " + _("Do you want to overwrite the information of directory '{}'?").format(id))==False:
                 sys.exit(100)
             else:
-                print ("   - Borrando los registros...")
+                print ("   - " + _("Deleting information..."))
                 sf.delete_all_films()
         global cur
         cur=mem.con.cursor()
-        print ("+ Insertando las peliculas en la base de datos")
+        print ("+ "+ _("Adding movies to the database"))
         for file in glob.glob( os.getcwd()+ "/*.jpg" ):
             f=Film(mem).init__create(datetime.date.today(), file[len(os.getcwd())+1:-4], file,id)
             f.save()
@@ -476,9 +476,9 @@ def main(parameters=None):
 
     elif args.generate==True:
         # SACA LAS IMÁGENES DE LA BASE DE DATOS
-        print ("  - Sacando las imágenes")
+        print ("  - "+ _("Getting images"))
         if len(args.output)==0:
-            print ("    Necesita añadir al menos un documento de salida. Por ejemplo '--output mymoviebook.pdf'")
+            print ("    " + _("You need to add at least one output document. For example: '--output mymoviebook.pdf'"))
             sys.exit(0)
         sf=SetFilms(mem)
         sf.load("SELECT * FROM films")
