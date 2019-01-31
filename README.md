@@ -6,6 +6,22 @@ This book is interactive and lets you find your movies quickly in a book with yo
 
 It uses postgres as your movie database
 
+Linux installation
+==================
+
+If you use Gentoo, you can find the ebuild in https://sourceforge.net/p/xulpymoney/code/HEAD/tree/myportage/media-video/mymoviebook/
+
+Or you can install with pypi, writing:
+
+`pip install mymoviebook`
+
+Or you can install from sources:
+
+`python3 setup.py install`
+
+You also need to install Latex in your distribution
+
+
 Usage
 =====
 
@@ -40,9 +56,11 @@ We enter in the directory with
 
 `cd /Films/7`
 
-we add the directory to the database with. If we need other parameters to connect to our database we can use them too.
+We add the directory to the database with the following command;
 
 `mymoviebook --insert`
+
+If we need other parameters to connect to our database we can use them too.
 
 We can add as many directories as we want.
 
@@ -50,7 +68,7 @@ If our latex is working, after executing
 
 `mymoviebook --generate --output /home/user/mymoviebook.pdf`
 
-we get our movie collection book. This is a ![demo](https://raw.githubusercontent.com/Turulomio/mymoviebook/master/doc/demo.pdf).
+we get our movie collection book. This is the ![demo movie book](https://raw.githubusercontent.com/Turulomio/mymoviebook/master/doc/demo.pdf).
 
 
 License
@@ -71,9 +89,6 @@ Main developer web page:
     
 Pypi web page:
     https://pypi.org/project/mymoviebook/
-
-Gentoo ebuild
-    You can find a Gentoo ebuild in https://sourceforge.net/p/xulpymoney/code/HEAD/tree/myportage/media-video/mymoviebook/
 
 
 Dependencies
