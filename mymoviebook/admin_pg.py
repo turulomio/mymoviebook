@@ -1,6 +1,6 @@
 ## @brief Package to manage postgresql admin functionss
 ## THIS IS FROM XULPYMONEY PACKAGE IF YOU NEED THIS MODULE PLEASE SYNC IT FROM THERE, FOR EXAMPLE
-## THIS FILE HAS BEEN DOWNLOADED AT 2019-01-09 05:07:22.452859 FROM https://github.com/Turulomio/xulpymoney/xulpymoney/admin_pg.py.
+## THIS FILE HAS BEEN DOWNLOADED AT 2019-02-10 07:32:26.103245 FROM https://github.com/Turulomio/xulpymoney/xulpymoney/admin_pg.py.
 ## @code
 ##       print ("Copying admin_pg.py from Xulpymoney project")
 ##        os.chdir("your directory)

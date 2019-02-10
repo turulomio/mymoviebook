@@ -1,18 +1,19 @@
-import os, sys, glob, datetime, psycopg2, psycopg2.extras, shutil
+import os, glob, datetime, shutil
 import pkg_resources
 import argparse
 import getpass
 import gettext
+import sys
 from mymoviebook.version import __version__, __versiondate__
 from officegenerator import ODT_Standard
 from mymoviebook.dbupdates import UpdateDB
-from mymoviebook.connection_pg import Connection
+from mymoviebook.connection_pg import Connection, argparse_connection_arguments_group
 from mymoviebook.libmanagers import ObjectManager_With_IdName
 from mymoviebook.admin_pg import AdminPG
 from urllib.parse import urlencode
 
 try:
-    t=gettext.translation('mymoviebook',pkg_resources.resource_filename("mymoviebook","locale"))
+    t=gettext.translation('mymoviebook', pkg_resources.resource_filename("mymoviebook","locale"))
     _=t.gettext
 except:
     _=str
@@ -384,11 +385,7 @@ def main(parameters=None):
     group.add_argument('--generate', help=_('Generate films documentation'), action="store_true", default=False)
     group.add_argument('--createdb', help=_("Creates a new postgresql database, checking if already exists. Copy MyMovieBook schema on it"), action="store_true", default=False)
 
-    group_db=parser.add_argument_group(_("Postgres database connection parameters"))
-    group_db.add_argument('--user', help=_('Postgresql user'), default='postgres')
-    group_db.add_argument('--port', help=_('Postgresql server port'), default=5432)
-    group_db.add_argument('--server', help=_('Postgresql server address'), default='127.0.0.1')
-    group_db.add_argument('--db', help=_('Postgresql database'), default='mymoviebook')
+    argparse_connection_arguments_group(parser, gettext_module="mymoviebook",  gettex_locale=pkg_resources.resource_filename("mymoviebook","locale"), default_db="mymoviebook") 
 
     group_generate=parser.add_argument_group(_("Generate command parameters"))
     group_generate.add_argument('--output', help=_("Path to the output document"), action="append", default=[])
@@ -404,10 +401,7 @@ def main(parameters=None):
     mem.con.server=args.server
     mem.con.port=args.port
     mem.con.db=args.db
-
-    print(_("Write the password for {}").format(mem.con.url_string()))
-    password=getpass.getpass()
-
+    password=mem.con.get_password(gettext_module="mymoviebook",  gettex_locale=pkg_resources.resource_filename("mymoviebook","locale")) 
 
     if args.createdb==True:
         admin=AdminPG(args.user, password, args.server, args.port)
@@ -425,6 +419,8 @@ def main(parameters=None):
     mem.con.password=password
 
     mem.con.connect()
+    if mem.con.is_active()==False:
+        sys.exit(1)
 
     UpdateDB(mem)
 
