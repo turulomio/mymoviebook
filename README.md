@@ -66,7 +66,10 @@ If we need other parameters to connect to our database we can use them too.
 
 We can add as many directories as we want.
 
-If our latex is working (pdflatex command is needed), after executing
+Generating book movie
+---------------------
+
+Once all our movies are quickly added to database and if our latex is working (pdflatex command is needed), after executing
 
 `mymoviebook --generate --output /home/user/mymoviebook.pdf`
 
