@@ -46,8 +46,6 @@ class Procedure(Command):
         print("  * python setup.py doc")
         print("  * python setup.py install")
         print("  * python setup.py doxygen")
-        print("  * mcedit doc/ttyrec/howto.py")
-        print("  * python setup.py video" + ". " + _("If changed restart from first python setup.py doc"))
         print("  * git commit -a -m 'mymoviebook-{}'".format(__version__))
         print("  * git push")
         print(_("  * Make a new tag in github"))
@@ -86,7 +84,7 @@ class Doc(Command):
 
     def run(self):
         #es
-        os.system("xgettext -L Python --no-wrap --no-location --from-code='UTF-8' -o locale/mymoviebook.pot *.py mymoviebook/*.py doc/ttyrec/*.py")
+        os.system("xgettext -L Python --no-wrap --no-location --from-code='UTF-8' -o locale/mymoviebook.pot *.py mymoviebook/*.py")
         os.system("msgmerge -N --no-wrap -U locale/es.po locale/mymoviebook.pot")
         os.system("msgmerge -N --no-wrap -U locale/fr.po locale/mymoviebook.pot")
         os.system("msgfmt -cv -o mymoviebook/locale/es/LC_MESSAGES/mymoviebook.mo locale/es.po")

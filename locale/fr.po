@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RecPermissions\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-31 08:57+0100\n"
+"POT-Creation-Date: 2019-02-11 06:06+0100\n"
 "PO-Revision-Date: 2018-11-03 07:11+0100\n"
 "Last-Translator: root <turulomio@yahoo.es>\n"
 "Language-Team: French\n"
@@ -95,6 +95,24 @@ msgstr ""
 msgid "You need ttyrecgenerator installed to generate videos"
 msgstr "Il faut installer ttyrecgenerator pour générer des vidéos"
 
+msgid "Write the password for {}"
+msgstr ""
+
+msgid "Postgres database connection parameters"
+msgstr ""
+
+msgid "Postgresql user"
+msgstr ""
+
+msgid "Postgresql server port"
+msgstr ""
+
+msgid "Postgresql server address"
+msgstr ""
+
+msgid "Postgresql database"
+msgstr ""
+
 msgid "MyMovieBook database needs to be updated. Please login with a superuser role."
 msgstr ""
 
@@ -170,6 +188,9 @@ msgstr ""
 msgid "Year {}"
 msgstr ""
 
+msgid "You pressed 'Ctrl+C', exiting..."
+msgstr ""
+
 msgid "Generate your personal movie collection book"
 msgstr ""
 
@@ -185,21 +206,6 @@ msgstr ""
 msgid "Creates a new postgresql database, checking if already exists. Copy MyMovieBook schema on it"
 msgstr ""
 
-msgid "Postgres database connection parameters"
-msgstr ""
-
-msgid "Postgresql user"
-msgstr ""
-
-msgid "Postgresql server port"
-msgstr ""
-
-msgid "Postgresql server address"
-msgstr ""
-
-msgid "Postgresql database"
-msgstr ""
-
 msgid "Generate command parameters"
 msgstr ""
 
@@ -207,9 +213,6 @@ msgid "Path to the output document"
 msgstr ""
 
 msgid "select output format. Default is PDF"
-msgstr ""
-
-msgid "Write the password for {}"
 msgstr ""
 
 msgid "I can't create '{}' database because it already exists."
@@ -243,9 +246,6 @@ msgid "Getting images"
 msgstr ""
 
 msgid "You need to add at least one output document. For example: '--output mymoviebook.pdf'"
-msgstr ""
-
-msgid "This is a video to show how to use 'mymoviebook' command"
 msgstr ""
 
 #~ msgid "User used to change files owner."

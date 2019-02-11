@@ -91,6 +91,11 @@ Dependencies
 
 Changelog
 =========
+1.4.0
+-----
+- Captured error pressing CTRL+C
+- Improved documentation and spanish translation
+
 1.3.0
 -----
 - Added the number of films in report for each year. Fixes #12.
