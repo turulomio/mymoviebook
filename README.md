@@ -4,6 +4,10 @@ It's a script to generate your personal movie collection book.
 
 This book is interactive and lets you find your movies quickly in a book with your prefered movie images.
 
+This is a page of automatically generated movie collection:
+
+[![Demo](https://raw.githubusercontent.com/Turulomio/mymoviebook/master/doc/demo.jpg)](https://raw.githubusercontent.com/Turulomio/mymoviebook/master/doc/demo.pdf)
+
 Linux installation
 ==================
 
