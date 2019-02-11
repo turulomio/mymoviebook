@@ -1,7 +1,9 @@
-import os, glob, datetime, shutil
+import os
+import glob
+import datetime
+import shutil
 import pkg_resources
 import argparse
-import getpass
 import gettext
 import sys
 from mymoviebook.version import __version__, __versiondate__
@@ -10,6 +12,7 @@ from mymoviebook.dbupdates import UpdateDB
 from mymoviebook.connection_pg import Connection, argparse_connection_arguments_group
 from mymoviebook.libmanagers import ObjectManager_With_IdName
 from mymoviebook.admin_pg import AdminPG
+from signal import signal, SIGINT
 from urllib.parse import urlencode
 
 try:
@@ -374,9 +377,14 @@ def string2tex(cadena):
     cadena=cadena.replace('#', '\#')
     return cadena
 
+def signal_handler(signal, frame):
+        print(_("You pressed 'Ctrl+C', exiting..."))
+        sys.exit(1)
+
 
 ### MAIN SCRIPT ###
 def main(parameters=None):
+    signal(SIGINT, signal_handler)
     parser=argparse.ArgumentParser(prog='mymoviebook', description=_('Generate your personal movie collection book'), epilog=_("Developed by Mariano Muñoz 2012-{}".format(__versiondate__.year)), formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument('--version', action='version', version=__version__)
 
@@ -393,7 +401,6 @@ def main(parameters=None):
 
     global args
     args=parser.parse_args(parameters)
-
 
     mem=Mem()
 
@@ -415,7 +422,6 @@ def main(parameters=None):
             print(_("MyMovieBook it's ready for use"))
         sys.exit(0)
 
-
     mem.con.password=password
 
     mem.con.connect()
@@ -431,7 +437,6 @@ def main(parameters=None):
         pass
     os.mkdir("/tmp/mymoviebook")
     os.system("chmod 777 /tmp/mymoviebook")
-
 
     if args.insert==True:# insertar
         try:
