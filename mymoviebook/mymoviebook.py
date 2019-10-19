@@ -12,6 +12,7 @@ from mymoviebook.dbupdates import UpdateDB
 from mymoviebook.connection_pg import Connection, argparse_connection_arguments_group
 from mymoviebook.libmanagers import ObjectManager_With_IdName
 from mymoviebook.admin_pg import AdminPG
+from mymoviebook.text_inputs import input_YN
 from signal import signal, SIGINT
 from urllib.parse import urlencode
 
@@ -248,6 +249,21 @@ class SetFilms(ObjectManager_With_IdName):
                 bd = bd + "\\end{tabular} \\\\\n\n"
             bd=bd +"\n\\newpage\n\n"
 
+
+
+        print ("  - Listado de películas sin año")
+        # ORDENADAS ALFABETICAMENTE
+        withoutyear=self.films_without_year()
+        if withoutyear.length()>0:
+            bd=bd + "\section{"+_("Films without year") +"}\n"
+            bd = bd + _("There are {} collection films without year. You should add the year in the movie and cover file and run mymoviebook --insert again.").format(withoutyear.length()) + "\\par\n"
+            for fi in withoutyear.arr:
+                bd=bd + "\\begin{tabular}{m{2.3cm} m{15cm}}\n"
+                bd=bd + "{0} & {1}. (~\\nameref{{sec:{2}}} )\\\\\n".format(fi.tex_cover(2.2,2.2), string2tex(fi.name), fi.id_dvd)
+                bd = bd + "\\end{tabular} \\\\\n\n"
+            bd=bd +"\\newpage\n\n"
+
+
         footer=" \
         \end{document} \
         "
@@ -318,6 +334,15 @@ class SetFilms(ObjectManager_With_IdName):
     def delete_all_films(self):
         for f in self.arr:
             f.delete()
+        
+    ## Returns a setfilms with the films without year
+    def films_without_year(self):        
+        result=SetFilms(self.mem)
+        for f in self.arr:
+            if f.year==None:
+                result.append(f)
+        result.order_by_name()
+        return result
 
     def distinct_id_dvd(self):
         """Returns a ordered list with distinct id_dvd in the set"""
@@ -358,15 +383,6 @@ def string2shell(cadena):
     cadena=cadena.replace("'","\\'")
     return cadena
 
-def Yn(pregunta):
-    while True:
-        user_input = input(pregunta +" [Y|n]").strip().lower()
-        if not user_input or user_input == 'y':
-            return True
-        elif user_input == 'n':
-            return False
-        else:
-            print ("Please enter 'Y', 'n'")
 
 def string2tex(cadena):
     cadena=str(cadena)
@@ -385,7 +401,7 @@ def signal_handler(signal, frame):
 ### MAIN SCRIPT ###
 def main(parameters=None):
     signal(SIGINT, signal_handler)
-    parser=argparse.ArgumentParser(prog='mymoviebook', description=_('Generate your personal movie collection book'), epilog=_("Developed by Mariano Muñoz 2012-{}".format(__versiondate__.year)), formatter_class=argparse.RawTextHelpFormatter)
+    parser=argparse.ArgumentParser(prog='mymoviebook', description=_('Generate your personal movie collection book'), epilog=_("Developed by Mariano Muñoz 2012-{}".format(__versiondate__.year) + " \xa9"), formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument('--version', action='version', version=__version__)
 
     group = parser.add_mutually_exclusive_group(required=True)
@@ -445,7 +461,7 @@ def main(parameters=None):
             print (_("Current directory is not numeric"))
             sys.exit(100)
 
-        if Yn(_("The id of the directory to add is '{}'. Do you want to continue?").format(id))==False:
+        if input_YN(_("The id of the directory to add is '{}'. Do you want to continue?").format(id))==False:
             sys.exit(100)
 
 
@@ -460,7 +476,7 @@ def main(parameters=None):
 
         # "Chequeando si hay registros en la base de datos del dispositivo " + str(id)
         if len(sf.arr)>0:
-            if Yn("+ " + _("Do you want to overwrite the information of directory '{}'?").format(id))==False:
+            if input_YN("+ " + _("Do you want to overwrite the information of directory '{}'?").format(id))==False:
                 sys.exit(100)
             else:
                 print ("   - " + _("Deleting information..."))

@@ -1,13 +1,6 @@
 ## @brief Package to manage postgresql admin functionss
-## THIS IS FROM XULPYMONEY PACKAGE IF YOU NEED THIS MODULE PLEASE SYNC IT FROM THERE, FOR EXAMPLE
-## THIS FILE HAS BEEN DOWNLOADED AT 2019-02-10 07:32:26.103245 FROM https://github.com/Turulomio/xulpymoney/xulpymoney/admin_pg.py.
-## @code
-##       print ("Copying admin_pg.py from Xulpymoney project")
-##        os.chdir("your directory)
-##        os.remove("admin_pg.py")
-##        os.system("wget https://raw.githubusercontent.com/Turulomio/xulpymoney/master/xulpymoney/admin_pg.py  --no-clobber")
-##        os.system("sed -i -e '3i ## THIS FILE HAS BEEN DOWNLOADED AT {} FROM https://github.com/Turulomio/xulpymoney/xulpymoney/admin_pg.py.' admin_pg.py".format(datetime.datetime.now()))
-## @encode
+## THIS IS FILE IS FROM https://github.com/turulomio/reusingcode IF YOU NEED TO UPDATE IT PLEASE MAKE A PULL REQUEST IN THAT PROJECT
+## DO NOT UPDATE IT IN YOUR CODE IT WILL BE REPLACED USING FUNCTION IN README
 
 import io
 import logging
@@ -25,16 +18,24 @@ class AdminPG:
         if self.con.is_superuser():
             cur=self.con.cursor()
             cur.execute("create database {0};".format(database))
+            return True
         else:
             logging.critical ("You need to be superuser to create database")
             return False
         
-        
+    #Creates a new database and return conexion to new database
+    def create_new_database_and_return_new_conexion(self,  database):
+        if self.db_exists(database)==True:
+            print("Database exists")
+            exit(1)
+        self.create_db(database)
+        return self.connect_to_database(database)
+
     def db_exists(self, database):
         """Hace conexi´on automatica a template usando la con """
         cur=self.con.cursor()
         cur.execute("SELECT 1 AS result FROM pg_database WHERE datname=%s", (database, ))
-        
+
         if cur.rowcount==1:
             cur.close()
             return True
@@ -50,7 +51,7 @@ class AdminPG:
         
         if self.con.is_superuser():
             try:
-                cur=self.cursor()
+                cur=self.con.cursor()
                 cur.execute("drop database {0};".format(database))
             except:
                 logging.error ("Error in drop()")
@@ -71,18 +72,16 @@ class AdminPG:
         con.connect()
         return con
         
-    def copy(self, con_origin, sql,  table_destiny ):
-        """Used to copy between tables, and sql to table_destiny, table origin and destiny must have the same structure"""
-        if sql.__class__==bytes:
-            sql=sql.decode('UTF-8')
+    ## Used to copy between tables, and sql to table_destiny, table origin and destiny must have the same structure
+    def copy(self, con_origin, con_destiny, sql_origin,  table_destiny , schema="public."):
+        if sql_origin.__class__==bytes:
+            sql_origin=sql_origin.decode('UTF-8')
         f=io.StringIO()
         cur_origin=con_origin.cursor()
-        cur_origin.copy_expert("copy ({}) to stdout".format(sql), f)
+        cur_origin.copy_expert("copy ({}) to stdout".format(sql_origin), f)
         cur_origin.close()
         f.seek(0)
-        cur_destiny=self.con.cursor()
-        cur_destiny.copy_from(f, table_destiny)
+        cur_destiny=con_destiny.cursor()
+        cur_destiny.copy_from(f, schema + table_destiny)
         cur_destiny.close()
-        f.seek(0)
-        logging.debug (f.read())
         f.close()

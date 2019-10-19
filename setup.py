@@ -154,18 +154,14 @@ class Compile(Command):
         pass
 
     def run(self):
-        import datetime
-        print ("Copying libmanagers.py anc connection_pg from Xulpymoney project")
-        os.chdir("mymoviebook")
-        os.remove("libmanagers.py")
-        os.remove("connection_pg.py")
-        os.remove("admin_pg.py")
-        os.system("wget https://raw.githubusercontent.com/turulomio/xulpymoney/master/xulpymoney/libmanagers.py  --no-clobber")
-        os.system("wget https://raw.githubusercontent.com/turulomio/xulpymoney/master/xulpymoney/connection_pg.py  --no-clobber")
-        os.system("wget https://raw.githubusercontent.com/turulomio/xulpymoney/master/xulpymoney/admin_pg.py  --no-clobber")
-        os.system("sed -i -e '3i ## THIS FILE HAS BEEN DOWNLOADED AT {} FROM https://github.com/Turulomio/xulpymoney/xulpymoney/libmanagers.py.' libmanagers.py".format(datetime.datetime.now()))
-        os.system("sed -i -e '3i ## THIS FILE HAS BEEN DOWNLOADED AT {} FROM https://github.com/Turulomio/xulpymoney/xulpymoney/connection_pg.py.' connection_pg.py".format(datetime.datetime.now()))
-        os.system("sed -i -e '3i ## THIS FILE HAS BEEN DOWNLOADED AT {} FROM https://github.com/Turulomio/xulpymoney/xulpymoney/admin_pg.py.' admin_pg.py".format(datetime.datetime.now()))
+        from sys import path
+        path.append("mymoviebook")
+        from github import download_from_github
+        download_from_github('turulomio','reusingcode','python/admin_pg.py', 'mymoviebook')
+        download_from_github('turulomio','reusingcode','python/github.py', 'mymoviebook')
+        download_from_github('turulomio','reusingcode','python/libmanagers.py', 'mymoviebook')
+        download_from_github('turulomio','reusingcode','python/connection_pg.py', 'mymoviebook')
+        download_from_github('turulomio','reusingcode','python/text_inputs.py', 'mymoviebook')
 
 class Video(Command):
     description = "Create video/GIF from console ouput"
