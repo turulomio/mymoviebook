@@ -94,6 +94,10 @@ Dependencies
 
 Changelog
 =========
+1.5.1
+-----
+- Removed demo files from distribution package.
+
 1.5.0
 -----
 - Films without year are showed in PDF report.
