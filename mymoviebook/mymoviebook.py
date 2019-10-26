@@ -105,11 +105,24 @@ class Film:
         return '/tmp/mymoviebook/{}.jpg'.format(self.id)
 
     ## Includes the cover in latex. Remember that to scape {} in python strings, you need to double them {{}}
+    ## Used to add the image and the link
     ## @param width Float with the width of the cover
     ## @param height Float with the height of the cover
     ## @return string
     def tex_cover(self,width,height):
         return  "\\href{{{0}}}{{ \\includegraphics[width={1}cm,height={2}cm]{{{3}.jpg}}}}".format(self.name2query_filmaffinity(), width, height, self.id)
+        
+    ## Includes the cover in latex. Remember that to scape {} in python strings, you need to double them {{}}
+    ## Used for one  cover in a different paragrahp
+    ## @param width Float with the width of the cover
+    ## @param height Float with the height of the cover
+    ## @return string
+    def tex_cover_tabular(self,width=2.2,height=2.2):
+        bd=""       
+        bd=bd + "\\begin{tabular}{m{2.3cm} m{15cm}}\n"
+        bd=bd + "{0} & {1}. (~\\nameref{{sec:{2}}} )\\\\\n".format(self.tex_cover(width, height), string2tex(self.name), self.id_dvd)
+        bd = bd + "\\end{tabular} \\\\\n\n"
+        return bd
 
     def save(self):
         if self.id==None:
@@ -125,7 +138,7 @@ class Film:
             cur.close()
             return True
 
-class SetFilms(ObjectManager_With_IdName):
+class FilmManager(ObjectManager_With_IdName):
     def __init__(self, mem):
         ObjectManager_With_IdName.__init__(self)
         self.mem=mem
@@ -196,7 +209,7 @@ class SetFilms(ObjectManager_With_IdName):
             bd=bd +"\n\\newpage\n\n"
 
 
-        print ("  - Listado de carátulas en pequeño")
+        print (_("  - Films list with small covers"))
 
         bd = bd + "\\setlength{\\parindent}{0cm}\n"
         # LISTADO DE CARATULAS JUNTAS
@@ -211,7 +224,7 @@ class SetFilms(ObjectManager_With_IdName):
         bd=bd +"\n\\newpage\n\n"
 
 
-        print ("  - Listado ordenado alfabéticamente")
+        print (_("  - Films list ordered by title"))
         # ORDENADAS ALFABETICAMENTE
         bd=bd + "\section{"+_("Order by movie title") +"}\n"
         self.order_by_name()
@@ -224,43 +237,44 @@ class SetFilms(ObjectManager_With_IdName):
         bd=bd +"\\newpage\n\n"
 
 
-        print ("  - Listado ordenado por años")
+        print ("  - Ordered by year films list")
         # ORDENADAS POR AÑO
 
         bd = bd + "\\setlength{\\parindent}{1cm}\n"
         bd=bd + "\section{"+ _("Order by movie year") + "}\n"
         for year in reversed(self.distinct_years()):
-            if year=="None":
-                bd=bd + "\\subsection*{" + _("Unknown year") + "}\n" 
-                bd=bd + "\\addcontentsline{toc}{subsection}{" + _("Unknown year") + "}\n" 
-            else:
+            if year!="None":
                 bd=bd + "\\subsection*{"+ _("Year") + " " + year +"}\n" 
                 bd=bd + "\\addcontentsline{toc}{subsection}{" + _("Year") + " " + year + "}\n" 
-            year_films=self.films_in_year(year)
-            if year_films.length()==1:
-                bd = bd + _("There is only one collection film in this year:") + "\\par\n"
-            elif year_films.length()>1:
-                bd = bd + _("There are {} collection films in this year:").format(year_films.length()) + "\\par\n"
-            bd=bd + "\\vspace{0.5cm}\n"
+                year_films=self.films_in_year(year)
+                if year_films.length()==1:
+                    bd = bd + _("There is only one collection film in this year:") + "\\par\n"
+                elif year_films.length()>1:
+                    bd = bd + _("There are {} collection films in this year:").format(year_films.length()) + "\\par\n"
+                bd=bd + "\\vspace{0.5cm}\n"
 
-            for fi in year_films.arr:
-                bd=bd + "\\begin{tabular}{m{2.3cm} m{15cm}}\n"
-                bd=bd + "{0} & {1}. (~\\nameref{{sec:{2}}} )\\\\\n".format(fi.tex_cover(2.2,2.2), string2tex(fi.name), fi.id_dvd)
-                bd = bd + "\\end{tabular} \\\\\n\n"
+                for fi in year_films.arr:
+                    bd=bd + fi.tex_cover_tabular()
             bd=bd +"\n\\newpage\n\n"
 
 
 
-        print ("  - Listado de películas sin año")
-        # ORDENADAS ALFABETICAMENTE
+        print (_("  - Films without year list"))
         withoutyear=self.films_without_year()
         if withoutyear.length()>0:
             bd=bd + "\section{"+_("Films without year") +"}\n"
             bd = bd + _("There are {} collection films without year. You should add the year in the movie and cover file and run mymoviebook --insert again.").format(withoutyear.length()) + "\\par\n"
             for fi in withoutyear.arr:
-                bd=bd + "\\begin{tabular}{m{2.3cm} m{15cm}}\n"
-                bd=bd + "{0} & {1}. (~\\nameref{{sec:{2}}} )\\\\\n".format(fi.tex_cover(2.2,2.2), string2tex(fi.name), fi.id_dvd)
-                bd = bd + "\\end{tabular} \\\\\n\n"
+                bd=bd + fi.tex_cover_tabular()
+            bd=bd +"\\newpage\n\n"
+
+        print (_("  - Duplicated films list"))
+        withoutyear=self.films_duplicated()
+        if withoutyear.length()>0:
+            bd=bd + "\section{"+_("Films without year") +"}\n"
+            bd = bd + _("There are {} collection films without year. You should add the year in the movie and cover file and run mymoviebook --insert again.").format(withoutyear.length()) + "\\par\n"
+            for fi in withoutyear.arr:
+                bd=bd + fi.tex_cover_tabular()
             bd=bd +"\\newpage\n\n"
 
 
@@ -313,7 +327,7 @@ class SetFilms(ObjectManager_With_IdName):
         
         print ("  - Listado ordenado por años")
         odt.header(_("Order by year"), 1)
-        for year in reversed(self.distinct_years()):
+        for year in self.distinct_years():
             if year=="None":
                 odt.header(_("Unknown year"), 2)
             else:
@@ -337,11 +351,23 @@ class SetFilms(ObjectManager_With_IdName):
         
     ## Returns a setfilms with the films without year
     def films_without_year(self):        
-        result=SetFilms(self.mem)
+        result=FilmManager(self.mem)
         for f in self.arr:
             if f.year==None:
                 result.append(f)
         result.order_by_name()
+        return result
+
+    ## Returns a FilmManager with the films duplicated in the database
+    def films_duplicated(self):
+        self.order_by_name()
+        result=FilmManager(self.mem)
+        last=None
+        for f in self.arr:
+            if last!=None and f.name==last.name and f.year==last.year:
+                result.append(f)
+                result.append(last)
+            last=f
         return result
 
     def distinct_id_dvd(self):
@@ -361,8 +387,8 @@ class SetFilms(ObjectManager_With_IdName):
         return sorted(l)
 
     def films_in_id_dvd(self, id_dvd):
-        """Returns a SetFilms with the films in a dvd and sorts them by name"""
-        result=SetFilms(self.mem)
+        """Returns a FilmManager with the films in a dvd and sorts them by name"""
+        result=FilmManager(self.mem)
         for f in self.arr:
             if f.id_dvd==id_dvd:
                 result.arr.append(f)
@@ -370,8 +396,8 @@ class SetFilms(ObjectManager_With_IdName):
         return result
 
     def films_in_year(self, year):
-        """Return a SetFilms with the filmns in a year and sorts them by name"""
-        result=SetFilms(self.mem)
+        """Return a FilmManager with the filmns in a year and sorts them by name"""
+        result=FilmManager(self.mem)
         for f in self.arr:
             if str(f.year)==year:
                 result.append(f)
@@ -471,7 +497,7 @@ def main(parameters=None):
                 print (_("There isn't a movie with the same name '{}'").format(file[:-3]))
                 sys.exit(100)
 
-        sf=SetFilms(mem)
+        sf=FilmManager(mem)
         sf.load("SELECT id_films, savedate, name, id_dvd, cover FROM films, covers WHERE covers.films_id=films.id_films and id_dvd=" + str(id))
 
         # "Chequeando si hay registros en la base de datos del dispositivo " + str(id)
@@ -497,7 +523,7 @@ def main(parameters=None):
         if len(args.output)==0:
             print ("    " + _("You need to add at least one output document. For example: '--output mymoviebook.pdf'"))
             sys.exit(0)
-        sf=SetFilms(mem)
+        sf=FilmManager(mem)
         sf.load("SELECT * FROM films")
         sf.extract_photos()
         if args.format=="PDF":
