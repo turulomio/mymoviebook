@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-11 06:07+0100\n"
+"POT-Creation-Date: 2019-10-26 23:06+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,9 +24,6 @@ msgid "  * Change version and date in version.py"
 msgstr ""
 
 msgid "  * Edit Changelog in README"
-msgstr ""
-
-msgid "If changed restart from first python setup.py doc"
 msgstr ""
 
 msgid "  * Make a new tag in github"
@@ -149,16 +146,19 @@ msgstr ""
 msgid "Index"
 msgstr ""
 
+msgid "  - Films list with small covers"
+msgstr ""
+
 msgid "Small covers"
+msgstr ""
+
+msgid "  - Films list ordered by title"
 msgstr ""
 
 msgid "Order by movie title"
 msgstr ""
 
 msgid "Order by movie year"
-msgstr ""
-
-msgid "Unknown year"
 msgstr ""
 
 msgid "Year"
@@ -168,6 +168,21 @@ msgid "There is only one collection film in this year:"
 msgstr ""
 
 msgid "There are {} collection films in this year:"
+msgstr ""
+
+msgid "  - Films without year list"
+msgstr ""
+
+msgid "Films without year"
+msgstr ""
+
+msgid "There are {} collection films without year."
+msgstr ""
+
+msgid "  - Duplicated films list"
+msgstr ""
+
+msgid "There are {} collection films duplicated."
 msgstr ""
 
 msgid "Movie list"
@@ -183,6 +198,9 @@ msgid "Order by name"
 msgstr ""
 
 msgid "Order by year"
+msgstr ""
+
+msgid "Unknown year"
 msgstr ""
 
 msgid "Year {}"
@@ -246,4 +264,13 @@ msgid "Getting images"
 msgstr ""
 
 msgid "You need to add at least one output document. For example: '--output mymoviebook.pdf'"
+msgstr ""
+
+msgid "Y"
+msgstr ""
+
+msgid "N"
+msgstr ""
+
+msgid "Please enter '{}' or '{}'"
 msgstr ""

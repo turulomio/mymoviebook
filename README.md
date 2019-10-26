@@ -94,6 +94,11 @@ Dependencies
 
 Changelog
 =========
+1.5.0
+-----
+- Films without year are showed in PDF report.
+- Duplicated films are showed in PDF report.
+
 1.4.0
 -----
 - Captured error pressing CTRL+C

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RecPermissions\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-11 06:06+0100\n"
+"POT-Creation-Date: 2019-10-26 23:05+0200\n"
 "PO-Revision-Date: 2018-10-22 18:51+0100\n"
 "Last-Translator: root <turulomio@yahoo.es>\n"
 "Language-Team: Spanish\n"
@@ -26,9 +26,6 @@ msgstr "  * Cambiar la versión y la fecha en version.py"
 
 msgid "  * Edit Changelog in README"
 msgstr "  * Modificar el Changelog en README"
-
-msgid "If changed restart from first python setup.py doc"
-msgstr "Si se cambia, reiniciar desde el primer 'python setup.py doc'"
 
 msgid "  * Make a new tag in github"
 msgstr "  * Hacer un nuevo tag en GitHub"
@@ -150,17 +147,20 @@ msgstr "Carátulas grandes"
 msgid "Index"
 msgstr "Índice"
 
+msgid "  - Films list with small covers"
+msgstr "  - Listado de películas con carátulas pequeñas"
+
 msgid "Small covers"
 msgstr "Pequeñas carátulas"
+
+msgid "  - Films list ordered by title"
+msgstr "  - Listado de películas ordenadas por título"
 
 msgid "Order by movie title"
 msgstr "Ordenadas por el título de la película"
 
 msgid "Order by movie year"
 msgstr "Ordenadas por el año de la película"
-
-msgid "Unknown year"
-msgstr "Año desconocido"
 
 msgid "Year"
 msgstr "Año"
@@ -170,6 +170,21 @@ msgstr "Hay solo una película de la colección en este año:"
 
 msgid "There are {} collection films in this year:"
 msgstr "Hay {} películas de la colección en este año:"
+
+msgid "  - Films without year list"
+msgstr "  - Listado de películas sin año"
+
+msgid "Films without year"
+msgstr "Películas sin año"
+
+msgid "There are {} collection films without year."
+msgstr "Hay {} películas sin año en la colección."
+
+msgid "  - Duplicated films list"
+msgstr "  - Listado de películas duplicadas"
+
+msgid "There are {} collection films duplicated."
+msgstr "Hay {} películas duplicadas en la colección."
 
 msgid "Movie list"
 msgstr "Listado de películas"
@@ -185,6 +200,9 @@ msgstr "Ordenado por nombre"
 
 msgid "Order by year"
 msgstr "Ordenado por año"
+
+msgid "Unknown year"
+msgstr "Año desconocido"
 
 msgid "Year {}"
 msgstr "Año {}"
@@ -249,5 +267,11 @@ msgstr "Extrayendo las imágenes"
 msgid "You need to add at least one output document. For example: '--output mymoviebook.pdf'"
 msgstr "Necesitas añadir por lo menos un documento de salida. Por ejemplo: '--output mymoviebook.pdf'"
 
-#~ msgid "This is a video to show how to use 'mymoviebook' command"
-#~ msgstr "Este video muestra cómo usar el comando 'mymoviebook'"
+msgid "Y"
+msgstr "S"
+
+msgid "N"
+msgstr "N"
+
+msgid "Please enter '{}' or '{}'"
+msgstr "Por favor introduce '{}' o '{}'"

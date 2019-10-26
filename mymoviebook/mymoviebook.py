@@ -256,7 +256,7 @@ class FilmManager(ObjectManager_With_IdName):
         withoutyear=self.films_without_year()
         if withoutyear.length()>0:
             bd=bd + "\section{"+_("Films without year") +"}\n"
-            bd = bd + _("There are {} collection films without year. You should add the year in the movie and cover file and run mymoviebook --insert again.").format(withoutyear.length()) + "\\par\n"
+            bd = bd + _("There are {} collection films without year.").format(withoutyear.length()) + "\\par\n"
             for fi in withoutyear.arr:
                 bd=bd + fi.tex_cover_tabular()
             bd=bd +"\\newpage\n\n"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RecPermissions\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-11 06:06+0100\n"
+"POT-Creation-Date: 2019-10-26 23:05+0200\n"
 "PO-Revision-Date: 2018-11-03 07:11+0100\n"
 "Last-Translator: root <turulomio@yahoo.es>\n"
 "Language-Team: French\n"
@@ -25,9 +25,6 @@ msgstr " * Changer la version et la date dans version.py"
 
 msgid "  * Edit Changelog in README"
 msgstr " * Editer le Changelog dans le README"
-
-msgid "If changed restart from first python setup.py doc"
-msgstr "S'il y a eu modification, recommencer depuis le premier document python setup.py"
 
 msgid "  * Make a new tag in github"
 msgstr " * Faire un nouveau tag dans GitHub"
@@ -149,16 +146,19 @@ msgstr ""
 msgid "Index"
 msgstr ""
 
+msgid "  - Films list with small covers"
+msgstr ""
+
 msgid "Small covers"
+msgstr ""
+
+msgid "  - Films list ordered by title"
 msgstr ""
 
 msgid "Order by movie title"
 msgstr ""
 
 msgid "Order by movie year"
-msgstr ""
-
-msgid "Unknown year"
 msgstr ""
 
 msgid "Year"
@@ -168,6 +168,21 @@ msgid "There is only one collection film in this year:"
 msgstr ""
 
 msgid "There are {} collection films in this year:"
+msgstr ""
+
+msgid "  - Films without year list"
+msgstr ""
+
+msgid "Films without year"
+msgstr ""
+
+msgid "There are {} collection films without year."
+msgstr ""
+
+msgid "  - Duplicated films list"
+msgstr ""
+
+msgid "There are {} collection films duplicated."
 msgstr ""
 
 msgid "Movie list"
@@ -183,6 +198,9 @@ msgid "Order by name"
 msgstr ""
 
 msgid "Order by year"
+msgstr ""
+
+msgid "Unknown year"
 msgstr ""
 
 msgid "Year {}"
@@ -247,6 +265,18 @@ msgstr ""
 
 msgid "You need to add at least one output document. For example: '--output mymoviebook.pdf'"
 msgstr ""
+
+msgid "Y"
+msgstr ""
+
+msgid "N"
+msgstr ""
+
+msgid "Please enter '{}' or '{}'"
+msgstr ""
+
+#~ msgid "If changed restart from first python setup.py doc"
+#~ msgstr "S'il y a eu modification, recommencer depuis le premier document python setup.py"
 
 #~ msgid "User used to change files owner."
 #~ msgstr "Utilisateur utilisé pour changer le propriétaire des fichiers."
