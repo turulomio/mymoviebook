@@ -116,11 +116,15 @@ class Film:
     ## Used for one  cover in a different paragrahp
     ## @param width Float with the width of the cover
     ## @param height Float with the height of the cover
+    ## @param show_name Boolean. If True shows the name and the id_dvd. If False only show id_dvd
     ## @return string
-    def tex_cover_tabular(self,width=2.2,height=2.2):
+    def tex_cover_tabular(self,width=2.2,height=2.2, show_name=True):
         bd=""       
         bd=bd + "\\begin{tabular}{m{2.3cm} m{15cm}}\n"
-        bd=bd + "{0} & {1}. (~\\nameref{{sec:{2}}} )\\\\\n".format(self.tex_cover(width, height), string2tex(self.name), self.id_dvd)
+        if show_name==True:
+            bd=bd + "{0} & {1}. (~\\nameref{{sec:{2}}} )\\\\\n".format(self.tex_cover(width, height), string2tex(self.name), self.id_dvd)
+        else:
+            bd=bd + "{0} & ~\\nameref{{sec:{1}}}\\\\\n".format(self.tex_cover(width, height), self.id_dvd)#Reference to DVD page
         bd = bd + "\\end{tabular} \\\\\n\n"
         return bd
 
@@ -130,12 +134,9 @@ class Film:
                 name=self.name
             else:
                 name="{}. {}".format(self.name,self.year)
-            cur=self.mem.con.cursor()
-            cur.execute("insert into films (savedate, name, id_dvd) values (%s, %s, %s) returning id_films",(self.savedate, name, self.id_dvd))
-            self.id=cur.fetchone()[0]
+            self.id=self.mem.con.cursor_one_field("insert into films (savedate, name, id_dvd) values (%s, %s, %s) returning id_films",(self.savedate, name, self.id_dvd))
             bytea=open(self.coverpath, "rb").read()
-            cur.execute("insert into covers (films_id, cover) values (%s, %s)",(self.id, bytea))
-            cur.close()
+            self.mem.con.execute("insert into covers (films_id, cover) values (%s, %s)",(self.id, bytea))
             return True
 
 class FilmManager(ObjectManager_With_IdName):
@@ -190,10 +191,8 @@ class FilmManager(ObjectManager_With_IdName):
         bd=bd +"\\newpage\n"
 
         print ("  - " + _("List by index"))
-        # LISTADO DE DVD POR PAGINA
         bd = bd + "\section{"+ _("Big covers") +"}\n"
         for id_dvd in reversed(self.distinct_id_dvd()):
-            # Son necesarias las dos
             bd=bd + "\\subsection*{"+ _("Index") + " " + str(id_dvd)+"}\n" 
             bd=bd + "\\label{{sec:{0}}}\n".format(id_dvd)
             bd=bd + "\\addcontentsline{toc}{subsection}{"+ _("Index") + " " + str(id_dvd)+"}\n" 
@@ -212,7 +211,6 @@ class FilmManager(ObjectManager_With_IdName):
         print (_("  - Films list with small covers"))
 
         bd = bd + "\\setlength{\\parindent}{0cm}\n"
-        # LISTADO DE CARATULAS JUNTAS
         bd=bd + "\section{"+ _("Small covers") +"}\n"
         for id_dvd in reversed(self.distinct_id_dvd()):
             bd=bd + "\\begin{tabular}{m{2.1cm} m{2.1cm} m{2.1cm} m{2.1cm} m{2.1cm} m{2.1cm} m{2.1cm}}\n"
@@ -225,24 +223,19 @@ class FilmManager(ObjectManager_With_IdName):
 
 
         print (_("  - Films list ordered by title"))
-        # ORDENADAS ALFABETICAMENTE
         bd=bd + "\section{"+_("Order by movie title") +"}\n"
         self.order_by_name()
         for f in self.arr:
             bd=bd + "\\subsection*{"+ string2tex(f) + "} \n"
             bd=bd + "\\addcontentsline{{toc}}{{subsection}}{{{0}}}\n".format(string2tex(f))
-            bd=bd + "\\begin{tabular}{m{2.3cm} m{15cm}}\n"
-            bd=bd + f.tex_cover(2.2,2.2) + " & ~\\nameref{{sec:{0}}}\\\\\n".format(f.id_dvd)#Reference to DVD page
-            bd = bd + "\\end{tabular}\n\n"
+            bd=bd + f.tex_cover_tabular(show_name=False)
         bd=bd +"\\newpage\n\n"
 
 
         print ("  - Ordered by year films list")
-        # ORDENADAS POR AÑO
-
         bd = bd + "\\setlength{\\parindent}{1cm}\n"
         bd=bd + "\section{"+ _("Order by movie year") + "}\n"
-        for year in reversed(self.distinct_years()):
+        for year in self.distinct_years():
             if year!="None":
                 bd=bd + "\\subsection*{"+ _("Year") + " " + year +"}\n" 
                 bd=bd + "\\addcontentsline{toc}{subsection}{" + _("Year") + " " + year + "}\n" 
@@ -269,11 +262,11 @@ class FilmManager(ObjectManager_With_IdName):
             bd=bd +"\\newpage\n\n"
 
         print (_("  - Duplicated films list"))
-        withoutyear=self.films_duplicated()
-        if withoutyear.length()>0:
+        duplicated=self.films_duplicated()
+        if duplicated.length()>0:
             bd=bd + "\section{"+_("Films without year") +"}\n"
-            bd = bd + _("There are {} collection films without year. You should add the year in the movie and cover file and run mymoviebook --insert again.").format(withoutyear.length()) + "\\par\n"
-            for fi in withoutyear.arr:
+            bd = bd + _("There are {} collection films duplicated.").format(duplicated.length()) + "\\par\n"
+            for fi in duplicated.arr:
                 bd=bd + fi.tex_cover_tabular()
             bd=bd +"\\newpage\n\n"
 
@@ -507,14 +500,12 @@ def main(parameters=None):
             else:
                 print ("   - " + _("Deleting information..."))
                 sf.delete_all_films()
-        global cur
-        cur=mem.con.cursor()
+                
         print ("+ "+ _("Adding movies to the database"))
         for file in glob.glob( os.getcwd()+ "/*.jpg" ):
             f=Film(mem).init__create(datetime.date.today(), file[len(os.getcwd())+1:-4], file,id)
             f.save()
             print ("    - {0}".format(file[len(os.getcwd())+1:-4]))
-        cur.close()
         mem.con.commit()
 
     elif args.generate==True:
