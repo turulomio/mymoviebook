@@ -116,8 +116,9 @@ class Doc(Command):
         man.paragraph(_("This app has the following mandatory parameters:"), 1)
         man.paragraph("--insert", 2, True)
         man.paragraph(_("Inserts a directory with movies with the index of the last directory numeric name."), 3)
-        man.paragraph("--generate", 2, True)
+        man.paragraph("--report", 2, True)
         man.paragraph(_("Generates the movie collection document"), 3)
+        man.paragraph(_("Path where the movie book it's going to be generated. You can use this parameter as many times as you want."), 3)
 
         man.paragraph(_("Postgresql database connection parameters:"), 1)
         man.paragraph("--user", 2, True)
@@ -128,8 +129,6 @@ class Doc(Command):
         man.paragraph(_("Database server. By default '127.0.0.1'."), 3)
         man.paragraph("--db", 2, True)
         man.paragraph(_("Database name. By default 'mymoviebook'."), 3)
-        man.paragraph("--output", 2, True)
-        man.paragraph(_("Path where the movie book it's going to be generated. You can use this parameter as many times as you want."), 3)
         man.paragraph("--format", 2, True)
         man.paragraph(_("You can choose PDF or ODT arguments. PDF is used by default."), 3)
 
@@ -137,9 +136,9 @@ class Doc(Command):
         man.paragraph(_("Insert movies with index 23"), 2, True)
         man.paragraph("mymoviebook --insert /path/to/my/movies/23", 3)
         man.paragraph(_("This command insert in database all movies (up to 6) in 23 directory. Each film must have it's cover with the same filename."), 3)
-        man.paragraph(_("Generate a book with all movies in the database"), 2, True)
-        man.paragraph("mymoviebook --generate --output /home/user/mymoviecollection.pdf", 3)
-        man.paragraph(_("This command generates a movie book in the output path."), 3)
+        man.paragraph(_("Generate a book with all movies in the database in two different directories"), 2, True)
+        man.paragraph("mymoviebook --report /home/user/mymoviecollection.pdf  --report /home/user2/mymoviecollection.pdf", 3)
+        man.paragraph(_("This command generates your movie book in the report path."), 3)
         man.save()
 
 
@@ -159,6 +158,9 @@ class Compile(Command):
         path.append("mymoviebook")
         from github import download_from_github
         download_from_github('turulomio','reusingcode','python/admin_pg.py', 'mymoviebook')
+        download_from_github('turulomio','reusingcode','python/casts.py', 'mymoviebook')
+        download_from_github('turulomio','reusingcode','python/datetime_functions.py', 'mymoviebook')
+        download_from_github('turulomio','reusingcode','python/decorators.py', 'mymoviebook')
         download_from_github('turulomio','reusingcode','python/github.py', 'mymoviebook')
         download_from_github('turulomio','reusingcode','python/libmanagers.py', 'mymoviebook')
         download_from_github('turulomio','reusingcode','python/connection_pg.py', 'mymoviebook')

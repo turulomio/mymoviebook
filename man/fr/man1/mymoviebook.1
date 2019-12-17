@@ -1,4 +1,4 @@
-.TH MYMOVIEBOOK 1 2019\-10\-26
+.TH MYMOVIEBOOK 1 2019\-12\-17
 .SH NAME
 
 .B mymoviebook:
@@ -24,12 +24,18 @@ Inserts a directory with movies with the index of the last directory numeric nam
 .RE
 .PP
 .RS
-.B \-\-generate
+.B \-\-report
 .RE
 .PP
 .RS
 .RS
 Generates the movie collection document
+.RE
+.RE
+.PP
+.RS
+.RS
+Path where the movie book it's going to be generated. You can use this parameter as many times as you want.
 .RE
 .RE
 .PP
@@ -76,16 +82,6 @@ Database name. By default 'mymoviebook'.
 .RE
 .PP
 .RS
-.B \-\-output
-.RE
-.PP
-.RS
-.RS
-Path where the movie book it's going to be generated. You can use this parameter as many times as you want.
-.RE
-.RE
-.PP
-.RS
 .B \-\-format
 .RE
 .PP
@@ -114,17 +110,17 @@ This command insert in database all movies (up to 6) in 23 directory. Each film 
 .RE
 .PP
 .RS
-.B Generate a book with all movies in the database
+.B Generate a book with all movies in the database in two different directories
 .RE
 .PP
 .RS
 .RS
-mymoviebook \-\-generate \-\-output /home/user/mymoviecollection.pdf
+mymoviebook \-\-report /home/user/mymoviecollection.pdf  \-\-report /home/user2/mymoviecollection.pdf
 .RE
 .RE
 .PP
 .RS
 .RS
-This command generates a movie book in the output path.
+This command generates your movie book in the report path.
 .RE
 .RE

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-26 23:20+0200\n"
+"POT-Creation-Date: 2019-12-17 07:23+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -53,6 +53,9 @@ msgstr ""
 msgid "Generates the movie collection document"
 msgstr ""
 
+msgid "Path where the movie book it's going to be generated. You can use this parameter as many times as you want."
+msgstr ""
+
 msgid "Postgresql database connection parameters:"
 msgstr ""
 
@@ -68,9 +71,6 @@ msgstr ""
 msgid "Database name. By default 'mymoviebook'."
 msgstr ""
 
-msgid "Path where the movie book it's going to be generated. You can use this parameter as many times as you want."
-msgstr ""
-
 msgid "You can choose PDF or ODT arguments. PDF is used by default."
 msgstr ""
 
@@ -83,10 +83,10 @@ msgstr ""
 msgid "This command insert in database all movies (up to 6) in 23 directory. Each film must have it's cover with the same filename."
 msgstr ""
 
-msgid "Generate a book with all movies in the database"
+msgid "Generate a book with all movies in the database in two different directories"
 msgstr ""
 
-msgid "This command generates a movie book in the output path."
+msgid "This command generates your movie book in the report path."
 msgstr ""
 
 msgid "You need ttyrecgenerator installed to generate videos"
@@ -116,96 +116,6 @@ msgstr ""
 msgid "MyMovieBook app is older than database. Please update it."
 msgstr ""
 
-msgid "My movie book"
-msgstr ""
-
-msgid "Title"
-msgstr ""
-
-msgid "This movie book has been generated using version {} of MyMovieBook."
-msgstr ""
-
-msgid "It's an opensource application published under GPL-3 license."
-msgstr ""
-
-msgid "The main page of the project is in \\href{https://github.com/turulomio/mymoviebook}{GitHub}."
-msgstr ""
-
-msgid "This book has {} movies and it was generated at {}."
-msgstr ""
-
-msgid "If you make click over a film cover, you'll be redirected to FilmAffinity portal to try to get information of the movie."
-msgstr ""
-
-msgid "List by index"
-msgstr ""
-
-msgid "Big covers"
-msgstr ""
-
-msgid "Index"
-msgstr ""
-
-msgid "  - Films list with small covers"
-msgstr ""
-
-msgid "Small covers"
-msgstr ""
-
-msgid "  - Films list ordered by title"
-msgstr ""
-
-msgid "Order by movie title"
-msgstr ""
-
-msgid "Order by movie year"
-msgstr ""
-
-msgid "Year"
-msgstr ""
-
-msgid "There is only one collection film in this year:"
-msgstr ""
-
-msgid "There are {} collection films in this year:"
-msgstr ""
-
-msgid "  - Films without year list"
-msgstr ""
-
-msgid "Films without year"
-msgstr ""
-
-msgid "There are {} collection films without year."
-msgstr ""
-
-msgid "  - Duplicated films list"
-msgstr ""
-
-msgid "There are {} collection films duplicated."
-msgstr ""
-
-msgid "Movie list"
-msgstr ""
-
-msgid "This list has {} films and was generated at {} with MyMovieBook-{}"
-msgstr ""
-
-msgid "Index {}"
-msgstr ""
-
-msgid "Order by name"
-msgstr ""
-
-msgid "Order by year"
-msgstr ""
-
-msgid "Unknown year"
-msgstr ""
-
-msgid "Year {}"
-msgstr ""
-
 msgid "You pressed 'Ctrl+C', exiting..."
 msgstr ""
 
@@ -218,16 +128,13 @@ msgstr ""
 msgid "Insert films from current numbered directory"
 msgstr ""
 
-msgid "Generate films documentation"
+msgid "Films report are generated in this path. Can be called several times"
 msgstr ""
 
 msgid "Creates a new postgresql database, checking if already exists. Copy MyMovieBook schema on it"
 msgstr ""
 
-msgid "Generate command parameters"
-msgstr ""
-
-msgid "Path to the output document"
+msgid "Other parameters"
 msgstr ""
 
 msgid "select output format. Default is PDF"
@@ -261,9 +168,6 @@ msgid "Adding movies to the database"
 msgstr ""
 
 msgid "Getting images"
-msgstr ""
-
-msgid "You need to add at least one output document. For example: '--output mymoviebook.pdf'"
 msgstr ""
 
 msgid "Y"

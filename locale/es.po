@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RecPermissions\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-26 23:05+0200\n"
+"POT-Creation-Date: 2019-12-17 07:23+0100\n"
 "PO-Revision-Date: 2018-10-22 18:51+0100\n"
 "Last-Translator: root <turulomio@yahoo.es>\n"
 "Language-Team: Spanish\n"
@@ -54,6 +54,9 @@ msgstr "Añade un directorio con películas cuyo índice es el nombre numérico 
 msgid "Generates the movie collection document"
 msgstr "Genera el documento con la colección de películas"
 
+msgid "Path where the movie book it's going to be generated. You can use this parameter as many times as you want."
+msgstr "Ruta donde se va a crear el libro de películas. Puedes usar este parámetro tantas veces como quieras."
+
 msgid "Postgresql database connection parameters:"
 msgstr "Parámetros de conexión a la base de datos Postgresql"
 
@@ -69,9 +72,6 @@ msgstr "Servidor de la base de datos. Por defecto '127.0.0.1'"
 msgid "Database name. By default 'mymoviebook'."
 msgstr "Nombre de la base de datos. Por defecto 'mymoviebook'"
 
-msgid "Path where the movie book it's going to be generated. You can use this parameter as many times as you want."
-msgstr "Ruta donde se va a crear el libro de películas. Puedes usar este parámetro tantas veces como quieras."
-
 msgid "You can choose PDF or ODT arguments. PDF is used by default."
 msgstr "Puedes elegir PDF ó ODT como argumentos. PDF es usado por defecto."
 
@@ -84,11 +84,11 @@ msgstr "Añade películas con el índice 23"
 msgid "This command insert in database all movies (up to 6) in 23 directory. Each film must have it's cover with the same filename."
 msgstr "Este comando añade a la base de datos hasta 6 películas del directorio 23. Cada película debe tener su carátula con el mismo nombre."
 
-msgid "Generate a book with all movies in the database"
-msgstr "Genera un libro con todas las películas en la base de datos"
+msgid "Generate a book with all movies in the database in two different directories"
+msgstr ""
 
-msgid "This command generates a movie book in the output path."
-msgstr "Este comando genera un libro de películas en la ruta de salida."
+msgid "This command generates your movie book in the report path."
+msgstr ""
 
 msgid "You need ttyrecgenerator installed to generate videos"
 msgstr "Necesitas instalar 'ttyrecgenerator' para generar videos"
@@ -117,96 +117,6 @@ msgstr "La base de datos de MyMovieBook necesita ser actualizada. Por favor aute
 msgid "MyMovieBook app is older than database. Please update it."
 msgstr "La aplicación MyMovieBook es más antigua que la base de datos. Por favor actualízala."
 
-msgid "My movie book"
-msgstr "Mi libro de películas"
-
-msgid "Title"
-msgstr "Título"
-
-msgid "This movie book has been generated using version {} of MyMovieBook."
-msgstr "Este libro de películas ha sido generado usando la versión {} de MyMovieBook."
-
-msgid "It's an opensource application published under GPL-3 license."
-msgstr "Es una aplicación de código abierto publicada bajo licencia GPL-3."
-
-msgid "The main page of the project is in \\href{https://github.com/turulomio/mymoviebook}{GitHub}."
-msgstr "La página principal del proyecto se encuentra en \\href{https://github.com/turulomio/mymoviebook}{GitHub}."
-
-msgid "This book has {} movies and it was generated at {}."
-msgstr "Este libro tiene {} películas y se generó a las {}."
-
-msgid "If you make click over a film cover, you'll be redirected to FilmAffinity portal to try to get information of the movie."
-msgstr "Si haces click sobre una carátula, serás redirigido al portal de FilmAffinity para intentar conseguir información de la película."
-
-msgid "List by index"
-msgstr "Listado por índice"
-
-msgid "Big covers"
-msgstr "Carátulas grandes"
-
-msgid "Index"
-msgstr "Índice"
-
-msgid "  - Films list with small covers"
-msgstr "  - Listado de películas con carátulas pequeñas"
-
-msgid "Small covers"
-msgstr "Pequeñas carátulas"
-
-msgid "  - Films list ordered by title"
-msgstr "  - Listado de películas ordenadas por título"
-
-msgid "Order by movie title"
-msgstr "Ordenadas por el título de la película"
-
-msgid "Order by movie year"
-msgstr "Ordenadas por el año de la película"
-
-msgid "Year"
-msgstr "Año"
-
-msgid "There is only one collection film in this year:"
-msgstr "Hay solo una película de la colección en este año:"
-
-msgid "There are {} collection films in this year:"
-msgstr "Hay {} películas de la colección en este año:"
-
-msgid "  - Films without year list"
-msgstr "  - Listado de películas sin año"
-
-msgid "Films without year"
-msgstr "Películas sin año"
-
-msgid "There are {} collection films without year."
-msgstr "Hay {} películas sin año en la colección."
-
-msgid "  - Duplicated films list"
-msgstr "  - Listado de películas duplicadas"
-
-msgid "There are {} collection films duplicated."
-msgstr "Hay {} películas duplicadas en la colección."
-
-msgid "Movie list"
-msgstr "Listado de películas"
-
-msgid "This list has {} films and was generated at {} with MyMovieBook-{}"
-msgstr "Este listado tiene {} películas y ha sido generado a las {} con MyMovieBook-{}"
-
-msgid "Index {}"
-msgstr "Índice {}"
-
-msgid "Order by name"
-msgstr "Ordenado por nombre"
-
-msgid "Order by year"
-msgstr "Ordenado por año"
-
-msgid "Unknown year"
-msgstr "Año desconocido"
-
-msgid "Year {}"
-msgstr "Año {}"
-
 msgid "You pressed 'Ctrl+C', exiting..."
 msgstr "Se ha pulsado 'Ctrl+C', saliendo..."
 
@@ -219,17 +129,14 @@ msgstr "Desarrollado por Mariano Muñoz 2012-{}"
 msgid "Insert films from current numbered directory"
 msgstr "Añade las películas del directorio numerado actual"
 
-msgid "Generate films documentation"
-msgstr "Genera la documentación"
+msgid "Films report are generated in this path. Can be called several times"
+msgstr ""
 
 msgid "Creates a new postgresql database, checking if already exists. Copy MyMovieBook schema on it"
 msgstr "Crea una nueva base de datos en postgresql, si no existiera. Copia el esquema de MyMovieBook en ella"
 
-msgid "Generate command parameters"
-msgstr "Parámetros para el comando '--generate'"
-
-msgid "Path to the output document"
-msgstr "Ruta al documento generado"
+msgid "Other parameters"
+msgstr ""
 
 msgid "select output format. Default is PDF"
 msgstr "Selecciona un formato de salida. Por defecto es PDF"
@@ -264,9 +171,6 @@ msgstr "Añadiendo películas a la base de datos"
 msgid "Getting images"
 msgstr "Extrayendo las imágenes"
 
-msgid "You need to add at least one output document. For example: '--output mymoviebook.pdf'"
-msgstr "Necesitas añadir por lo menos un documento de salida. Por ejemplo: '--output mymoviebook.pdf'"
-
 msgid "Y"
 msgstr "S"
 
@@ -275,3 +179,111 @@ msgstr "N"
 
 msgid "Please enter '{}' or '{}'"
 msgstr "Por favor introduce '{}' o '{}'"
+
+#~ msgid "Generate a book with all movies in the database"
+#~ msgstr "Genera un libro con todas las películas en la base de datos"
+
+#~ msgid "This command generates a movie book in the output path."
+#~ msgstr "Este comando genera un libro de películas en la ruta de salida."
+
+#~ msgid "My movie book"
+#~ msgstr "Mi libro de películas"
+
+#~ msgid "Title"
+#~ msgstr "Título"
+
+#~ msgid "This movie book has been generated using version {} of MyMovieBook."
+#~ msgstr "Este libro de películas ha sido generado usando la versión {} de MyMovieBook."
+
+#~ msgid "It's an opensource application published under GPL-3 license."
+#~ msgstr "Es una aplicación de código abierto publicada bajo licencia GPL-3."
+
+#~ msgid "The main page of the project is in \\href{https://github.com/turulomio/mymoviebook}{GitHub}."
+#~ msgstr "La página principal del proyecto se encuentra en \\href{https://github.com/turulomio/mymoviebook}{GitHub}."
+
+#~ msgid "This book has {} movies and it was generated at {}."
+#~ msgstr "Este libro tiene {} películas y se generó a las {}."
+
+#~ msgid "If you make click over a film cover, you'll be redirected to FilmAffinity portal to try to get information of the movie."
+#~ msgstr "Si haces click sobre una carátula, serás redirigido al portal de FilmAffinity para intentar conseguir información de la película."
+
+#~ msgid "List by index"
+#~ msgstr "Listado por índice"
+
+#~ msgid "Big covers"
+#~ msgstr "Carátulas grandes"
+
+#~ msgid "Index"
+#~ msgstr "Índice"
+
+#~ msgid "  - Films list with small covers"
+#~ msgstr "  - Listado de películas con carátulas pequeñas"
+
+#~ msgid "Small covers"
+#~ msgstr "Pequeñas carátulas"
+
+#~ msgid "  - Films list ordered by title"
+#~ msgstr "  - Listado de películas ordenadas por título"
+
+#~ msgid "Order by movie title"
+#~ msgstr "Ordenadas por el título de la película"
+
+#~ msgid "Order by movie year"
+#~ msgstr "Ordenadas por el año de la película"
+
+#~ msgid "Year"
+#~ msgstr "Año"
+
+#~ msgid "There is only one collection film in this year:"
+#~ msgstr "Hay solo una película de la colección en este año:"
+
+#~ msgid "There are {} collection films in this year:"
+#~ msgstr "Hay {} películas de la colección en este año:"
+
+#~ msgid "  - Films without year list"
+#~ msgstr "  - Listado de películas sin año"
+
+#~ msgid "Films without year"
+#~ msgstr "Películas sin año"
+
+#~ msgid "There are {} collection films without year."
+#~ msgstr "Hay {} películas sin año en la colección."
+
+#~ msgid "  - Duplicated films list"
+#~ msgstr "  - Listado de películas duplicadas"
+
+#~ msgid "There are {} collection films duplicated."
+#~ msgstr "Hay {} películas duplicadas en la colección."
+
+#~ msgid "Movie list"
+#~ msgstr "Listado de películas"
+
+#~ msgid "This list has {} films and was generated at {} with MyMovieBook-{}"
+#~ msgstr "Este listado tiene {} películas y ha sido generado a las {} con MyMovieBook-{}"
+
+#~ msgid "Index {}"
+#~ msgstr "Índice {}"
+
+#~ msgid "Order by name"
+#~ msgstr "Ordenado por nombre"
+
+#~ msgid "Order by year"
+#~ msgstr "Ordenado por año"
+
+#~ msgid "Unknown year"
+#~ msgstr "Año desconocido"
+
+#~ msgid "Year {}"
+#~ msgstr "Año {}"
+
+#~ msgid "Generate films documentation"
+#~ msgstr "Genera la documentación"
+
+#~ msgid "Generate command parameters"
+#~ msgstr "Parámetros para el comando '--generate'"
+
+#~ msgid "Path to the output document"
+#~ msgstr "Ruta al documento generado"
+
+#~ msgid "You need to add at least one output document. For example: '--output mymoviebook.pdf'"
+#~ msgstr "Necesitas añadir por lo menos un documento de salida. Por ejemplo: '--output mymoviebook.pdf'"

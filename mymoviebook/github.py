@@ -28,7 +28,9 @@ def download_from_github(user,repository,path_filename, destiny_directory):
 
 ## Downloads file to a new file path
 def download_from_github_to_path(user,repository,path_filename, destiny_path):
-    response = urlopen("https://raw.githubusercontent.com/{}/{}/master/{}".format(user,repository, path_filename), timeout = 5)
+    command="https://raw.githubusercontent.com/{}/{}/master/{}".format(user,repository, path_filename)
+    print(command)
+    response = urlopen(command, timeout = 5)
     content = response.read()
     f = open(destiny_path, 'wb' )
     f.write( content )
@@ -38,5 +40,5 @@ def download_from_github_to_path(user,repository,path_filename, destiny_path):
 
 if __name__ == '__main__':
     print(get_file_modification_dtaware("turulomio","xulpymoney","products.xlsx"))
-    download_from_github("turulomio", "xulpymoney", "products.xlsx", "./")
-    download_from_github_to_path("turulomio", "xulpymoney", "products.xlsx", "productas.xlsx")
+    download_from_github("turulomio", "xulpymoney", "doc/xulpymoney.odt", "./")
+    download_from_github_to_path("turulomio", "xulpymoney", "doc/xulpymoney.odt", "xulpymoney.odt")

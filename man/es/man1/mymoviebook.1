@@ -1,4 +1,4 @@
-.TH MYMOVIEBOOK 1 2019\-10\-26
+.TH MYMOVIEBOOK 1 2019\-12\-17
 .SH NAME
 
 .B mymoviebook:
@@ -24,12 +24,18 @@ A\(~nade un directorio con pel\('iculas cuyo \('indice es el nombre num\('erico 
 .RE
 .PP
 .RS
-.B \-\-generate
+.B \-\-report
 .RE
 .PP
 .RS
 .RS
 Genera el documento con la colecci\('on de pel\('iculas
+.RE
+.RE
+.PP
+.RS
+.RS
+Ruta donde se va a crear el libro de pel\('iculas. Puedes usar este par\('ametro tantas veces como quieras.
 .RE
 .RE
 .PP
@@ -76,16 +82,6 @@ Nombre de la base de datos. Por defecto 'mymoviebook'
 .RE
 .PP
 .RS
-.B \-\-output
-.RE
-.PP
-.RS
-.RS
-Ruta donde se va a crear el libro de pel\('iculas. Puedes usar este par\('ametro tantas veces como quieras.
-.RE
-.RE
-.PP
-.RS
 .B \-\-format
 .RE
 .PP
@@ -114,17 +110,17 @@ Este comando a\(~nade a la base de datos hasta 6 pel\('iculas del directorio 23.
 .RE
 .PP
 .RS
-.B Genera un libro con todas las pel\('iculas en la base de datos
+.B Generate a book with all movies in the database in two different directories
 .RE
 .PP
 .RS
 .RS
-mymoviebook \-\-generate \-\-output /home/user/mymoviecollection.pdf
+mymoviebook \-\-report /home/user/mymoviecollection.pdf  \-\-report /home/user2/mymoviecollection.pdf
 .RE
 .RE
 .PP
 .RS
 .RS
-Este comando genera un libro de pel\('iculas en la ruta de salida.
+This command generates your movie book in the report path.
 .RE
 .RE
