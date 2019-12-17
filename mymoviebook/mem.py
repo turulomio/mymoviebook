@@ -30,7 +30,7 @@ class Mem:
 
         group = self.parser.add_mutually_exclusive_group(required=True)
         group.add_argument('--insert', help=self._('Insert films from current numbered directory'), action="store_true", default=False)
-        group.add_argument('--report', help=self._('Films report are generated in this path. Can be called several times'), action="append", default=[])
+        group.add_argument('--report', help=self._('Films report is generated in this path. Can be called several times'), action="append", default=[])
         group.add_argument('--createdb', help=self._("Creates a new postgresql database, checking if already exists. Copy MyMovieBook schema on it"), action="store_true", default=False)
 
         argparse_connection_arguments_group(self.parser, gettext_module="mymoviebook",  gettex_locale=resource_filename("mymoviebook","locale"), default_db="mymoviebook") 

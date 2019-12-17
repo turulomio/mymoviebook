@@ -85,7 +85,7 @@ class Doc(Command):
 
     def run(self):
         #es
-        os.system("xgettext -L Python --no-wrap --no-location --from-code='UTF-8' -o locale/mymoviebook.pot *.py mymoviebook/*.py")
+        os.system("xgettext -L Python --no-wrap --no-location --from-code='UTF-8' -o locale/mymoviebook.pot *.py mymoviebook/*.py mymoviebook/objects/*.py")
         os.system("msgmerge -N --no-wrap -U locale/es.po locale/mymoviebook.pot")
         os.system("msgmerge -N --no-wrap -U locale/fr.po locale/mymoviebook.pot")
         os.system("msgfmt -cv -o mymoviebook/locale/es/LC_MESSAGES/mymoviebook.mo locale/es.po")

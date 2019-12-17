@@ -94,6 +94,11 @@ Dependencies
 
 Changelog
 =========
+1.6.0
+-----
+- Replaced --output and --generate parameter by --report
+- Improved code structure
+
 1.5.1
 -----
 - Removed demo files from distribution package.
