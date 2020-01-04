@@ -193,10 +193,6 @@ with open('mymoviebook/version.py', encoding='utf-8') as f:
         if line.find("__version__ =")!=-1:
             __version__=line.split("'")[1]
 
-
-with open('README.md', encoding='utf-8') as f:
-    long_description = f.read()
-
 if platform_system()=="Linux":
     data_files=[('/usr/share/man/man1/', ['man/man1/mymoviebook.1']), 
                 ('/usr/share/man/es/man1/', ['man/es/man1/mymoviebook.1'])
@@ -207,7 +203,7 @@ else:
 setup(name='mymoviebook',
     version=__version__,
     description='Generate your own personal movie collection book',
-    long_description=long_description,
+    long_description="Project web page is in https://github.com/turulomio/mymoviebook",
     long_description_content_type='text/markdown',
     classifiers=['Development Status :: 4 - Beta',
                  'Intended Audience :: System Administrators',
