@@ -4,4 +4,5 @@ recursive-include mymoviebook *.mo *.py *.png *.sql
 recursive-include man *.1
 recursive-include doc *.py Doxyfile index.dox mymoviebook*.png
 prune __pycache__
+prune doc/html
 global-exclude *.pyc demo.pdf demo.jpg
