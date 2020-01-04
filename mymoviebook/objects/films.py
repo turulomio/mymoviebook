@@ -56,13 +56,8 @@ class Film:
         return "https://www.filmaffinity.com/es/search.php?{}".format(urlencode(query))
 
     def delete(self):
-        cur=self.mem.con.cursor()
-        sqldel="delete from films where id_films=" + str(self.id)
-        cur.execute(sqldel)
-        sqldel="delete from covers where films_id=" + str(self.id)
-        cur.execute(sqldel)
-        cur.close()
-
+        self.mem.con.execute("delete from films where id_films=%s", (self.id, ))
+        self.mem.con.execute("delete from covers where films_id=%s", (self.id, ))
 
     def cover_db2file(self):
         cur=self.mem.con.cursor()
@@ -102,14 +97,11 @@ class Film:
         bd = bd + "\\end{tabular} \\\\\n\n"
         return bd
 
-    def save(self):
+    ## Coverpath points to the path of the file system where the cover is. 
+    def save(self, coverpath):
         if self.id==None:
-            if self.year()==None:
-                name=self.name()
-            else:
-                name="{}. {}".format(self.name(),self.year())
-            self.id=self.mem.con.cursor_one_field("insert into films (savedate, name, id_dvd) values (%s, %s, %s) returning id_films",(self.savedate, name, self.id_dvd))
-            bytea=open(self.coverpath, "rb").read()
+            self.id=self.mem.con.cursor_one_field("insert into films (savedate, name, id_dvd) values (%s, %s, %s) returning id_films",(self.savedate, self.rawname, self.id_dvd))
+            bytea=open(coverpath, "rb").read()
             self.mem.con.execute("insert into covers (films_id, cover) values (%s, %s)",(self.id, bytea))
             return True
 
@@ -257,49 +249,50 @@ class FilmManager(ObjectManager_With_Id):
             system("cp /tmp/mymoviebook/mymoviebook.pdf {}".format(output))
 
     def generate_odt(self):
-        odt=ODT_Standard(self.mem.args.output[0])
-        odt.title(self.mem._("Movie list"), 1)
-        odt.simpleParagraph(self.mem._("This list has {} films and was generated at {} with MyMovieBook-{}").format(self.length(), date.today(), __version__))
-        
-        #Add photos to document
-        for f in self.arr:
-            odt.addImage(f.coverpath_in_tmp(), str(f.id))
-        
-        print ("  - Listado por página")
-        odt.header(self.mem._("Big covers"), 1)
-        for id_dvd in reversed(self.distinct_id_dvd()):
-            odt.header(self.mem._("Index {}").format(id_dvd), 2)
-            for i, fi in enumerate(self.films_in_id_dvd(id_dvd).arr):
-                odt.illustration([str(fi.id), ], 3, 3, str(fi.id))
-                odt.simpleParagraph(fi.name)
-        
-        print ("  - Listado de carátulas en pequeño")
-        odt.header(self.mem._("Small covers"), 1)
-        for id_dvd in reversed(self.distinct_id_dvd()):
-            odt.simpleParagraph(self.mem._("Index {}").format(id_dvd))
-            photo_arr=[]
-            for fi in self.films_in_id_dvd(id_dvd).arr:
-                photo_arr.append(str(fi.id))
-            odt.illustration(photo_arr, 3, 3, str(id_dvd))
+        for filename in self.mem.args.report:
+            odt=ODT_Standard(filename)
+            odt.title(self.mem._("Movie list"), 1)
+            odt.simpleParagraph(self.mem._("This list has {} films and was generated at {} with MyMovieBook-{}").format(self.length(), date.today(), __version__))
             
-        print ("  - Listado ordenado alfabéticamente")
-        odt.header(self.mem._("Order by name"), 1)
-        self.order_by_name()
-        for f in self.arr:
-            odt.header(f.name, 2)
-            odt.illustration([str(f.id), ], 3, 3, str(f.id))
-        
-        print ("  - Listado ordenado por años")
-        odt.header(self.mem._("Order by year"), 1)
-        for year in self.distinct_years():
-            if year=="None":
-                odt.header(self.mem._("Unknown year"), 2)
-            else:
-                odt.header(self.mem._("Year {}").format(year), 2)
-            for fi in self.films_in_year(year).arr:
-                odt.illustration([str(fi.id), ], 3, 3, str(fi.id))
+            #Add photos to document
+            for f in self.arr:
+                odt.addImage(f.coverpath_in_tmp(), str(f.id))
+            
+            print ("  - Listado por página")
+            odt.header(self.mem._("Big covers"), 1)
+            for id_dvd in reversed(self.distinct_id_dvd()):
+                odt.header(self.mem._("Index {}").format(id_dvd), 2)
+                for i, fi in enumerate(self.films_in_id_dvd(id_dvd).arr):
+                    odt.illustration([str(fi.id), ], 3, 3, str(fi.id))
+                    odt.simpleParagraph(fi.name)
+            
+            print ("  - Listado de carátulas en pequeño")
+            odt.header(self.mem._("Small covers"), 1)
+            for id_dvd in reversed(self.distinct_id_dvd()):
+                odt.simpleParagraph(self.mem._("Index {}").format(id_dvd))
+                photo_arr=[]
+                for fi in self.films_in_id_dvd(id_dvd).arr:
+                    photo_arr.append(str(fi.id))
+                odt.illustration(photo_arr, 3, 3, str(id_dvd))
+                
+            print ("  - Listado ordenado alfabéticamente")
+            odt.header(self.mem._("Order by name"), 1)
+            self.order_by_name()
+            for f in self.arr:
+                odt.header(f.name, 2)
+                odt.illustration([str(f.id), ], 3, 3, str(f.id))
+            
+            print ("  - Listado ordenado por años")
+            odt.header(self.mem._("Order by year"), 1)
+            for year in self.distinct_years():
+                if year=="None":
+                    odt.header(self.mem._("Unknown year"), 2)
+                else:
+                    odt.header(self.mem._("Year {}").format(year), 2)
+                for fi in self.films_in_year(year).arr:
+                    odt.illustration([str(fi.id), ], 3, 3, str(fi.id))
 
-        odt.save()
+            odt.save()
 
 
     def delete_all_films(self):
@@ -310,7 +303,7 @@ class FilmManager(ObjectManager_With_Id):
     def films_without_year(self):        
         result=FilmManager(self.mem)
         for f in self.arr:
-            if f.year==None:
+            if f.year()==None:
                 result.append(f)
         result.order_by_name()
         return result
@@ -380,18 +373,15 @@ def add_movies_to_database(mem):
     if input_YN(mem._("The id of the directory to add is '{}'. Do you want to continue?").format(id))==False:
         exit(100)
 
-
     print ("+ " + mem._("Checking that the movies have the correct format..."))
     for file in glob( getcwd()+ "/*.jpg" ):
         if path.exists(file[:-3]+"avi")==False and path.exists(file[:-3]+"mpg")==False and path.exists(file[:-3]+"mkv")==False:
             print (mem._("There isn't a movie with the same name '{}'").format(file[:-3]))
             exit(100)
 
-    sf=FilmManager(mem)
-    sf.load("SELECT id_films, savedate, name, id_dvd, cover FROM films, covers WHERE covers.films_id=films.id_films and id_dvd=" + str(id))
-
     # "Chequeando si hay registros en la base de datos del dispositivo " + str(id)
-    if len(sf.arr)>0:
+    sf=FilmManager_from_db_query(mem, mem.con.mogrify("SELECT * FROM films WHERE id_dvd=%s", (id, )))
+    if sf.length()>0:
         if input_YN("+ " + mem._("Do you want to overwrite the information of directory '{}'?").format(id))==False:
             exit(100)
         else:
@@ -401,10 +391,9 @@ def add_movies_to_database(mem):
     print ("+ "+ mem._("Adding movies to the database"))
     for file in glob( getcwd()+ "/*.jpg" ):
         f=Film(mem, date.today(), file[len(getcwd())+1:-4], id, None)
-        f.save()
-        print ("    - {0}".format(file[len(getcwd())+1:-4]))
+        f.save(file)
+        print ("    - {0}".format(f))
     mem.con.commit()
-
 
 def Film_from_db_row(mem, row):
     return Film(mem, row['savedate'], row['name'], row['id_dvd'], row['id_films'])

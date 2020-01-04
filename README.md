@@ -94,6 +94,11 @@ Dependencies
 
 Changelog
 =========
+1.7.0
+-----
+- Fixed error parsing names
+- Improved objects encapsulation
+
 1.6.0
 -----
 - Replaced --output and --generate parameter by --report
