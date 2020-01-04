@@ -2,7 +2,7 @@ from setuptools import setup, Command
 import datetime
 import gettext
 import os
-import platform
+from platform import system as platform_system
 import site
 
 gettext.install('mymoviebook', 'mymoviebook/locale')
@@ -65,7 +65,7 @@ class Uninstall(Command):
         pass
 
     def run(self):
-        if platform.system()=="Linux":
+        if platform_system()=="Linux":
             os.system("rm -Rf {}/mymoviebook*".format(site.getsitepackages()[0]))
             os.system("rm /usr/bin/mymoviebook")
             os.system("rm /usr/share/man/man1/mymoviebook.1")
@@ -143,7 +143,7 @@ class Doc(Command):
 
 
 
-class Compile(Command):
+class Reusing(Command):
     description = "Fetch remote modules"
     user_options = []
 
@@ -197,7 +197,7 @@ with open('mymoviebook/version.py', encoding='utf-8') as f:
 with open('README.md', encoding='utf-8') as f:
     long_description = f.read()
 
-if platform.system()=="Linux":
+if platform_system()=="Linux":
     data_files=[('/usr/share/man/man1/', ['man/man1/mymoviebook.1']), 
                 ('/usr/share/man/es/man1/', ['man/es/man1/mymoviebook.1'])
                ]
@@ -231,7 +231,7 @@ setup(name='mymoviebook',
                'uninstall': Uninstall,
                'video': Video,
                'procedure': Procedure,
-               'compile': Compile,
+               'compile': Reusing,
              },
     zip_safe=False,
     include_package_data=True

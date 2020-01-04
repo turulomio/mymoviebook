@@ -1,7 +1,7 @@
 from datetime import datetime, date
 from glob import glob
 from mymoviebook.casts import string2tex
-from mymoviebook.libmanagers import ObjectManager_With_IdName
+from mymoviebook.libmanagers import ObjectManager_With_Id
 from mymoviebook.text_inputs import input_YN
 from mymoviebook.version import __version__
 from officegenerator import ODT_Standard
@@ -10,57 +10,49 @@ from pkg_resources import resource_filename
 from urllib.parse import urlencode
 
 class Film:
-    def __init__(self, mem):
+    def __init__(self, mem, savedate, name, id_dvd, id):
         self.mem=mem
-        self.id=None
-        self.savedate=None
-        self.name=None
-        self.coverpath=None
-        self.id_dvd=None
-        self.year=None
+        self.id=id#id_films
+        self.savedate=savedate
+        self.rawname=name
+        self.id_dvd=id_dvd
 
     def __repr__(self):
-        if self.year==None:
-            return self.name
+        name, year=self.__parse_rawname()
+        if year==None:
+            return name
         else:
-            return "{} ({})".format(self.name, self.year)
+            return "{} ({})".format(name, year)
 
-    def init__create(self,savedate, name, coverpath, id_dvd):
-        """Introduce pathcover, ya que debera luego hacer un insert, id siempre es None, year es None, pero lo parsea en la funcion"""
-        self.savedate=savedate
-        self.name=name
-        self.coverpath=coverpath
-        self.id_dvd=id_dvd
-        self.parse_name()
-        return self
-
-    def init__from_db(self,row):
-        self.id=row['id_films']
-        self.savedate=row['savedate']
-        self.name=row['name']
-        self.id_dvd=row['id_dvd']
-        self.parse_name()
-        return self
-
-    def parse_name(self):
-        name=self.name
-        arr=name.split(". ")
+    ## Returns a tu
+    def __parse_rawname(self):
+        arr=self.rawname.split(". ")
+        name=self.rawname
         try:
-            self.year=int(arr[len(arr)-1])
-            self.name=name.replace(". "+arr[len(arr)-1], "")
-            if self.year<1850 or self.year>datetime.date.today().year:#Must be a film
-                self.year=None
+            year=int(arr[len(arr)-1])
+            name=self.rawname.replace(". "+arr[len(arr)-1], "")
+            if year<1850 or year>date.today().year:#Must be a film
+                year=None
         except:
-            self.year=None
+            year=None
+        return (name, year)
+        
+    ## Returns Film year integer or None
+    def year(self):
+        return self.__parse_rawname()[1]
+
+    ## Returns Film name
+    def name(self):
+        return self.__parse_rawname()[0]
 
     ## Returns a Internet url to query this film in sensacine.com
     def name2query_sensacine(self):
-        query={"q": self.name,}
+        query={"q": self.name(),}
         return "http://www.sensacine.com/busqueda/?{}".format(urlencode(query))
 
     ## Returns a Internet url to query this film in filmaffinity.com
     def name2query_filmaffinity(self):
-        query={"stext": self.name,}
+        query={"stext": self.name(),}
         return "https://www.filmaffinity.com/es/search.php?{}".format(urlencode(query))
 
     def delete(self):
@@ -104,7 +96,7 @@ class Film:
         bd=""       
         bd=bd + "\\begin{tabular}{m{2.3cm} m{15cm}}\n"
         if show_name==True:
-            bd=bd + "{0} & {1}. (~\\nameref{{sec:{2}}} )\\\\\n".format(self.tex_cover(width, height), string2tex(self.name), self.id_dvd)
+            bd=bd + "{0} & {1}. (~\\nameref{{sec:{2}}} )\\\\\n".format(self.tex_cover(width, height), string2tex(self.name()), self.id_dvd)
         else:
             bd=bd + "{0} & ~\\nameref{{sec:{1}}}\\\\\n".format(self.tex_cover(width, height), self.id_dvd)#Reference to DVD page
         bd = bd + "\\end{tabular} \\\\\n\n"
@@ -112,18 +104,18 @@ class Film:
 
     def save(self):
         if self.id==None:
-            if self.year==None:
-                name=self.name
+            if self.year()==None:
+                name=self.name()
             else:
-                name="{}. {}".format(self.name,self.year)
+                name="{}. {}".format(self.name(),self.year())
             self.id=self.mem.con.cursor_one_field("insert into films (savedate, name, id_dvd) values (%s, %s, %s) returning id_films",(self.savedate, name, self.id_dvd))
             bytea=open(self.coverpath, "rb").read()
             self.mem.con.execute("insert into covers (films_id, cover) values (%s, %s)",(self.id, bytea))
             return True
 
-class FilmManager(ObjectManager_With_IdName):
+class FilmManager(ObjectManager_With_Id):
     def __init__(self, mem):
-        ObjectManager_With_IdName.__init__(self)
+        ObjectManager_With_Id.__init__(self)
         self.mem=mem
 
     def extract_photos(self):
@@ -191,7 +183,6 @@ class FilmManager(ObjectManager_With_IdName):
 
 
         print (self.mem._("  - Films list with small covers"))
-
         bd = bd + "\\setlength{\\parindent}{0cm}\n"
         bd=bd + "\section{"+ self.mem._("Small covers") +"}\n"
         for id_dvd in reversed(self.distinct_id_dvd()):
@@ -203,7 +194,6 @@ class FilmManager(ObjectManager_With_IdName):
             bd = bd + "\\end{tabular} \\\\\n\n"
         bd=bd +"\n\\newpage\n\n"
 
-
         print (self.mem._("  - Films list ordered by title"))
         bd=bd + "\section{"+self.mem._("Order by movie title") +"}\n"
         self.order_by_name()
@@ -212,7 +202,6 @@ class FilmManager(ObjectManager_With_IdName):
             bd=bd + "\\addcontentsline{{toc}}{{subsection}}{{{0}}}\n".format(string2tex(f))
             bd=bd + f.tex_cover_tabular(show_name=False)
         bd=bd +"\\newpage\n\n"
-
 
         print ("  - Ordered by year films list")
         bd = bd + "\\setlength{\\parindent}{1cm}\n"
@@ -312,13 +301,6 @@ class FilmManager(ObjectManager_With_IdName):
 
         odt.save()
 
-    def load(self,sql):
-        cur=self.mem.con.cursor()
-        cur.execute(sql)
-        for row in cur:
-            self.arr.append(Film(self.mem).init__from_db(row))
-        self.mem.con.commit()
-        cur.close()
 
     def delete_all_films(self):
         for f in self.arr:
@@ -339,7 +321,7 @@ class FilmManager(ObjectManager_With_IdName):
         result=FilmManager(self.mem)
         last=None
         for f in self.arr:
-            if last!=None and f.name==last.name and f.year==last.year:
+            if last!=None and f.name()==last.name() and f.year()==last.year():
                 result.append(f)
                 result.append(last)
             last=f
@@ -357,7 +339,7 @@ class FilmManager(ObjectManager_With_IdName):
         """Returns a ordered list with distinct id_dvd in the set"""
         s=set([])
         for f in self.arr:
-            s.add(str(f.year))#String para añadir None
+            s.add(str(f.year()))#String para añadir None
         l=list(s)
         return sorted(l)
 
@@ -374,10 +356,17 @@ class FilmManager(ObjectManager_With_IdName):
         """Return a FilmManager with the filmns in a year and sorts them by name"""
         result=FilmManager(self.mem)
         for f in self.arr:
-            if str(f.year)==year:
+            if str(f.year())==year:
                 result.append(f)
         result.order_by_name()
         return result
+        
+    def order_by_name(self):
+        try:
+            self.arr=sorted(self.arr, key=lambda c: c.name(),  reverse=False)       
+            return True
+        except:
+            return False        
         
 ## Function to add movies to a database from console
 def add_movies_to_database(mem):
@@ -411,7 +400,19 @@ def add_movies_to_database(mem):
             
     print ("+ "+ mem._("Adding movies to the database"))
     for file in glob( getcwd()+ "/*.jpg" ):
-        f=Film(mem).init__create(date.today(), file[len(getcwd())+1:-4], file,id)
+        f=Film(mem, date.today(), file[len(getcwd())+1:-4], id, None)
         f.save()
         print ("    - {0}".format(file[len(getcwd())+1:-4]))
     mem.con.commit()
+
+
+def Film_from_db_row(mem, row):
+    return Film(mem, row['savedate'], row['name'], row['id_dvd'], row['id_films'])
+    
+## Creates a film
+def FilmManager_from_db_query(mem, sql):
+    r=FilmManager(mem)
+    rows=mem.con.cursor_rows(sql)
+    for row in rows:
+        r.append(Film_from_db_row(mem, row))
+    return r

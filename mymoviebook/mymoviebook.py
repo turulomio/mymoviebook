@@ -2,7 +2,7 @@ from sys import exit
 from pkg_resources import resource_filename
 from mymoviebook.dbupdates import UpdateDB
 from mymoviebook.mem import Mem
-from mymoviebook.objects.films import FilmManager, add_movies_to_database
+from mymoviebook.objects.films import FilmManager_from_db_query, add_movies_to_database
 
 ### MAIN SCRIPT ###
 def main(parameters=None):
@@ -32,8 +32,7 @@ def main(parameters=None):
     elif len(mem.args.report)>0:## Report arg
         # SACA LAS IMÁGENES DE LA BASE DE DATOS
         print ("  - "+ mem._("Getting images"))
-        sf=FilmManager(mem)
-        sf.load("SELECT * FROM films")
+        sf=FilmManager_from_db_query(mem, "SELECT * FROM films")
         sf.extract_photos()
         if mem.args.format=="PDF":
             sf.generate_pdf()
