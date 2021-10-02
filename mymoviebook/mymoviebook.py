@@ -1,6 +1,6 @@
 from sys import exit
 from pkg_resources import resource_filename
-from mymoviebook.dbupdates import UpdateDB
+from mymoviebook.reusing.dbupdates import UpdateDB
 from mymoviebook.mem import Mem
 from mymoviebook.objects.films import FilmManager_from_db_query, add_movies_to_database
 

@@ -4,22 +4,9 @@
 ## If a function only can be used by dtaware or naive it will have its prefix dtaware_ or dtnaive_
 ## If a function can use both of them its prefix will be dt_
 
-
 from datetime import timedelta, datetime, date, time
 from pytz import timezone
 from logging import error
-from .decorators import deprecated #To use main remove dot from decorators
-
-## Types for dt strings. Used in dtaware2string function
-class eDtStrings:
-    ## Parsed for ui
-    QTableWidgetItem=1
-    
-    ## 20190909 0909
-    Filename=2
-    
-    ## 201909090909
-    String=3
 
 ## Returns if a datetime is aware
 def is_aware(dt):
@@ -30,7 +17,6 @@ def is_aware(dt):
 ## Returns if a datetime is naive
 def is_naive(dt):
     return not is_aware(dt)
-
 
 ## Function to create a datetime aware object
 ## @param date datetime.date object
@@ -43,12 +29,16 @@ def dtaware(date, hour, tz_name):
     a=z.localize(a)
     return a
 
+def dtnaive2dtaware(dtnaive, tz_name):
+    z=timezone(tz_name)
+    return z.localize(dtnaive)
+
+
 def dtaware_now(tzname='UTC'):
     return timezone(tzname).localize(dtnaive_now())
 
 def dtnaive_now():
     return datetime.now()
-
 
 ## Function to create a datetime aware object
 ## @param date datetime.date object
@@ -92,7 +82,17 @@ def date_last_of_the_month(year, month):
     if month==12:
         return date(year, month, 31)
     return date(year, month+1, 1)-timedelta(days=1)
-    
+
+## Returns a date with the first date of the year
+## @param year Year to search first day
+def date_first_of_the_year(year):
+    return date_first_of_the_month(year,12)
+
+## Returns a date with the last date of the year
+## @param year Year to search last day
+def date_last_of_the_year(year):
+    return date_last_of_the_month(year,12)
+
 ## Returns a date with the first date of the month after x months
 ## @param year Year to search  day
 ## @param month Month to search day
@@ -241,54 +241,6 @@ def string2date(iso, format="YYYY-MM-DD"):
     else:
         error("I can't convert this format '{}'. I only support this {}".format(format, allowed))
 
-        
-## Function to generate a datetime aware from a string
-## @param s String
-## @param type Integer
-## @param tz_name Name of the tz_name. By default "Europe Madrid" only in type 3and 4
-## @return Datetime
-@deprecated
-def string2dtaware_old(s, type, tz_name="Europe/Madrid"):
-    if type==1:#2017-11-20 23:00:00+00:00  ==> Aware
-        s=s[:-3]+s[-2:]
-        dat=datetime.strptime( s, "%Y-%m-%d %H:%M:%S%z" )
-        return dat
-    if type==3:#20/11/2017 23:00 ==> Aware, using zone parameter
-        dat=datetime.strptime( s, "%d/%m/%Y %H:%M" )
-        z=timezone(tz_name)
-        return z.localize(dat)
-    if type==4:#27 1 16:54 2017==> Aware, using zone parameter . 1 es el mes convertido con month2int
-        dat=datetime.strptime( s, "%d %m %H:%M %Y")
-        z=timezone(tz_name)
-        return z.localize(dat)
-    if type==5:#2017-11-20 23:00:00.000000+00:00  ==> Aware with microsecond
-        s=s[:-3]+s[-2:]#quita el :
-        arrPunto=s.split(".")
-        s=arrPunto[0]+s[-5:]
-        micro=int(arrPunto[1][:-5])
-        dat=datetime.strptime( s, "%Y-%m-%d %H:%M:%S%z" )
-        dat=dat+timedelta(microseconds=micro)
-        return dat
-    if type==6:#201907210725 ==> Aware
-        dat=datetime.strptime( s, "%Y%m%d%H%M" )
-        z=timezone(tz_name)
-        return z.localize(dat)
-    if type==7:#01:02:03 ==> Aware
-        tod=date.today()
-        a=s.split(":")
-        dat=datetime(tod.year, tod.month, tod.day, int(a[0]), int(a[1]), int(a[2]))
-        z=timezone(tz_name)
-        return z.localize(dat)
-
-@deprecated
-def string2dtnaive_old(s, type):
-    if type==2:#20/11/2017 23:00 ==> Naive
-        dat=datetime.strptime( s, "%d/%m/%Y %H:%M" )
-        return dat
-    if type==6:#201907210725 ==> Naive
-        dat=datetime.strptime( s, "%Y%m%d%H%M" )
-        return dat
-
 def string2dtnaive(s, format):
     allowed=["%Y%m%d%H%M","%Y-%m-%d %H:%M:%S","%d/%m/%Y %H:%M","%d %m %H:%M %Y","%Y-%m-%d %H:%M:%S.","%H:%M:%S"]
     if format in allowed:
@@ -304,7 +256,7 @@ def string2dtnaive(s, format):
         if format=="%Y-%m-%d %H:%M:%S.":#2017-11-20 23:00:00.000000  ==>  microsecond. Notice the point in format
             arrPunto=s.split(".")
             s=arrPunto[0]
-            micro=int(arrPunto[1])
+            micro=int(arrPunto[1]) if len(arrPunto)==2 else 0
             dt=datetime.strptime( s, "%Y-%m-%d %H:%M:%S" )
             dt=dt+timedelta(microseconds=micro)
             return dt
@@ -316,7 +268,7 @@ def string2dtnaive(s, format):
         error("I can't convert this format '{}'. I only support this {}".format(format, allowed))
 
 def string2dtaware(s, format, tz_name='UTC'):
-    allowed=["%Y-%m-%d %H:%M:%S%z","%Y-%m-%d %H:%M:%S.%z"]
+    allowed=["%Y-%m-%d %H:%M:%S%z","%Y-%m-%d %H:%M:%S.%z", "JsUtcIso"]
     if format in allowed:
         if format=="%Y-%m-%d %H:%M:%S%z":#2017-11-20 23:00:00+00:00
             s=s[:-3]+s[-2:]
@@ -330,6 +282,12 @@ def string2dtaware(s, format, tz_name='UTC'):
             dt=datetime.strptime( s, "%Y-%m-%d %H:%M:%S%z" )
             dt=dt+timedelta(microseconds=micro)
             return dtaware_changes_tz(dt, tz_name)
+        if format=="JsUtcIso": #2021-08-21T06:27:38.294Z
+            s=s.replace("T"," ").replace("Z","")
+            dtnaive=string2dtnaive(s,"%Y-%m-%d %H:%M:%S.")
+            dtaware_utc=dtnaive2dtaware(dtnaive, 'UTC')
+            return dtaware_changes_tz(dtaware_utc, tz_name)
+
     else:
         return timezone(tz_name).localize(string2dtnaive(s,format))
 
@@ -344,42 +302,53 @@ def epochms2dtaware(n, tz="UTC"):
     utc_aware=utc_unaware.replace(tzinfo=timezone('UTC'))#Due to epoch is in UTC
     return dtaware_changes_tz(utc_aware, tz)
 
+## epoch is the time from 1,1,1970 in UTC
+## return now(timezone(self.name))
+def dtaware2epochmicros(d):
+    return int(d.timestamp()*1000000)
+## Return a UTC datetime aware
+def epochmicros2dtaware(n, tz="UTC"):
+    utc_unaware=datetime.utcfromtimestamp(n/1000000)
+    utc_aware=utc_unaware.replace(tzinfo=timezone('UTC'))#Due to epoch is in UTC
+    return dtaware_changes_tz(utc_aware, tz)
+
 
 ## Returns a formated string of a dtaware string formatting with a zone name
 ## @param dt datetime aware object
 ## @return String
-def dtaware2string(dt, type=eDtStrings.QTableWidgetItem):
+def dtaware2string(dt, format):
+    if is_naive(dt)==True:
+        error("A dtaware is needed for {}".format(dt))
+    else:
+        return dtnaive2string(dt, format)
+
+## Returns a formated string of a dtaware string formatting with a zone name
+## @param dt datetime aware object
+## @param format String in ["%Y-%m-%d", "%Y-%m-%d %H:%M:%S", "%Y%m%d %H%M", "%Y%m%d%H%M"]
+## @return String
+def dtnaive2string(dt, format):
+    allowed=["%Y-%m-%d", "%Y-%m-%d %H:%M:%S", "%Y%m%d %H%M", "%Y%m%d%H%M"]
     if dt==None:
         return "None"
-    elif dt.tzname()==None:
-        return "Naive date and time"
+    elif format in allowed:
+        if format=="%Y-%m-%d":
+            return dt.strftime("%Y-%m-%d")
+        elif format=="%Y-%m-%d %H:%M:%S": 
+            return dt.strftime("%Y-%m-%d %H:%M:%S")
+        elif format=="%Y%m%d %H%M": 
+            return dt.strftime("%Y%m%d %H%M")
+        elif format=="%Y%m%d%H%M":
+            return dt.strftime("%Y%m%d%H%M")
     else:
-        return dtnaive2string(dt, type)
+        error("I can't convert this format '{}'. I only support this {}".format(format, allowed))
 
-## Returns a formated string of a dtaware string formatting with a zone name
-## @param dt datetime aware object
-## @return String
-def dtnaive2string(dt, type=eDtStrings.QTableWidgetItem):
-    if dt==None:
-        resultado="None"
-    elif type==eDtStrings.QTableWidgetItem:
-        if dt.microsecond==4 :
-            resultado="{}-{}-{}".format(dt.year, str(dt.month).zfill(2), str(dt.day).zfill(2))
-        else:
-            resultado="{}-{}-{} {}:{}:{}".format(dt.year, str(dt.month).zfill(2), str(dt.day).zfill(2), str(dt.hour).zfill(2), str(dt.minute).zfill(2),  str(dt.second).zfill(2))
-    elif type==eDtStrings.Filename:
-            resultado="{}{}{} {}{}".format(dt.year, str(dt.month).zfill(2), str(dt.day).zfill(2), str(dt.hour).zfill(2), str(dt.minute).zfill(2))
-    elif type==eDtStrings.String:
-        resultado="{}{}{}{}{}".format(dt.year, str(dt.month).zfill(2), str(dt.day).zfill(2), str(dt.hour).zfill(2), str(dt.minute).zfill(2))
-    return resultado
-    
 ## Changes zoneinfo from a dtaware object
 ## For example:
 ## - datetime.datetime(2018, 5, 18, 8, 12, tzinfo=<DstTzInfo 'Europe/Madrid' CEST+2:00:00 DST>)
 ## - libcaloriestrackerfunctions.dtaware_changes_tz(a,"Europe/London")
 ## - datetime.datetime(2018, 5, 18, 7, 12, tzinfo=<DstTzInfo 'Europe/London' BST+1:00:00 DST>)
 ## @param dt datetime aware object
-## @tzname String with datetime zone. For example: "Europe/Madrid"
+## @param tzname String with datetime zone. For example: "Europe/Madrid"
 ## @return datetime aware object
 def dtaware_changes_tz(dt,  tzname):
     if dt==None:
@@ -388,22 +357,45 @@ def dtaware_changes_tz(dt,  tzname):
     tarjet=tzt.normalize(dt.astimezone(tzt))
     return tarjet
 
+## Returns a list of tuples (year, month) from a month to another month, both included
+## @param year_from Integer
+## @param month_from Integer
+## @param year_to Integer If none uses current year
+## @param month_to Integer If none uses current month
+def months(year_from, month_from, year_to=None, month_to=None):
+    if year_to is None or month_to is None:
+        year_to=date.today().year
+        month_to=date.today().month
+    r=[]
+    end=date_first_of_the_month(year_to, month_to)
+    current=date_first_of_the_month(year_from, month_from)
+    while True:
+        if current>end:
+            break
+        r.append((current.year,current.month))
+        current=date_first_of_the_next_x_months(current.year, current.month, 1)
+    return r
 
 if __name__ == "__main__":
     tz="Europe/Madrid"
-    now=datetime.now()
+    now=dtnaive_now()
     print("Current localzone is", tz)
     print ("DtNaive:",  now)
     now_aware=dtaware(now.date(), now.time(), tz)
-    print("DtAware:", now_aware)
+    print("DtAware:", now_aware, "With dtaware_now", dtaware_now(tz))
     epochms=dtaware2epochms(now_aware)
     print("Epoch in miliseconds:", epochms)
     print("Dtaware reconverting epoch {}".format(epochms2dtaware(epochms, tz)) )
-    print("This is a dataware string wight eDtStrings.QTableWidgetItem:", dtaware2string(now_aware, eDtStrings.QTableWidgetItem))
-    print("This is a dataware string wight eDtStrings.Filename:", dtaware2string(now_aware, eDtStrings.Filename))
-    print("This is a dataware string wight eDtStrings.String:", dtaware2string(now_aware, eDtStrings.String))
+    epochmicros=dtaware2epochmicros(now_aware)
+    print("Epoch in microseconds:", epochmicros)
+    print("Dtaware reconverting epoch in microseconds {}".format(epochmicros2dtaware(epochmicros, tz)) )
     now_aware_in_utc=dtaware_changes_tz(now_aware, 'UTC')
     print("Datetime '{}' changes to UTC '{}'".format(now_aware, now_aware_in_utc))
+    print()
+    print("dtaware2string")
+    print("  - {}".format(dtaware2string(now_aware, "%Y-%m-%d %H:%M:%S")))
+    print("  - {}".format(dtaware2string(now_aware, "%Y%m%d %H%M")))
+    print("  - {}".format(dtaware2string(now_aware, "%Y%m%d%H%M")))
     print()
     print("dt_day_end")
     print("  - Today will end at '{}' as naive".format(dt_day_end(now)))
@@ -412,7 +404,7 @@ if __name__ == "__main__":
     print("time2string")
     print("  - This is the current hour '{}' with format HH:MM".format(time2string(now.time(), "HH:MM")))
     print("  - This is the current hour '{}' with format HH:MM:SS".format(time2string(now.time(), "HH:MM:SS")))
-
+    print()    
     print("string2dtnaive and string2dtaware")
     a="201910022209"
     format="%Y%m%d%H%M"
@@ -432,3 +424,9 @@ if __name__ == "__main__":
     a="2019-10-03 2:22:09.267"
     format="%Y-%m-%d %H:%M:%S."
     print("  - {}: {} and {}".format(a,string2dtnaive(a,format),string2dtaware(a,format)))
+    
+    print("Js UTC ISO 2 DTAWARE")
+    a="2021-08-21T06:27:38.294Z"
+    print(f"  - {a}: {string2dtaware(a,'JsUtcIso','Europe/Madrid')}")
+
+

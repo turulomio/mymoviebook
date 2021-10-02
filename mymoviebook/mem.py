@@ -1,4 +1,4 @@
-from mymoviebook.connection_pg import Connection, argparse_connection_arguments_group
+from mymoviebook.reusing.connection_pg import Connection, argparse_connection_arguments_group
 from pkg_resources import resource_filename
 from argparse import ArgumentParser, RawTextHelpFormatter
 from gettext import translation

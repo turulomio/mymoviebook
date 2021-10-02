@@ -170,30 +170,43 @@ class Doc(Command):
 
 class Reusing(Command):
     description = "Fetch remote modules"
-    user_options = []
+    user_options = [
+      # The format is (long option, short option, description).
+      ( 'local', None, 'Update files without internet'),
+  ]
 
     def initialize_options(self):
-        pass
+        self.local=False
 
     def finalize_options(self):
         pass
 
     def run(self):
         from sys import path
-        path.append("mymoviebook")
-        from github import download_from_github
-        download_from_github('turulomio','reusingcode','python/admin_pg.py', 'mymoviebook')
-        download_from_github('turulomio','reusingcode','python/casts.py', 'mymoviebook')
-        download_from_github('turulomio','reusingcode','python/datetime_functions.py', 'mymoviebook')
-        download_from_github('turulomio','reusingcode','python/decorators.py', 'mymoviebook')
-        download_from_github('turulomio','reusingcode','python/github.py', 'mymoviebook')
-        download_from_github('turulomio','reusingcode','python/libmanagers.py', 'mymoviebook')
-        download_from_github('turulomio','reusingcode','python/connection_pg.py', 'mymoviebook')
-        download_from_github('turulomio','reusingcode','python/text_inputs.py', 'mymoviebook')
+        path.append("mymoviebook/reusing")
+        print(self.local)
+        if self.local is False:
+            from github import download_from_github
+            download_from_github('turulomio','reusingcode','python/admin_pg.py', 'mymoviebook/reusing')
+            download_from_github('turulomio','reusingcode','python/file_functions.py', 'mymoviebook/reusing')
+            download_from_github('turulomio','reusingcode','python/call_by_name.py', 'mymoviebook/reusing') 
+            download_from_github('turulomio','reusingcode','python/casts.py', 'mymoviebook/reusing')
+            download_from_github('turulomio','reusingcode','python/currency.py', 'mymoviebook/reusing')
+            download_from_github('turulomio','reusingcode','python/percentage.py', 'mymoviebook/reusing')
+            download_from_github('turulomio','reusingcode','python/datetime_functions.py', 'mymoviebook/reusing')
+            download_from_github('turulomio','reusingcode','python/decorators.py', 'mymoviebook/reusing')
+            download_from_github('turulomio','reusingcode','python/github.py', 'mymoviebook/reusing')
+            download_from_github('turulomio','reusingcode','python/libmanagers.py', 'mymoviebook/reusing')
+            download_from_github('turulomio','reusingcode','python/connection_pg.py', 'mymoviebook/reusing')
+            download_from_github('turulomio','reusingcode','python/text_inputs.py', 'mymoviebook/reusing')
+        
+        from file_functions import replace_in_file
+        replace_in_file("mymoviebook/reusing/casts.py","from currency","from mymoviebook.reusing.currency")
+        replace_in_file("mymoviebook/reusing/casts.py","from percentage","from mymoviebook.reusing.percentage")
 
 class Video(Command):
     description = "Create video/GIF from console ouput"
-    user_options = []
+    user_options = ['--compile']
 
     def initialize_options(self):
         pass
@@ -245,14 +258,14 @@ setup(name='mymoviebook',
     entry_points = {'console_scripts': ['mymoviebook=mymoviebook.mymoviebook:main',
                                        ],
                    },
-    install_requires=['colorama','setuptools', 'officegenerator'],
+    install_requires=['colorama','setuptools', 'unogenerator'],
     data_files=data_files,
     cmdclass={ 'doxygen': Doxygen,
                'doc': Doc,
                'uninstall': Uninstall,
                'video': Video,
                'procedure': Procedure,
-               'compile': Reusing,
+               'reusing': Reusing,
              },
     zip_safe=False,
     include_package_data=True

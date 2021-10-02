@@ -2,7 +2,7 @@
   "header": {
     "comment": "eric project file for project mymoviebook",
     "copyright": "Copyright (C) 2021 , ",
-    "saved": "2021-10-02, 18:33:47"
+    "saved": "2021-10-02, 18:45:56"
   },
   "project": {
     "AUTHOR": "",
@@ -87,7 +87,16 @@
       "mymoviebook/objects/films.py",
       "mymoviebook/datetime_functions.py",
       "mymoviebook/mymoviebook.py",
-      "setup.py"
+      "setup.py",
+      "mymoviebook/reusing/decorators.py",
+      "mymoviebook/reusing/github.py",
+      "mymoviebook/reusing/dbupdates.py",
+      "mymoviebook/reusing/admin_pg.py",
+      "mymoviebook/reusing/text_inputs.py",
+      "mymoviebook/reusing/libmanagers.py",
+      "mymoviebook/reusing/connection_pg.py",
+      "mymoviebook/reusing/casts.py",
+      "mymoviebook/reusing/datetime_functions.py"
     ],
     "SPELLEXCLUDES": "",
     "SPELLLANGUAGE": "en_US",
