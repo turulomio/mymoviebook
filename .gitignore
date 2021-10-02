@@ -17,3 +17,6 @@ cur/
 tmp/
 __pycache__/
 *.DS_Store
+dist/
+doc/html/
+mymoviebook.egg-info/

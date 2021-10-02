@@ -23,7 +23,8 @@ class Doxygen(Command):
         os.system("""sed -i -e "41iPROJECT_NUMBER         = {}" doc/Doxyfile""".format(__version__))#Insert line 41
         os.system("rm -Rf build")
         os.chdir("doc")
-        os.system("doxygen Doxyfile")
+        os.system("doxygen Doxyfile") 
+
         os.system("rsync -avzP -e 'ssh -l turulomio' html/ frs.sourceforge.net:/home/users/t/tu/turulomio/userweb/htdocs/doxygen/mymoviebook/ --delete-after")
         os.chdir("..")
 
@@ -75,15 +76,32 @@ class Uninstall(Command):
 
 class Doc(Command):
     description = "Update man pages and translations"
-    user_options = []
-
+    user_options = [
+      # The format is (long option, short option, description).
+      ( 'user=', None, 'Database user'),
+      ( 'db=', None, 'Database name'),
+      ( 'port=', None, 'Database port'),
+      ( 'server=', None, 'Database server'),
+  ]
     def initialize_options(self):
-        pass
+        self.user="postgres"
+        self.db="mymoviebook"
+        self.port="5432"
+        self.server="127.0.0.1"
 
     def finalize_options(self):
         pass
 
     def run(self):
+        from caloriestracker.connection_pg import Connection
+        con=Connection()
+        con.user=self.user
+        con.server=self.server
+        con.port=self.port
+        con.db=self.db
+        con.get_password("", "")
+        con.connect()
+        print("Is connection active?",  con.is_active())
         #es
         os.system("xgettext -L Python --no-wrap --no-location --from-code='UTF-8' -o locale/mymoviebook.pot *.py mymoviebook/*.py mymoviebook/objects/*.py")
         os.system("msgmerge -N --no-wrap -U locale/es.po locale/mymoviebook.pot")
@@ -93,6 +111,13 @@ class Doc(Command):
 
         for language in ["en", "es", "fr"]:
             self.mangenerator(language)
+
+        print("Updating Entity Relationship Schema")
+        os.chdir("doc/html")
+        os.system("/usr/bin/postgresql_autodoc -d {} -h {} -u {} -p {} --password={} -t html".format(self.db,self.server,self.user, self.port,con.password))
+        os.system("/usr/bin/postgresql_autodoc -d {} -h {} -u {} -p {} --password={} -t dot_shortfk".format(self.db,self.server,self.user, self.port,con.password))
+        os.system("dot -Tpng {0}.dot_shortfk -o {0}_er.png".format(self.db))
+
 
     def mangenerator(self, language):
         """
