@@ -264,33 +264,34 @@ class FilmManager(ObjectManager_With_Id):
         for id_dvd in tqdm(reversed(self.distinct_id_dvd()), total=len(self.distinct_id_dvd())):
             odt.addParagraph(self.mem._("Index {}").format(id_dvd), "Heading 2")
             for i, fi in enumerate(self.films_in_id_dvd(id_dvd).arr):
-                odt.addImageParagraph([fi.coverpath_in_tmp()], 3000, 3000, "Illustration")
-#        
-#        print ("  - Listado de carátulas en pequeño")
-#        odt.header(self.mem._("Small covers"), 1)
-#        for id_dvd in reversed(self.distinct_id_dvd()):
-#            odt.simpleParagraph(self.mem._("Index {}").format(id_dvd))
-#            photo_arr=[]
-#            for fi in self.films_in_id_dvd(id_dvd).arr:
-#                photo_arr.append(str(fi.id))
-#            odt.illustration(photo_arr, 3, 3, str(id_dvd))
-#            
-#        print ("  - Listado ordenado alfabéticamente")
-#        odt.header(self.mem._("Order by name"), 1)
-#        self.order_by_name()
-#        for f in self.arr:
-#            odt.header(f.name, 2)
-#            odt.illustration([str(f.id), ], 3, 3, str(f.id))
-#        
-#        print ("  - Listado ordenado por años")
-#        odt.header(self.mem._("Order by year"), 1)
-#        for year in self.distinct_years():
-#            if year=="None":
-#                odt.header(self.mem._("Unknown year"), 2)
-#            else:
-#                odt.header(self.mem._("Year {}").format(year), 2)
-#            for fi in self.films_in_year(year).arr:
-#                odt.illustration([str(fi.id), ], 3, 3, str(fi.id))
+                odt.addImageParagraph([fi.coverpath_in_tmp()], 3000, 3000, "Illustration", linked=True)
+        
+        print ("  - Listado de carátulas en pequeño")
+        odt.addParagraph(self.mem._("Small covers"), "Heading 1")
+        for id_dvd in tqdm(reversed(self.distinct_id_dvd()), total=len(self.distinct_id_dvd())):
+            l=[]
+            l.append(self.mem._("Index {}").format(id_dvd))
+            for fi in self.films_in_id_dvd(id_dvd).arr:
+                l.append(odt.textcontentImage(fi.coverpath_in_tmp(), 2200, 2200, "AS_CHARACTER", "PRIMERA", linked=True))
+
+            odt.addParagraphComplex(l, "Standard")
+            
+        print ("  - Listado ordenado alfabéticamente")
+        odt.addParagraph(self.mem._("Order by name"), "Heading 1")
+        self.order_by_name()
+        for f in tqdm(reversed(self.arr), total=self.length()):
+            odt.addParagraph(f.name(), "Heading 2")
+            odt.addImageParagraph([f.coverpath_in_tmp(), ], 3000, 3000, linked=True)
+        
+        print ("  - Listado ordenado por años")
+        odt.addParagraph(self.mem._("Order by year"), "Heading 1")
+        for year in tqdm(reversed(self.distinct_years()), total=len(self.distinct_years())):
+            if year=="None":
+                odt.addParagraph(self.mem._("Unknown year"), "Heading 2")
+            else:
+                odt.addParagraph(self.mem._("Year {}").format(year), "Heading 2")
+            for fi in self.films_in_year(year).arr:
+                odt.addImageParagraph([fi.coverpath_in_tmp(),  ], 3000, 3000, str(fi.id), linked=True)
         odt.save(filename)
         odt.export_pdf(filename[:-4]+".pdf")
         odt.close()

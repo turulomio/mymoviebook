@@ -2,7 +2,7 @@
   "header": {
     "comment": "eric project file for project mymoviebook",
     "copyright": "Copyright (C) 2021 , ",
-    "saved": "2021-10-02, 18:45:56"
+    "saved": "2021-10-03, 05:25:45"
   },
   "project": {
     "AUTHOR": "",
@@ -50,7 +50,6 @@
     },
     "MIXEDLANGUAGE": false,
     "OTHERS": [
-      "mymoviebook.e4p",
       "README.md",
       "doc/ENTITY_RELATIONSHIP.md",
       "mymoviebook.egg-info/SOURCES.txt",
@@ -74,18 +73,9 @@
     "RESOURCES": [],
     "SOURCES": [
       "mymoviebook/mem.py",
-      "mymoviebook/decorators.py",
-      "mymoviebook/github.py",
-      "mymoviebook/dbupdates.py",
-      "mymoviebook/admin_pg.py",
-      "mymoviebook/text_inputs.py",
-      "mymoviebook/libmanagers.py",
       "mymoviebook/version.py",
-      "mymoviebook/connection_pg.py",
       "mymoviebook/__init__.py",
-      "mymoviebook/casts.py",
       "mymoviebook/objects/films.py",
-      "mymoviebook/datetime_functions.py",
       "mymoviebook/mymoviebook.py",
       "setup.py",
       "mymoviebook/reusing/decorators.py",
