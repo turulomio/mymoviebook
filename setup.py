@@ -93,7 +93,7 @@ class Doc(Command):
         pass
 
     def run(self):
-        from caloriestracker.connection_pg import Connection
+        from mymoviebook.reusing.connection_pg import Connection
         con=Connection()
         con.user=self.user
         con.server=self.server
@@ -191,8 +191,6 @@ class Reusing(Command):
             download_from_github('turulomio','reusingcode','python/file_functions.py', 'mymoviebook/reusing')
             download_from_github('turulomio','reusingcode','python/call_by_name.py', 'mymoviebook/reusing') 
             download_from_github('turulomio','reusingcode','python/casts.py', 'mymoviebook/reusing')
-            download_from_github('turulomio','reusingcode','python/currency.py', 'mymoviebook/reusing')
-            download_from_github('turulomio','reusingcode','python/percentage.py', 'mymoviebook/reusing')
             download_from_github('turulomio','reusingcode','python/datetime_functions.py', 'mymoviebook/reusing')
             download_from_github('turulomio','reusingcode','python/decorators.py', 'mymoviebook/reusing')
             download_from_github('turulomio','reusingcode','python/github.py', 'mymoviebook/reusing')

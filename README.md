@@ -94,6 +94,10 @@ Dependencies
 
 Changelog
 =========
+1.8.0
+-----
+- Replaced officegenerator by unogenerator
+
 1.7.0
 -----
 - Fixed error parsing names

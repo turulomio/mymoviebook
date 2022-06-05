@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RecPermissions\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-17 07:38+0100\n"
+"POT-Creation-Date: 2022-06-05 08:21+0200\n"
 "PO-Revision-Date: 2018-11-03 07:11+0100\n"
 "Last-Translator: root <turulomio@yahoo.es>\n"
 "Language-Team: French\n"
@@ -92,30 +92,6 @@ msgstr ""
 msgid "You need ttyrecgenerator installed to generate videos"
 msgstr "Il faut installer ttyrecgenerator pour générer des vidéos"
 
-msgid "Write the password for {}"
-msgstr ""
-
-msgid "Postgres database connection parameters"
-msgstr ""
-
-msgid "Postgresql user"
-msgstr ""
-
-msgid "Postgresql server port"
-msgstr ""
-
-msgid "Postgresql server address"
-msgstr ""
-
-msgid "Postgresql database"
-msgstr ""
-
-msgid "MyMovieBook database needs to be updated. Please login with a superuser role."
-msgstr ""
-
-msgid "MyMovieBook app is older than database. Please update it."
-msgstr ""
-
 msgid "You pressed 'Ctrl+C', exiting..."
 msgstr ""
 
@@ -147,15 +123,6 @@ msgid "MyMovieBook it's ready for use"
 msgstr ""
 
 msgid "Getting images"
-msgstr ""
-
-msgid "Y"
-msgstr ""
-
-msgid "N"
-msgstr ""
-
-msgid "Please enter '{}' or '{}'"
 msgstr ""
 
 msgid "My movie book"

@@ -1,3 +1,4 @@
+.eric7project/
 .eric6project/
 _eric6project/
 .eric5project/
@@ -20,3 +21,4 @@ __pycache__/
 dist/
 doc/html/
 mymoviebook.egg-info/
+build/

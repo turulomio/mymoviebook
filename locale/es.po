@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RecPermissions\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-17 07:38+0100\n"
+"POT-Creation-Date: 2022-06-05 08:21+0200\n"
 "PO-Revision-Date: 2018-10-22 18:51+0100\n"
 "Last-Translator: root <turulomio@yahoo.es>\n"
 "Language-Team: Spanish\n"
@@ -93,30 +93,6 @@ msgstr "Este comando crea tu libro de películas en la ruta"
 msgid "You need ttyrecgenerator installed to generate videos"
 msgstr "Necesitas instalar 'ttyrecgenerator' para generar videos"
 
-msgid "Write the password for {}"
-msgstr "Escribe la contraseña para {}"
-
-msgid "Postgres database connection parameters"
-msgstr "Parámetros de conexión de la base de datos Postgres"
-
-msgid "Postgresql user"
-msgstr "Usuario de Postgresql"
-
-msgid "Postgresql server port"
-msgstr "Puerto del servidor Postgres"
-
-msgid "Postgresql server address"
-msgstr "Dirección del servidor Postgres"
-
-msgid "Postgresql database"
-msgstr "Base de datos Postgresql"
-
-msgid "MyMovieBook database needs to be updated. Please login with a superuser role."
-msgstr "La base de datos de MyMovieBook necesita ser actualizada. Por favor autentícate con un perfil de administrador."
-
-msgid "MyMovieBook app is older than database. Please update it."
-msgstr "La aplicación MyMovieBook es más antigua que la base de datos. Por favor actualízala."
-
 msgid "You pressed 'Ctrl+C', exiting..."
 msgstr "Se ha pulsado 'Ctrl+C', saliendo..."
 
@@ -149,15 +125,6 @@ msgstr "MyMovieBook está preparada para ser usada"
 
 msgid "Getting images"
 msgstr "Extrayendo las imágenes"
-
-msgid "Y"
-msgstr "S"
-
-msgid "N"
-msgstr "N"
-
-msgid "Please enter '{}' or '{}'"
-msgstr "Por favor introduce '{}' o '{}'"
 
 msgid "My movie book"
 msgstr "Mi libro de películas"
@@ -272,3 +239,36 @@ msgstr "Borrando la información..."
 
 msgid "Adding movies to the database"
 msgstr "Añadiendo películas a la base de datos"
+
+#~ msgid "Write the password for {}"
+#~ msgstr "Escribe la contraseña para {}"
+
+#~ msgid "Postgres database connection parameters"
+#~ msgstr "Parámetros de conexión de la base de datos Postgres"
+
+#~ msgid "Postgresql user"
+#~ msgstr "Usuario de Postgresql"
+
+#~ msgid "Postgresql server port"
+#~ msgstr "Puerto del servidor Postgres"
+
+#~ msgid "Postgresql server address"
+#~ msgstr "Dirección del servidor Postgres"
+
+#~ msgid "Postgresql database"
+#~ msgstr "Base de datos Postgresql"
+
+#~ msgid "MyMovieBook database needs to be updated. Please login with a superuser role."
+#~ msgstr "La base de datos de MyMovieBook necesita ser actualizada. Por favor autentícate con un perfil de administrador."
+
+#~ msgid "MyMovieBook app is older than database. Please update it."
+#~ msgstr "La aplicación MyMovieBook es más antigua que la base de datos. Por favor actualízala."
+
+#~ msgid "Y"
+#~ msgstr "S"
+
+#~ msgid "N"
+#~ msgstr "N"
+
+#~ msgid "Please enter '{}' or '{}'"
+#~ msgstr "Por favor introduce '{}' o '{}'"
