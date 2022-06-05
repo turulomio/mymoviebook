@@ -201,8 +201,8 @@ class Reusing(Command):
             download_from_github('turulomio','reusingcode','python/text_inputs.py', 'mymoviebook/reusing')
         
         from file_functions import replace_in_file
-        replace_in_file("mymoviebook/reusing/casts.py","from currency","from mymoviebook.reusing.currency")
-        replace_in_file("mymoviebook/reusing/casts.py","from percentage","from mymoviebook.reusing.percentage")
+        replace_in_file("mymoviebook/reusing/libmanagers.py","from datetime_functions","from .datetime_functions")
+        replace_in_file("mymoviebook/reusing/libmanagers.py","from call_by_name","from .call_by_name")
 
 class Video(Command):
     description = "Create video/GIF from console ouput"

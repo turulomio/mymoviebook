@@ -1,7 +1,7 @@
 ## @brief Module with objects managers as list or as dictionary.
-## THIS IS FILE IS FROM https://github.com/turulomio/reusingcode IF YOU NEED TO UPDATE IT PLEASE MAKE A PULL REQUEST IN THAT PROJECT
-## DO NOT UPDATE IT IN YOUR CODE IT WILL BE REPLACED USING FUNCTION IN README
-##
+## THIS IS FILE IS FROM https://github.com/turulomio/reusingcode/python/libmanagers.py
+## IF YOU NEED TO UPDATE IT PLEASE MAKE A PULL REQUEST IN THAT PROJECT AND DOWNLOAD FROM IT
+## DO NOT UPDATE IT IN YOUR CODE
 ## You have to use list objects if you are going to make selections and secuential access.
 
 from datetime import datetime, timedelta, date
@@ -429,25 +429,24 @@ class ObjectManager_With_IdName(ObjectManager_With_Id):
     ## Creates a libreoffice sheet from the ObjectManager
     ##
     ## This function needs the unogenerator package
-    ## @param ods unogenerator ODS_Write object
+    ## @param doc Unogenerator ODS_Standard, ODS object
     ## @param sheetname String with the name of the libreoffice sheet
     ## @param titles List of strings with the titles of the columns
     ## @param order_by_name Boolean. True: orders by name. False: orders by id
-    ## @returns unogenerator OdfSheet
-    def ods_sheet(self, ods, sheetname, titles=["Id", "Name"],  order_by_name=True):
-        from unogenerator import Coord
+    ## @returns Officegenerator OdfSheet
+    def uno_sheet(self, doc, sheetname, titles=["Id", "Name"],  order_by_name=True):
+        from unogenerator.commons import Coord, ColorsNamed
         if order_by_name==True:
             self.order_by_name()
         else:
             self.order_by_id()
-        s=ods.createSheet(sheetname)
-        s.setColumnsWidth([80, 240])
-        s.add("A1", [titles], "OrangeCenter")
+        doc.createSheet(sheetname)
+        doc.setColumnsWidth([3, 20])
+        doc.addRowWithStyle("A1", titles, ColorsNamed.Orange, "BoldCenter")
         for number, o in enumerate(self.arr):
-            s.add(Coord("A2").addRow(number), o.id, "WhiteRight")        
-            s.add(Coord("B2").addRow(number), o.name, "WhiteLeft")
-        s.freezeAndSelect("A1")
-        return s
+            doc.addCellWithStyle(Coord("A2").addRow(number), o.id)        
+            doc.addCellWithStyle(Coord("B2").addRow(number), str(o.name))
+        doc.freezeAndSelect("A2")
 
 ## Usefull when creating a class with two attributes self.id and self.name only
 class Object_With_IdName:
