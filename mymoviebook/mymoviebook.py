@@ -43,4 +43,4 @@ def main(parameters=None):
 
     mem.con.disconnect()
 
-    #mem.remove_temporal_directory()
+    mem.remove_temporal_directory()

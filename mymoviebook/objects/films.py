@@ -133,10 +133,11 @@ class FilmManager(ObjectManager_With_Id):
         header = header + "\\usepackage[bookmarksnumbered, colorlinks=true, urlcolor=blue, linkcolor=blue, pdftitle={"+ self.mem._("My movie book") +"}, pdfauthor={MyMovieBook-"+ __version__ +"}, pdfkeywords={movie book}]{hyperref}\n"
         header = header + "\\geometry{verbose,a4paper}\n"
         header = header + "\\usepackage{anysize}\n"
-        header = header + "\\marginsize{1.5cm}{1.5cm}{1.5cm}{1.5cm} \n"
+        header = header + "\\marginsize{1.5cm}{1.5cm}{0.5cm}{1cm} \n"
         header = header + "\\usepackage{array}\n"
         header = header + "\\begin{document}\n"
         header = header + "\\title{\\textbf{" + self.mem._("My movie book") + "}}\n"
+        header = header + "\\author{MyMovieBook-"+ __version__ +"}\n"
 
         header = header + "\\setlength{\\parindent}{1cm}\n"
         header = header + "\\setlength{\\parskip}{0.2cm}\n"
@@ -160,19 +161,23 @@ class FilmManager(ObjectManager_With_Id):
 
         print ("  - " + self.mem._("List by index"))
         bd = bd + "\section{"+ self.mem._("Big covers") +"}\n"
+        bd = bd + "\\setlength{\\parindent}{0cm}\n"
         for id_dvd in reversed(self.distinct_id_dvd()):
             bd=bd + "\\subsection*{"+ self.mem._("Index") + " " + str(id_dvd)+"}\n" 
             bd=bd + "\\label{{sec:{0}}}\n".format(id_dvd)
             bd=bd + "\\addcontentsline{toc}{subsection}{"+ self.mem._("Index") + " " + str(id_dvd)+"}\n" 
+            
+            bd=bd + "\\begin{center}\n"
             bd=bd + "\\begin{tabular}{c c}\n"
             for i, fi in enumerate(self.films_in_id_dvd(id_dvd).arr):
-                bd=bd+ "\\begin{tabular}{p{7.1cm}}\n" #Tabla foto name interior
-                bd=bd+ fi.tex_cover(6.7,6.7) + "\\\\\n"
+                bd=bd+ "\\begin{tabular}{p{8cm}}\n" #Tabla foto name interior
+                bd=bd+ fi.tex_cover(8,6.8) + "\\\\\n"
                 bd=bd+ string2tex(fi) +"\\\\\n"
                 bd=bd+ "\\end{tabular} &"
                 if i % 2==1:
                     bd=bd[:-2]+"\\\\\n"
             bd = bd + "\\end{tabular}\n"
+            bd=bd + "\\end{center}\n"
             bd=bd +"\n\\newpage\n\n"
 
 
@@ -184,8 +189,8 @@ class FilmManager(ObjectManager_With_Id):
             bd=bd + self.mem._("Index") + " " +str(id_dvd) + " & "
             for fi in self.films_in_id_dvd(id_dvd).arr:
                 bd=bd + fi.tex_cover(2,2) + " &" 
-            bd = bd[:-2]  + "\\\\\n"
-            bd = bd + "\\end{tabular} \\\\\n\n"
+            bd = bd[:-2]  + "\n"
+            bd = bd + "\\end{tabular} \n\n"
         bd=bd +"\n\\newpage\n\n"
 
         print (self.mem._("  - Films list ordered by title"))
