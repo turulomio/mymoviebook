@@ -89,14 +89,14 @@ class Film:
     ## @param height Float with the height of the cover
     ## @param show_name Boolean. If True shows the name and the id_dvd. If False only show id_dvd
     ## @return string
-    def tex_cover_tabular(self,width=2.2,height=2.2, show_name=True):
+    def tex_cover_tabular(self,width=2,height=2, show_name=True):
         bd=""       
-        bd=bd + "\\begin{tabular}{m{2.3cm} m{15cm}}\n"
+        bd=bd + "\\begin{tabular}{ m{2.2cm} m{13cm} }\n"
         if show_name==True:
-            bd=bd + "{0} & {1}. (~\\nameref{{sec:{2}}} )\\\\\n".format(self.tex_cover(width, height), string2tex(self.name()), self.id_dvd)
+            bd=bd + "{0} & {1}. (~\\nameref{{sec:{2}}} )\n".format(self.tex_cover(width, height), string2tex(self.name()), self.id_dvd)
         else:
-            bd=bd + "{0} & ~\\nameref{{sec:{1}}}\\\\\n".format(self.tex_cover(width, height), self.id_dvd)#Reference to DVD page
-        bd = bd + "\\end{tabular} \\\\\n\n"
+            bd=bd + "{0} & ~\\nameref{{sec:{1}}}\n".format(self.tex_cover(width, height), self.id_dvd)#Reference to DVD page
+        bd = bd + "\\end{tabular} \n\n"
         return bd
 
     ## Coverpath points to the path of the file system where the cover is. 
@@ -180,10 +180,10 @@ class FilmManager(ObjectManager_With_Id):
         bd = bd + "\\setlength{\\parindent}{0cm}\n"
         bd=bd + "\section{"+ self.mem._("Small covers") +"}\n"
         for id_dvd in reversed(self.distinct_id_dvd()):
-            bd=bd + "\\begin{tabular}{m{2.1cm} m{2.1cm} m{2.1cm} m{2.1cm} m{2.1cm} m{2.1cm} m{2.1cm}}\n"
+            bd=bd + "\\begin{tabular}{m{2cm} m{2cm} m{2cm} m{2cm} m{2cm} m{2cm} m{2cm}}\n"
             bd=bd + self.mem._("Index") + " " +str(id_dvd) + " & "
             for fi in self.films_in_id_dvd(id_dvd).arr:
-                bd=bd + fi.tex_cover(2.1,2.1) + " &" 
+                bd=bd + fi.tex_cover(2,2) + " &" 
             bd = bd[:-2]  + "\\\\\n"
             bd = bd + "\\end{tabular} \\\\\n\n"
         bd=bd +"\n\\newpage\n\n"
