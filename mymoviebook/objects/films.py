@@ -395,7 +395,7 @@ def add_movies_to_database(mem):
     #Check if there are more than 6 images
     print ("+ " + mem._("Checking the number of films in the directory..."))
     if number_images>6:
-        print(mem._("There are more than 6 images in this directory. Please fix it."))
+        print(mem._("There are more than 6 films in this directory. Please fix it."))
         exit(100)
         
 

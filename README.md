@@ -80,7 +80,7 @@ Links
 =====
 
 Doxygen documentation:
-    http://turulomio.users.sourceforge.net/doxygen/mymoviebook/
+    https://coolnewton.mooo.com/doxygen/mymoviebook/
 
 Pypi web page:
     https://pypi.org/project/mymoviebook/
@@ -94,6 +94,10 @@ Dependencies
 
 Changelog
 =========
+1.9.0 (2022-11-13)
+------------------
+-  --insert parameter now checks there aren't more than 6 films per directory
+
 1.8.0
 -----
 - Replaced officegenerator by unogenerator

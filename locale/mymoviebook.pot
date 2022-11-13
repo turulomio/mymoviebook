@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-05 08:23+0200\n"
+"POT-Creation-Date: 2022-11-13 06:28+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -228,6 +228,12 @@ msgid "Checking that the movies have the correct format..."
 msgstr ""
 
 msgid "There isn't a movie with the same name '{}'"
+msgstr ""
+
+msgid "Checking the number of films in the directory..."
+msgstr ""
+
+msgid "There are more than 6 films in this directory. Please fix it."
 msgstr ""
 
 msgid "Do you want to overwrite the information of directory '{}'?"
