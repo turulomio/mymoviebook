@@ -71,7 +71,7 @@ Generating book movie
 
 Once all our movies are quickly added to database and if our latex is working (pdflatex command is needed), after executing
 
-`mymoviebook --generate --output /home/user/mymoviebook.pdf`
+`mymoviebook --report /home/user/mymoviebook.pdf`
 
 we get our movie collection book. This is the ![demo movie book](https://raw.githubusercontent.com/Turulomio/mymoviebook/master/doc/demo.pdf).
 
