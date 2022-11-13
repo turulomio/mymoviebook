@@ -384,10 +384,20 @@ def add_movies_to_database(mem):
         exit(100)
 
     print ("+ " + mem._("Checking that the movies have the correct format..."))
+    
+    number_images=0
     for file in glob( getcwd()+ "/*.jpg" ):
         if path.exists(file[:-3]+"avi")==False and path.exists(file[:-3]+"mpg")==False and path.exists(file[:-3]+"mkv")==False:
             print (mem._("There isn't a movie with the same name '{}'").format(file[:-3]))
             exit(100)
+        number_images=number_images+1
+        
+    #Check if there are more than 6 images
+    print ("+ " + mem._("Checking the number of films in the directory..."))
+    if number_images>6:
+        print(mem._("There are more than 6 images in this directory. Please fix it."))
+        exit(100)
+        
 
     # "Chequeando si hay registros en la base de datos del dispositivo " + str(id)
     sf=FilmManager_from_db_query(mem, mem.con.mogrify("SELECT * FROM films WHERE id_dvd=%s", (id, )))
