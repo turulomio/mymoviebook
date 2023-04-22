@@ -3,12 +3,9 @@ from glob import glob
 from mymoviebook.reusing.casts import string2tex
 from mymoviebook.reusing.libmanagers import ObjectManager_With_Id
 from mymoviebook.reusing.text_inputs import input_YN
-from mymoviebook.version import __version__
-from unogenerator import ODT_Standard
+from mymoviebook import __version__
 from os import system, getcwd, path
 from pkg_resources import resource_filename
-from shutil import copyfile
-from tqdm import tqdm
 from urllib.parse import urlencode
 
 class Film:
@@ -254,56 +251,6 @@ class FilmManager(ObjectManager_With_Id):
         system("cd /tmp/mymoviebook;pdflatex /tmp/mymoviebook/mymoviebook.tex;  &>/dev/null;pdflatex /tmp/mymoviebook/mymoviebook.tex; pdflatex /tmp/mymoviebook/mymoviebook.tex")
         for output in self.mem.args.report:
             system("cp /tmp/mymoviebook/mymoviebook.pdf {}".format(output))
-
-    def generate_odt(self):
-        filename=self.mem.args.report[0]
-        other_filenames=self.mem.args.report[1:]
-        
-        
-        odt=ODT_Standard()
-        odt.addParagraph(self.mem._("Movie list"), "Title")
-        odt.addParagraph(self.mem._("This list has {} films and was generated at {} with MyMovieBook-{}").format(self.length(), date.today(), __version__),  "Subtitle")
-        
-        print ("  - Listado por página")
-        odt.addParagraph(self.mem._("Big covers"), "Heading 1")
-        for id_dvd in tqdm(reversed(self.distinct_id_dvd()), total=len(self.distinct_id_dvd())):
-            odt.addParagraph(self.mem._("Index {}").format(id_dvd), "Heading 2")
-            for i, fi in enumerate(self.films_in_id_dvd(id_dvd).arr):
-                odt.addImageParagraph([fi.coverpath_in_tmp()], 3000, 3000, "Illustration", linked=True)
-        
-        print ("  - Listado de carátulas en pequeño")
-        odt.addParagraph(self.mem._("Small covers"), "Heading 1")
-        for id_dvd in tqdm(reversed(self.distinct_id_dvd()), total=len(self.distinct_id_dvd())):
-            l=[]
-            l.append(self.mem._("Index {}").format(id_dvd))
-            for fi in self.films_in_id_dvd(id_dvd).arr:
-                l.append(odt.textcontentImage(fi.coverpath_in_tmp(), 2200, 2200, "AS_CHARACTER", "PRIMERA", linked=True))
-
-            odt.addParagraphComplex(l, "Standard")
-            
-        print ("  - Listado ordenado alfabéticamente")
-        odt.addParagraph(self.mem._("Order by name"), "Heading 1")
-        self.order_by_name()
-        for f in tqdm(reversed(self.arr), total=self.length()):
-            odt.addParagraph(f.name(), "Heading 2")
-            odt.addImageParagraph([f.coverpath_in_tmp(), ], 3000, 3000, linked=True)
-        
-        print ("  - Listado ordenado por años")
-        odt.addParagraph(self.mem._("Order by year"), "Heading 1")
-        for year in tqdm(reversed(self.distinct_years()), total=len(self.distinct_years())):
-            if year=="None":
-                odt.addParagraph(self.mem._("Unknown year"), "Heading 2")
-            else:
-                odt.addParagraph(self.mem._("Year {}").format(year), "Heading 2")
-            for fi in self.films_in_year(year).arr:
-                odt.addImageParagraph([fi.coverpath_in_tmp(),  ], 3000, 3000, str(fi.id), linked=True)
-        odt.save(filename)
-        odt.export_pdf(filename[:-4]+".pdf")
-        odt.close()
-
-        for other_filename in other_filenames:
-            copyfile(filename, other_filename)
-
 
     def delete_all_films(self):
         for f in self.arr:

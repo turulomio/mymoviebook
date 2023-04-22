@@ -36,8 +36,6 @@ def main(parameters=None):
         sf.extract_photos()
         if mem.args.format=="PDF":
             sf.generate_pdf()
-        else:
-            sf.generate_odt()
     else:
         mem.parser.print_help()
 

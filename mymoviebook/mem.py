@@ -6,7 +6,7 @@ from shutil import rmtree
 from os import system, mkdir, path
 from signal import signal, SIGINT
 from sys import exit
-from mymoviebook.version import __version__, __versiondate__
+from mymoviebook import __version__, __versiondate__
 
 
 class Mem:
@@ -36,7 +36,7 @@ class Mem:
         argparse_connection_arguments_group(self.parser, gettext_module="mymoviebook",  gettex_locale=resource_filename("mymoviebook","locale"), default_db="mymoviebook") 
 
         group_generate=self.parser.add_argument_group(self._("Other parameters"))
-        group_generate.add_argument('--format', help=self._("select output format. Default is PDF"), action="store", choices=['PDF', 'ODT'],  default='PDF')
+        group_generate.add_argument('--format', help=self._("select output format. Default is PDF"), action="store", choices=['PDF'],  default='PDF')
         
     def create_args_from_parser(self, parameters=None):
         #Validations

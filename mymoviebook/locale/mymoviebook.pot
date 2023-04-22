@@ -1,0 +1,51 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-04-22 08:39+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "You pressed 'Ctrl+C', exiting..."
+msgstr ""
+
+msgid "Generate your personal movie collection book"
+msgstr ""
+
+msgid "Developed by Mariano Muñoz 2012-{}"
+msgstr ""
+
+msgid "Insert films from current numbered directory"
+msgstr ""
+
+msgid "Films report is generated in this path. Can be called several times"
+msgstr ""
+
+msgid "Creates a new postgresql database, checking if already exists. Copy MyMovieBook schema on it"
+msgstr ""
+
+msgid "Other parameters"
+msgstr ""
+
+msgid "select output format. Default is PDF"
+msgstr ""
+
+msgid "I can't create '{}' database because it already exists."
+msgstr ""
+
+msgid "MyMovieBook it's ready for use"
+msgstr ""
+
+msgid "Getting images"
+msgstr ""
