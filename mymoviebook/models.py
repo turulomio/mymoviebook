@@ -59,12 +59,11 @@ class Films(models.Model):
         managed = True
         db_table = 'films'
 
-    def __repr__(self):
-        name, year=self.__parse_name()
-        if year==None:
-            return name
+    def __str__(self):
+        if self.year()==None:
+            return self.title()
         else:
-            return "{} ({})".format(name, year)
+            return "{} ({})".format(self.title(), self.year())
             
     def title(self):
         if hasattr(self, "_title"):

@@ -15,18 +15,17 @@ try:
     _=t.gettext
 except:
     _=str
+
+from django.db import connection
     
 ### MAIN SCRIPT ###
 def main(parameters=None):
+
+    #Before any django import
     environ.setdefault("DJANGO_SETTINGS_MODULE", "mymoviebook.settings")
-
-    #instantiate a web sv for django which is a wsgi
     from django.core.wsgi import get_wsgi_application
+    #instantiate a web sv for django which is a wsgi
     get_wsgi_application()
-
-    from mymoviebook import models
-    #import your models schema
-    print(models.Films.objects.count())
 
 #
     mem=Mem()
@@ -40,20 +39,27 @@ def main(parameters=None):
     else:
         mem.parser.print_help()
 
-#
-### Returns a FilmManager with the films duplicated in the database
-#def films_duplicated(self):
-#    self.order_by_name()
-#    result=FilmManager(self.mem)
-#    last=None
-#    for f in self.arr:
-#        if last!=None and f.title()==last.title() and f.year()==last.year():
-#            result.append(f)
-#            result.append(last)
-#        last=f
-#    return result
-#
-# 
+
+## Returns a FilmManager with the films duplicated in the database
+def films_duplicated(qs):
+    result=[]
+    qs=qs.order_by("name")
+    last=None
+    for f in qs:
+        if last!=None and f.title()==last.title() and f.year()==last.year():
+            result.append(f)
+            result.append(last)
+        last=f
+    return result
+
+##  This method can be used as a function when decorators are not allowed (DRF actions)
+def show_queries_function():
+    sum_=0
+    for d in connection.queries:
+        print (f"[{d['time']}] {d['sql']}")
+        sum_=sum_+float(d['time'])
+    print (f"{len(connection.queries)} db queries took {round(sum_*1000,2)} ms")
+ 
         
 ## Function to add movies to a database from console
 def add_movies_to_database(mem):
@@ -115,7 +121,7 @@ def generate_pdf(mem):
     
     with TemporaryDirectory() as tmpdirname:
         print('created temporary directory', tmpdirname, )
-        qs_films_all=models.Films.objects.all().order_by("dvd")
+        qs_films_all=models.Films.objects.all().select_related("covers").order_by("dvd")
         
         
         # SACA LAS IMÁGENES DE LA BASE DE DATOS
@@ -123,6 +129,7 @@ def generate_pdf(mem):
         
         dict_dvds={}
         dict_years={}
+        films_without_year=[]
         for film in qs_films_all:
             #Extract foto to tempdir
             film.covers.extract_to_path(tmpdirname)
@@ -131,11 +138,13 @@ def generate_pdf(mem):
                 dict_dvds[film.dvd]=[]
             dict_dvds[film.dvd].append(film)
             #Creates year dictionary
-            if not film.savedate.year in dict_years:
-                dict_years[film.savedate.year]=[]
-            dict_years[film.savedate.year].append(film)
+            if film.year() is None:
+                films_without_year.append(film)
+                continue            
+            if not film.year() in dict_years:
+                dict_years[film.year()]=[]
+            dict_years[film.year()].append(film)
         
-        system(f"ls -la {tmpdirname}")
         icon=resource_filename("mymoviebook","images/mymoviebook.png")
 
 
@@ -216,7 +225,7 @@ def generate_pdf(mem):
 
         print (_("  - Films list ordered by title"))
         bd=bd + "\section{"+_("Order by movie title") +"}\n"
-        qs_films_all.order_by("name")
+        qs_films_all=qs_films_all.order_by("name")
         for f in qs_films_all:
             bd=bd + "\\subsection*{"+ string2tex(f) + "} \n"
             bd=bd + "\\addcontentsline{{toc}}{{subsection}}{{{0}}}\n".format(string2tex(f))
@@ -228,6 +237,7 @@ def generate_pdf(mem):
         bd=bd + "\section{"+ _("Order by movie year") + "}\n"
         
         list_years=list(dict_years.keys())
+        print(list_years)
         list_years.sort()
         for year in list_years:
             if year!="None":
@@ -244,25 +254,25 @@ def generate_pdf(mem):
                     bd=bd + fi.covers.tex_tabular()
             bd=bd +"\n\\newpage\n\n"
 
-    #
-    #
-    #    print (_("  - Films without year list"))
-    #    withoutyear=self.films_without_year()
-    #    if withoutyear.length()>0:
-    #        bd=bd + "\section{"+_("Films without year") +"}\n"
-    #        bd = bd + _("There are {} collection films without year.").format(withoutyear.length()) + "\\par\n"
-    #        for fi in withoutyear.arr:
-    #            bd=bd + fi.tex_cover_tabular()
-    #        bd=bd +"\\newpage\n\n"
-    #
-    #    print (_("  - Duplicated films list"))
-    #    duplicated=self.films_duplicated()
-    #    if duplicated.length()>0:
-    #        bd=bd + "\section{"+_("Duplicated films") +"}\n"
-    #        bd = bd + _("There are {} collection films duplicated.").format(duplicated.length()) + "\\par\n"
-    #        for fi in duplicated.arr:
-    #            bd=bd + fi.tex_cover_tabular()
-    #        bd=bd +"\\newpage\n\n"
+            
+
+
+        print (_("  - Films without year list"))
+        if len(films_without_year)>0:
+            bd=bd + "\section{"+_("Films without year") +"}\n"
+            bd = bd + _("There are {} collection films without year.").format(len(films_without_year)) + "\\par\n"
+            for fi in films_without_year:
+                bd=bd + fi.covers.tex_tabular()
+            bd=bd +"\\newpage\n\n"
+
+        print (_("  - Duplicated films list"))
+        duplicated=films_duplicated(qs_films_all)
+        if len(duplicated)>0:
+            bd=bd + "\section{"+_("Duplicated films") +"}\n"
+            bd = bd + _("There are {} collection films duplicated.").format(len(duplicated)) + "\\par\n"
+            for fi in duplicated:
+                bd=bd + fi.covers.tex_tabular()
+            bd=bd +"\\newpage\n\n"
 
 
         footer=" \
@@ -278,3 +288,7 @@ def generate_pdf(mem):
         system(f"cd {tmpdirname};pdflatex {tmpdirname}/mymoviebook.tex;  &>/dev/null;pdflatex {tmpdirname}/mymoviebook.tex; pdflatex {tmpdirname}/mymoviebook.tex")
         for output in mem.args.report:
             system(f"cp {tmpdirname}/mymoviebook.pdf {output}")
+            
+        print(None in list_years)
+        print(list_years)
+        show_queries_function()
