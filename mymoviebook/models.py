@@ -19,75 +19,19 @@ class Covers(models.Model):
         managed = True
         db_table = 'covers'
 
+    def path(self, tmpdir):
+        return f"{tmpdir}/{self.films.id}.jpg"
 
-class Films(models.Model):
-    savedate = models.DateField(blank=True, null=True)
-    name = models.TextField(blank=True, null=True)
-    dvd = models.IntegerField(blank=True, null=True)
-
-    class Meta:
-        managed = True
-        db_table = 'films'
-
-    def __repr__(self):
-        name, year=self.__parse_rawname()
-        if year==None:
-            return name
-        else:
-            return "{} ({})".format(name, year)
-
-    ## Returns a tu
-    def __parse_rawname(self):
-        arr=self.rawname.split(". ")
-        name=self.rawname
-        try:
-            year=int(arr[len(arr)-1])
-            name=self.rawname.replace(". "+arr[len(arr)-1], "")
-            if year<1850 or year>date.today().year:#Must be a film
-                year=None
-        except:
-            year=None
-        return (name, year)
-        
-    ## Returns Film year integer or None
-    def year(self):
-        return self.__parse_rawname()[1]
-
-    ## Returns Film name
-    def name(self):
-        return self.__parse_rawname()[0]
-
-    ## Returns a Internet url to query this film in sensacine.com
-    def name2query_sensacine(self):
-        query={"q": self.name(),}
-        return "http://www.sensacine.com/busqueda/?{}".format(urlencode(query))
-
-    ## Returns a Internet url to query this film in filmaffinity.com
-    def name2query_filmaffinity(self):
-        query={"stext": self.name(),}
-        return "https://www.filmaffinity.com/es/search.php?{}".format(urlencode(query))
-
-    def cover_db2file(self):
-        cur=self.mem.con.cursor()
-        cur.execute("SELECT cover FROM covers where films_id=%s", (self.id, ))#Si es null peta el open, mejor que devuelva fals3ee3 que pasar a variable
-        if cur.rowcount==1:
-            open(self.coverpath_in_tmp(), "wb").write(cur.fetchone()[0])
-            cur.close()
-            return True
-        cur.close()
-        return False
-
-    ## Path to cover in /tmp directory
-    def coverpath_in_tmp(self):
-        return '/tmp/mymoviebook/{}.jpg'.format(self.id)
+    def extract_to_path(self, tmpdir):
+        open(self.path(tmpdir), "wb").write(self.cover)
 
     ## Includes the cover in latex. Remember that to scape {} in python strings, you need to double them {{}}
     ## Used to add the image and the link
     ## @param width Float with the width of the cover
     ## @param height Float with the height of the cover
     ## @return string
-    def tex_cover(self,width,height):
-        return  "\\href{{{0}}}{{ \\includegraphics[width={1}cm,height={2}cm]{{{3}.jpg}}}}".format(self.name2query_filmaffinity(), width, height, self.id)
+    def tex(self,width,height):
+        return  "\\href{{{0}}}{{ \\includegraphics[width={1}cm,height={2}cm]{{{3}.jpg}}}}".format(self.films.name2query_filmaffinity(), width, height, self.films.id)
         
     ## Includes the cover in latex. Remember that to scape {} in python strings, you need to double them {{}}
     ## Used for one  cover in a different paragrahp
@@ -95,13 +39,60 @@ class Films(models.Model):
     ## @param height Float with the height of the cover
     ## @param show_name Boolean. If True shows the name and the id_dvd. If False only show id_dvd
     ## @return string
-    def tex_cover_tabular(self,width=2,height=2, show_name=True):
+    def tex_tabular(self,width=2,height=2, show_name=True):
         bd=""       
         bd=bd + "\\begin{tabular}{ m{2.2cm} m{13cm} }\n"
         if show_name==True:
-            bd=bd + "{0} & {1}. (~\\nameref{{sec:{2}}} )\n".format(self.tex_cover(width, height), string2tex(self.name()), self.id_dvd)
+            bd=bd + "{0} & {1}. (~\\nameref{{sec:{2}}} )\n".format(self.tex(width, height), string2tex(self.films.title()), self.films.dvd)
         else:
-            bd=bd + "{0} & ~\\nameref{{sec:{1}}}\n".format(self.tex_cover(width, height), self.id_dvd)#Reference to DVD page
+            bd=bd + "{0} & ~\\nameref{{sec:{1}}}\n".format(self.tex(width, height), self.films.dvd)#Reference to DVD page
         bd = bd + "\\end{tabular} \n\n"
         return bd
+
+
+class Films(models.Model):
+    savedate = models.DateField(blank=True, null=True)
+    name = models.TextField(blank=True, null=True) #title. year
+    dvd = models.IntegerField(blank=True, null=True)
+
+    class Meta:
+        managed = True
+        db_table = 'films'
+
+    def __repr__(self):
+        name, year=self.__parse_name()
+        if year==None:
+            return name
+        else:
+            return "{} ({})".format(name, year)
+            
+    def title(self):
+        if hasattr(self, "_title"):
+            return self._title
+        self._parse_name()
+        return self._title
+        
+    def year(self):
+        if hasattr(self, "_year"):
+            return self._year
+        self._parse_name()
+        return self._year
+        
+
+    ## Returns a tu
+    def _parse_name(self):
+        arr=self.name.split(". ")
+        self._title=self.name
+        try:
+            self._year=int(arr[len(arr)-1])
+            self._title=self.name.replace(". "+arr[len(arr)-1], "")
+            if self._year<1850 or self._year>date.today().year:#Must be a film
+                self._year=None
+        except:
+            self._year=None
+
+    ## Returns a Internet url to query this film in filmaffinity.com
+    def name2query_filmaffinity(self):
+        query={"stext": self.title(),}
+        return "https://www.filmaffinity.com/es/search.php?{}".format(urlencode(query))
 

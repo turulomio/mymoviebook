@@ -2,7 +2,7 @@
   "header": {
     "comment": "eric project file for project mymoviebook",
     "copyright": "Copyright (C) 2023 , ",
-    "saved": "2023-04-22, 08:17:48"
+    "saved": "2023-04-22, 11:39:36"
   },
   "project": {
     "AUTHOR": "",
@@ -54,11 +54,6 @@
     "OTHERS": [
       "README.md",
       "doc/ENTITY_RELATIONSHIP.md",
-      "mymoviebook.egg-info/SOURCES.txt",
-      "mymoviebook.egg-info/dependency_links.txt",
-      "mymoviebook.egg-info/entry_points.txt",
-      "mymoviebook.egg-info/requires.txt",
-      "mymoviebook.egg-info/top_level.txt",
       "mymoviebook.epj"
     ],
     "OTHERTOOLSPARMS": {},
@@ -79,7 +74,6 @@
       "mymoviebook/devscripts.py",
       "mymoviebook/mem.py",
       "mymoviebook/mymoviebook.py",
-      "mymoviebook/objects/films.py",
       "mymoviebook/reusing/admin_pg.py",
       "mymoviebook/reusing/call_by_name.py",
       "mymoviebook/reusing/casts.py",
@@ -90,9 +84,7 @@
       "mymoviebook/reusing/file_functions.py",
       "mymoviebook/reusing/github.py",
       "mymoviebook/reusing/libmanagers.py",
-      "mymoviebook/reusing/text_inputs.py",
-      "mymoviebook/version.py",
-      "setup.py"
+      "mymoviebook/reusing/text_inputs.py"
     ],
     "SPELLEXCLUDES": "",
     "SPELLLANGUAGE": "en_US",

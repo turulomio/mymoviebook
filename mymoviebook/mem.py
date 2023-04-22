@@ -1,8 +1,7 @@
 from pkg_resources import resource_filename
 from argparse import ArgumentParser, RawTextHelpFormatter
 from gettext import translation
-from shutil import rmtree
-from os import system, mkdir, path
+from os import path
 from signal import signal, SIGINT
 from sys import exit
 from mymoviebook import __version__, __versiondate__
@@ -42,15 +41,15 @@ class Mem:
                 exit(1)
 
 
-    def create_temporal_directory(self):
-        try:
-            rmtree("/tmp/mymoviebook")
-        except:
-            pass
-        mkdir("/tmp/mymoviebook")
-        system("chmod 777 /tmp/mymoviebook")
-        
-        
-    
-    def remove_temporal_directory(self):
-        rmtree("/tmp/mymoviebook")
+#    def create_temporal_directory(self):
+#        try:
+#            rmtree("/tmp/mymoviebook")
+#        except:
+#            pass
+#        mkdir("/tmp/mymoviebook")
+#        system("chmod 777 /tmp/mymoviebook")
+#        
+#        
+#    
+#    def remove_temporal_directory(self):
+#        rmtree("/tmp/mymoviebook")
