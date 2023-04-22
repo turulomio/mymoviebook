@@ -28,3 +28,5 @@ INSTALLED_APPS = (
 
 # Write a random secret key here
 SECRET_KEY = '4e&6aw+(5&cg^_!05r(&7_#dghg_dfasdfju3e f^*j'
+
+DEFAULT_AUTO_FIELD ='django.db.models.BigAutoField'
