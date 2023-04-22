@@ -2,7 +2,7 @@
   "header": {
     "comment": "eric project file for project mymoviebook",
     "copyright": "Copyright (C) 2023 , ",
-    "saved": "2023-04-22, 11:39:36"
+    "saved": "2023-04-22, 18:11:49"
   },
   "project": {
     "AUTHOR": "",
@@ -73,6 +73,7 @@
       "mymoviebook/__init__.py",
       "mymoviebook/devscripts.py",
       "mymoviebook/mem.py",
+      "mymoviebook/models.py",
       "mymoviebook/mymoviebook.py",
       "mymoviebook/reusing/admin_pg.py",
       "mymoviebook/reusing/call_by_name.py",
@@ -84,7 +85,8 @@
       "mymoviebook/reusing/file_functions.py",
       "mymoviebook/reusing/github.py",
       "mymoviebook/reusing/libmanagers.py",
-      "mymoviebook/reusing/text_inputs.py"
+      "mymoviebook/reusing/text_inputs.py",
+      "mymoviebook/settings.py"
     ],
     "SPELLEXCLUDES": "",
     "SPELLLANGUAGE": "en_US",

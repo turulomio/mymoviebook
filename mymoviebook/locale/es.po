@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RecPermissions\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-22 17:59+0200\n"
+"POT-Creation-Date: 2023-04-22 18:17+0200\n"
 "PO-Revision-Date: 2018-10-22 18:51+0100\n"
 "Last-Translator: root <turulomio@yahoo.es>\n"
 "Language-Team: Spanish\n"
@@ -17,6 +17,27 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "New Release:"
+msgstr "Nueva versión:"
+
+msgid "  * Change version and date in __init__.py"
+msgstr ""
+
+msgid "  * Change version and date in pyproject.toml"
+msgstr ""
+
+msgid "  * Edit Changelog in README"
+msgstr "  * Modificar el Changelog en README"
+
+msgid "  * Make a new tag in github"
+msgstr "  * Hacer un nuevo tag en GitHub"
+
+msgid "  * Create a new gentoo ebuild with the new version"
+msgstr "  * Crea un nuevo ebuild de Gentoo con la nueva versión"
+
+msgid "  * Upload to portage repository"
+msgstr "  * Subelo al repositorio del portage"
 
 msgid "You pressed 'Ctrl+C', exiting..."
 msgstr "Se ha pulsado 'Ctrl+C', saliendo..."
@@ -181,23 +202,8 @@ msgstr "El proceso tardó: {0}"
 #~ msgid "MyMovieBook it's ready for use"
 #~ msgstr "MyMovieBook está preparada para ser usada"
 
-#~ msgid "New Release:"
-#~ msgstr "Nueva versión:"
-
 #~ msgid "  * Change version and date in version.py"
 #~ msgstr "  * Cambiar la versión y la fecha en version.py"
-
-#~ msgid "  * Edit Changelog in README"
-#~ msgstr "  * Modificar el Changelog en README"
-
-#~ msgid "  * Make a new tag in github"
-#~ msgstr "  * Hacer un nuevo tag en GitHub"
-
-#~ msgid "  * Create a new gentoo ebuild with the new version"
-#~ msgstr "  * Crea un nuevo ebuild de Gentoo con la nueva versión"
-
-#~ msgid "  * Upload to portage repository"
-#~ msgstr "  * Subelo al repositorio del portage"
 
 #~ msgid "Uninstall command only works in Linux"
 #~ msgstr "El comando 'uninstall' solo funciona en Linux"

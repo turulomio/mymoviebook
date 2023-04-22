@@ -19,7 +19,7 @@ Or you can install with pypi, writing:
 
 Or you can install from sources:
 
-`python3 setup.py install`
+`poetry install`
 
 You also need to install Latex in your distribution
 
@@ -29,7 +29,7 @@ Usage
 
 MyMovieBook uses PostgreSQL database as its backend, so we must create a new database and load the schema needed. To do it we just have to input the next command:
 
-`mymoviebook --createdb`
+`poe django_manage migrate`
 
 By default it uses mymoviebook database, but we can change database connection parameters with:
 *  --user USER         Postgresql user
@@ -90,10 +90,13 @@ Dependencies
 * https://www.python.org/, as the main programming language.
 * https://pypi.org/project/colorama/, to give console colors.
 * https://www.latex-project.org/, to generate PDF documents
-* https://github.com/turulomio/officegenerator/, to generate ODT documents (Beta)
 
 Changelog
 =========
+1.10.0 (2023-04-22)
+-------------------
+- Code is now based in a standalone django process
+
 1.9.0 (2022-11-13)
 ------------------
 -  --insert parameter now checks there aren't more than 6 films per directory
