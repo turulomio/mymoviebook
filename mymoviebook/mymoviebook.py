@@ -3,9 +3,21 @@ from pkg_resources import resource_filename
 from mymoviebook.reusing.dbupdates import UpdateDB
 from mymoviebook.mem import Mem
 from mymoviebook.objects.films import FilmManager_from_db_query, add_movies_to_database
+from os import environ
 
 ### MAIN SCRIPT ###
 def main(parameters=None):
+    environ.setdefault("DJANGO_SETTINGS_MODULE", "mymoviebook.settings")
+
+    #instantiate a web sv for django which is a wsgi
+    from django.core.wsgi import get_wsgi_application
+    get_wsgi_application()
+
+    from mymoviebook import models
+    #import your models schema
+    print(models.Films.objects.count())
+
+
     mem=Mem()
 
     if mem.args.createdb==True:

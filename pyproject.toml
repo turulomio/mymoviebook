@@ -15,6 +15,7 @@ python = "^3.10"
 colorama = "^0.4.6"
 psycopg2 = "^2.9.6"
 pytz = "^2023.3"
+django = "^4.2"
 
 
 [tool.poetry.group.dev.dependencies]
@@ -31,6 +32,7 @@ mymoviebook = 'mymoviebook.mymoviebook:main'
 [tool.poe.tasks]
 release = { script = "mymoviebook.devscripts:release" }
 translate = { script = "mymoviebook.devscripts:translate" }
+django_manage = { script = "mymoviebook.devscripts:django_manage" }
 
 [project.urls]
 homepage = "https://github.com/turulomio/mymoviebook/"

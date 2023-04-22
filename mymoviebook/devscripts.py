@@ -1,5 +1,13 @@
 from mymoviebook import __version__
-from os import system
+from os import system, environ
+from sys import argv
+
+def django_manage():
+    environ.setdefault("DJANGO_SETTINGS_MODULE", "mymoviebook.settings")
+
+    from django.core.management import execute_from_command_line
+
+    execute_from_command_line(argv)
 
 
 def release():
