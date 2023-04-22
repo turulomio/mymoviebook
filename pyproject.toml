@@ -17,6 +17,7 @@ psycopg2 = "^2.9.6"
 pytz = "^2023.3"
 django = "^4.2"
 platformdirs = "^3.2.0"
+tqdm = "^4.65.0"
 
 
 [tool.poetry.group.dev.dependencies]

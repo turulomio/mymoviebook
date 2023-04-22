@@ -1,5 +1,4 @@
 from mymoviebook.mem import Mem
-from os import environ
 from datetime import datetime, date
 from gettext import translation
 from glob import glob
@@ -7,9 +6,11 @@ from importlib.resources import files
 from mymoviebook.reusing.casts import string2tex
 from mymoviebook.reusing.text_inputs import input_YN
 from mymoviebook import __version__
-from os import system, getcwd, path
-from pkg_resources import resource_filename
+from os import environ, chdir, getcwd, system, path
+from subprocess import run
 from tempfile import TemporaryDirectory
+from tqdm import tqdm
+
 try:
     t=translation('mymoviebook', files("mymoviebook") / "locale")
     _=t.gettext
@@ -118,7 +119,6 @@ def generate_pdf(mem):
     from mymoviebook import models
     
     with TemporaryDirectory() as tmpdirname:
-        print('created temporary directory', tmpdirname, )
         qs_films_all=models.Films.objects.all().select_related("covers").order_by("dvd")
         
         
@@ -143,7 +143,8 @@ def generate_pdf(mem):
                 dict_years[film.year()]=[]
             dict_years[film.year()].append(film)
         
-        icon=resource_filename("mymoviebook","images/mymoviebook.png")
+        icon = files("mymoviebook") / "images/mymoviebook.png"
+#        icon=resource_filename("mymoviebook","images/mymoviebook.png")
 
 
         header=""
@@ -235,7 +236,6 @@ def generate_pdf(mem):
         bd=bd + "\section{"+ _("Order by movie year") + "}\n"
         
         list_years=list(dict_years.keys())
-        print(list_years)
         list_years.sort()
         for year in list_years:
             if year!="None":
@@ -282,8 +282,16 @@ def generate_pdf(mem):
         d=open(f"{tmpdirname}/mymoviebook.tex","w")
         d.write(doc)
         d.close()
-
-        system(f"cd {tmpdirname};pdflatex {tmpdirname}/mymoviebook.tex;  &>/dev/null;pdflatex {tmpdirname}/mymoviebook.tex; pdflatex {tmpdirname}/mymoviebook.tex")
+        cwd=getcwd()
+        chdir(tmpdirname)
+        for i in tqdm(range(3), desc="  - " + _("Writing PDF")):
+            if mem.args.debug is True:
+                system(f"pdflatex {tmpdirname}/mymoviebook.tex")
+            else:
+                run(f"pdflatex {tmpdirname}/mymoviebook.tex", shell=True, capture_output=True)
+ #       system(f"cd {tmpdirname};;  ;pdflatex {tmpdirname}/mymoviebook.tex; pdflatex {tmpdirname}/mymoviebook.tex")
+        
+        chdir(cwd)
         for output in mem.args.report:
             system(f"cp {tmpdirname}/mymoviebook.pdf {output}")
         
