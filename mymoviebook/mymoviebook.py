@@ -115,8 +115,10 @@ def add_movies_to_database(mem):
 
 
 def generate_pdf(mem):
+    start=datetime.now()
     
     from mymoviebook import models
+    print(_("Creating your movie book..."))
     
     with TemporaryDirectory() as tmpdirname:
         qs_films_all=models.Films.objects.all().select_related("covers").order_by("dvd")
@@ -252,9 +254,6 @@ def generate_pdf(mem):
                     bd=bd + fi.covers.tex_tabular()
             bd=bd +"\n\\newpage\n\n"
 
-            
-
-
         print (_("  - Films without year list"))
         if len(films_without_year)>0:
             bd=bd + "\section{"+_("Films without year") +"}\n"
@@ -289,7 +288,6 @@ def generate_pdf(mem):
                 system(f"pdflatex {tmpdirname}/mymoviebook.tex")
             else:
                 run(f"pdflatex {tmpdirname}/mymoviebook.tex", shell=True, capture_output=True)
- #       system(f"cd {tmpdirname};;  ;pdflatex {tmpdirname}/mymoviebook.tex; pdflatex {tmpdirname}/mymoviebook.tex")
         
         chdir(cwd)
         for output in mem.args.report:
@@ -297,3 +295,5 @@ def generate_pdf(mem):
         
         if mem.args.debug is True:
             show_queries_function()
+            
+        print(_("Process took: {0}").format(datetime.now()-start))

@@ -28,4 +28,4 @@ INSTALLED_APPS = (
 
 DEFAULT_AUTO_FIELD ='django.db.models.BigAutoField'
 
-DEBUG=True #To see connection.queries
+DEBUG=False #To see connection.queries
