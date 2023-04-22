@@ -20,15 +20,13 @@ from django.db import connection
     
 ### MAIN SCRIPT ###
 def main(parameters=None):
-
     #Before any django import
     environ.setdefault("DJANGO_SETTINGS_MODULE", "mymoviebook.settings")
     from django.core.wsgi import get_wsgi_application
     #instantiate a web sv for django which is a wsgi
-    get_wsgi_application()
-
-#
+    get_wsgi_application()    
     mem=Mem()
+    
     if mem.args.insert==True:# insertar
         add_movies_to_database(mem)
 
@@ -288,7 +286,6 @@ def generate_pdf(mem):
         system(f"cd {tmpdirname};pdflatex {tmpdirname}/mymoviebook.tex;  &>/dev/null;pdflatex {tmpdirname}/mymoviebook.tex; pdflatex {tmpdirname}/mymoviebook.tex")
         for output in mem.args.report:
             system(f"cp {tmpdirname}/mymoviebook.pdf {output}")
-            
-        print(None in list_years)
-        print(list_years)
-        show_queries_function()
+        
+        if mem.args.debug is True:
+            show_queries_function()

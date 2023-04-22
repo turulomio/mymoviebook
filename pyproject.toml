@@ -16,6 +16,7 @@ colorama = "^0.4.6"
 psycopg2 = "^2.9.6"
 pytz = "^2023.3"
 django = "^4.2"
+platformdirs = "^3.2.0"
 
 
 [tool.poetry.group.dev.dependencies]
