@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-22 08:39+0200\n"
+"POT-Creation-Date: 2023-04-22 17:59+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,6 +26,9 @@ msgstr ""
 msgid "Developed by Mariano Muñoz 2012-{}"
 msgstr ""
 
+msgid "Debug mode"
+msgstr ""
+
 msgid "Insert films from current numbered directory"
 msgstr ""
 
@@ -41,11 +44,132 @@ msgstr ""
 msgid "select output format. Default is PDF"
 msgstr ""
 
-msgid "I can't create '{}' database because it already exists."
+msgid "Postgres database connection parameters"
 msgstr ""
 
-msgid "MyMovieBook it's ready for use"
+msgid "Postgresql user"
+msgstr ""
+
+msgid "Postgresql server port"
+msgstr ""
+
+msgid "Postgresql server address"
+msgstr ""
+
+msgid "Postgresql database"
+msgstr ""
+
+msgid "Current directory is not numeric"
+msgstr ""
+
+msgid "The id of the directory to add is '{}'. Do you want to continue?"
+msgstr ""
+
+msgid "Checking that the movies have the correct format..."
+msgstr ""
+
+msgid "There isn't a movie with the same name '{}'"
+msgstr ""
+
+msgid "Checking the number of films in the directory..."
+msgstr ""
+
+msgid "There are more than 6 films in this directory. Please fix it."
+msgstr ""
+
+msgid "Do you want to overwrite the information of directory '{}'?"
+msgstr ""
+
+msgid "Deleting information..."
+msgstr ""
+
+msgid "Adding movies to the database"
+msgstr ""
+
+msgid "Creating your movie book..."
 msgstr ""
 
 msgid "Getting images"
+msgstr ""
+
+msgid "My movie book"
+msgstr ""
+
+msgid "Title"
+msgstr ""
+
+msgid "This movie book has been generated using version {} of MyMovieBook."
+msgstr ""
+
+msgid "It's an opensource application published under GPL-3 license."
+msgstr ""
+
+msgid "The main page of the project is in \\href{https://github.com/turulomio/mymoviebook}{GitHub}."
+msgstr ""
+
+msgid "This book has {} movies and it was generated at {}."
+msgstr ""
+
+msgid "If you make click over a film cover, you'll be redirected to FilmAffinity portal to try to get information of the movie."
+msgstr ""
+
+msgid "List by index"
+msgstr ""
+
+msgid "Big covers"
+msgstr ""
+
+msgid "Index"
+msgstr ""
+
+msgid "  - Films list with small covers"
+msgstr ""
+
+msgid "Small covers"
+msgstr ""
+
+msgid "  - Films list ordered by title"
+msgstr ""
+
+msgid "Order by movie title"
+msgstr ""
+
+msgid "  - Ordered by year films list"
+msgstr ""
+
+msgid "Order by movie year"
+msgstr ""
+
+msgid "Year"
+msgstr ""
+
+msgid "There is only one collection film in this year:"
+msgstr ""
+
+msgid "There are {} collection films in this year:"
+msgstr ""
+
+msgid "  - Films without year list"
+msgstr ""
+
+msgid "Films without year"
+msgstr ""
+
+msgid "There are {} collection films without year."
+msgstr ""
+
+msgid "  - Duplicated films list"
+msgstr ""
+
+msgid "Duplicated films"
+msgstr ""
+
+msgid "There are {} collection films duplicated."
+msgstr ""
+
+msgid "Writing PDF"
+msgstr ""
+
+#, python-brace-format
+msgid "Process took: {0}"
 msgstr ""

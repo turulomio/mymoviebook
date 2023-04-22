@@ -233,7 +233,7 @@ def generate_pdf(mem):
             bd=bd + f.covers.tex_tabular(show_name=False)
         bd=bd +"\\newpage\n\n"
 
-        print ("  - Ordered by year films list")
+        print (_("  - Ordered by year films list"))
         bd = bd + "\\setlength{\\parindent}{1cm}\n"
         bd=bd + "\section{"+ _("Order by movie year") + "}\n"
         

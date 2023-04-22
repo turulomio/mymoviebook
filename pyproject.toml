@@ -35,6 +35,7 @@ mymoviebook = 'mymoviebook.mymoviebook:main'
 release = { script = "mymoviebook.devscripts:release" }
 translate = { script = "mymoviebook.devscripts:translate" }
 django_manage = { script = "mymoviebook.devscripts:django_manage" }
+reusing = { script = "mymoviebook.devscripts:reusing" }
 
 [project.urls]
 homepage = "https://github.com/turulomio/mymoviebook/"
