@@ -23,3 +23,4 @@ doc/html/
 mymoviebook.egg-info/
 build/
 .jedi/
+poetry.lock
