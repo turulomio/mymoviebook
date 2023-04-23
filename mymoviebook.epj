@@ -2,7 +2,7 @@
   "header": {
     "comment": "eric project file for project mymoviebook",
     "copyright": "Copyright (C) 2023 , ",
-    "saved": "2023-04-22, 18:11:49"
+    "saved": "2023-04-23, 08:15:35"
   },
   "project": {
     "AUTHOR": "",
@@ -75,16 +75,8 @@
       "mymoviebook/mem.py",
       "mymoviebook/models.py",
       "mymoviebook/mymoviebook.py",
-      "mymoviebook/reusing/admin_pg.py",
-      "mymoviebook/reusing/call_by_name.py",
       "mymoviebook/reusing/casts.py",
-      "mymoviebook/reusing/connection_pg.py",
-      "mymoviebook/reusing/datetime_functions.py",
-      "mymoviebook/reusing/dbupdates.py",
-      "mymoviebook/reusing/decorators.py",
-      "mymoviebook/reusing/file_functions.py",
       "mymoviebook/reusing/github.py",
-      "mymoviebook/reusing/libmanagers.py",
       "mymoviebook/reusing/text_inputs.py",
       "mymoviebook/settings.py"
     ],
