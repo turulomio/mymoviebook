@@ -21,21 +21,17 @@ Or you can install from sources:
 
 `poetry install`
 
-You also need to install Latex in your distribution
+You also need to install Latex in your distribution to be able to use `pdflatex` command
 
 
 Usage
 =====
 
-MyMovieBook uses PostgreSQL database as its backend, so we must create a new database and load the schema needed. To do it we just have to input the next command:
+MyMovieBook has Django as its backend, and uses a sqlite database by default. You can change it to use any django supported database. To prepare just run:
 
-`poe django_manage migrate`
+`mymoviebook --updatedb`
 
-By default it uses mymoviebook database, but we can change database connection parameters with:
-*  --user USER         Postgresql user
-*  --port PORT         Postgresql server port
-*  --server SERVER     Postgresql server address
-*  --db DB             Postgresql database
+You can change your database settings using dj-database-url project https://github.com/jazzband/dj-database-url#url-schema
 
 MyMovieBook it's prepared to create big books with thousands of films. So, in order to do this managemente easy, It's very important that movies are placed in numbered directories with 6 movies and its 6 covers. Although it's optional, I recommend to apped the year of the film to the end of the title.
 
@@ -84,12 +80,6 @@ Doxygen documentation:
 
 Pypi web page:
     https://pypi.org/project/mymoviebook/
-
-Dependencies
-============
-* https://www.python.org/, as the main programming language.
-* https://pypi.org/project/colorama/, to give console colors.
-* https://www.latex-project.org/, to generate PDF documents
 
 Changelog
 =========

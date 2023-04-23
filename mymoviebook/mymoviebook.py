@@ -61,15 +61,19 @@ def main(parameters=None):
     group.add_argument('--updatedb', help=_("Updates database"), action="store_true", default=False)
     group_generate=parser.add_argument_group(_("Other parameters"))
     group_generate.add_argument('--format', help=_("select output format. Default is PDF"), action="store", choices=['PDF'],  default='PDF')
-            #Validations
+    
+    #Validations
     args=parser.parse_args(parameters)
     for file in args.report:
         if path.isdir(file)==True:
             print("--report parameter can't be a directory ({})".format(file))
             exit(1)
+    
+    #Overrides DEBUG settings with args.debug
     settings.DEBUG=args.debug
     if args.debug is True:
         print(settings.DATABASES)
+        
     if args.updatedb is True:
         from django.core import management 
         print(db_info)
@@ -84,14 +88,13 @@ def main(parameters=None):
     
     if args.insert==True:# insertar
         add_movies_to_database(args)
-
-
-    elif len(args.report)>0:## Report arg
+        exit(0)
+        
+    if len(args.report)>0:## Report arg
         if args.format=="PDF":
             generate_pdf(args)
     else:
         parser.print_help()
-
 
 ## Returns a FilmManager with the films duplicated in the database
 def films_duplicated(qs):
