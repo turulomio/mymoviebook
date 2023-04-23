@@ -45,7 +45,7 @@ def main(parameters=None):
     #instantiate a web sv for django which is a wsgi
     get_wsgi_application()    
     
-    db_info=_("Your database uses '{0}' and is called '{1}'.").format(settings.DATABASES["default"]["ENGINE"], settings.DATABASES["default"]["NAME"])
+    db_info=_("Your database uses '{0}' and is called '{1}'.").format(settings.DATABASES["default"]["ENGINE"], settings.DATABASES["default"]["NAME"]) + "\n" +_("You can change this settings in '{0}'").format(settings.FILECONFIG)
 
     mem=Mem()
         

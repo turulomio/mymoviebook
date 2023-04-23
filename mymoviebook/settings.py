@@ -8,20 +8,20 @@ from platformdirs import user_config_dir, user_data_dir
 BASE_DIR = path.dirname(path.abspath(__file__))
 
 #Search for fileconfig and create it if it doesn't exist
-fileconfig=f"{user_config_dir('mymoviebook')}/settings.ini"
-makedirs(path.dirname(fileconfig), exist_ok=True)
+FILECONFIG=f"{user_config_dir('mymoviebook')}/settings.ini"
+makedirs(path.dirname(FILECONFIG), exist_ok=True)
 
 data_dir=user_data_dir("mymoviebook")
 makedirs(data_dir, exist_ok=True)
 
-if not path.exists(fileconfig):
-    with open(fileconfig, "w") as f:
+if not path.exists(FILECONFIG):
+    with open(FILECONFIG, "w") as f:
         f.write(f"""[settings]
 DEBUG = False
 DATABASE_URL = sqlite:///{data_dir}/mymoviebook.db
 """)
 
-config = AutoConfig(search_path=fileconfig)
+config = AutoConfig(search_path=FILECONFIG)
 db=db_url(config("DATABASE_URL"), conn_max_age=600, conn_health_checks=True)
 # Database is defined using parse (db_url) from dj_database_url project
 DATABASES = {
