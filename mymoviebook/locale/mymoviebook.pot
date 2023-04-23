@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-22 18:17+0200\n"
+"POT-Creation-Date: 2023-04-23 07:54+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -41,13 +41,21 @@ msgstr ""
 msgid "You pressed 'Ctrl+C', exiting..."
 msgstr ""
 
+#, python-brace-format
+msgid "Your database uses '{0}' and is called '{1}'."
+msgstr ""
+
+#, python-brace-format
+msgid "You can change this settings in '{0}'"
+msgstr ""
+
 msgid "Generate your personal movie collection book"
 msgstr ""
 
 msgid "Developed by Mariano Muñoz 2012-{}"
 msgstr ""
 
-msgid "Debug mode"
+msgid "Overrides debug mode"
 msgstr ""
 
 msgid "Insert films from current numbered directory"
@@ -56,7 +64,7 @@ msgstr ""
 msgid "Films report is generated in this path. Can be called several times"
 msgstr ""
 
-msgid "Creates a new postgresql database, checking if already exists. Copy MyMovieBook schema on it"
+msgid "Updates database"
 msgstr ""
 
 msgid "Other parameters"
@@ -65,19 +73,7 @@ msgstr ""
 msgid "select output format. Default is PDF"
 msgstr ""
 
-msgid "Postgres database connection parameters"
-msgstr ""
-
-msgid "Postgresql user"
-msgstr ""
-
-msgid "Postgresql server port"
-msgstr ""
-
-msgid "Postgresql server address"
-msgstr ""
-
-msgid "Postgresql database"
+msgid "Your database needs to be updated, please run mymoviebook --updatedb"
 msgstr ""
 
 msgid "Current directory is not numeric"

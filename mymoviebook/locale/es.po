@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RecPermissions\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-22 18:17+0200\n"
+"POT-Creation-Date: 2023-04-23 07:51+0200\n"
 "PO-Revision-Date: 2018-10-22 18:51+0100\n"
 "Last-Translator: root <turulomio@yahoo.es>\n"
 "Language-Team: Spanish\n"
@@ -42,14 +42,22 @@ msgstr "  * Subelo al repositorio del portage"
 msgid "You pressed 'Ctrl+C', exiting..."
 msgstr "Se ha pulsado 'Ctrl+C', saliendo..."
 
+#, python-brace-format
+msgid "Your database uses '{0}' and is called '{1}'."
+msgstr "Tu base de datos usa '{0}' y se llama '{1}'."
+
+#, python-brace-format
+msgid "You can change this settings in '{0}'"
+msgstr "Puedes cambiar esta configuración en '{0}'"
+
 msgid "Generate your personal movie collection book"
 msgstr "Genera tu libro de colección de películas"
 
 msgid "Developed by Mariano Muñoz 2012-{}"
 msgstr "Desarrollado por Mariano Muñoz 2012-{}"
 
-msgid "Debug mode"
-msgstr "Modo depuración"
+msgid "Overrides debug mode"
+msgstr "Fuerza el modo de depuración"
 
 msgid "Insert films from current numbered directory"
 msgstr "Añade las películas del directorio numerado actual"
@@ -57,8 +65,8 @@ msgstr "Añade las películas del directorio numerado actual"
 msgid "Films report is generated in this path. Can be called several times"
 msgstr "El informe de las películas es generado en esta ruta. Puede ser llamado varias veces"
 
-msgid "Creates a new postgresql database, checking if already exists. Copy MyMovieBook schema on it"
-msgstr "Crea una nueva base de datos en postgresql, si no existiera. Copia el esquema de MyMovieBook en ella"
+msgid "Updates database"
+msgstr "Actualiza base de datos"
 
 msgid "Other parameters"
 msgstr "Otros parámetros"
@@ -66,20 +74,8 @@ msgstr "Otros parámetros"
 msgid "select output format. Default is PDF"
 msgstr "Selecciona un formato de salida. Por defecto es PDF"
 
-msgid "Postgres database connection parameters"
-msgstr ""
-
-msgid "Postgresql user"
-msgstr ""
-
-msgid "Postgresql server port"
-msgstr ""
-
-msgid "Postgresql server address"
-msgstr ""
-
-msgid "Postgresql database"
-msgstr ""
+msgid "Your database needs to be updated, please run mymoviebook --updatedb"
+msgstr "Tu base de datos necesita ser actualizada, por favor ejecuta mymoviebook --updatedb"
 
 msgid "Current directory is not numeric"
 msgstr "El directorio actual no es numérico"
@@ -195,6 +191,12 @@ msgstr "Generando el PDF"
 #, python-brace-format
 msgid "Process took: {0}"
 msgstr "El proceso tardó: {0}"
+
+#~ msgid "Debug mode"
+#~ msgstr "Modo depuración"
+
+#~ msgid "Creates a new postgresql database, checking if already exists. Copy MyMovieBook schema on it"
+#~ msgstr "Crea una nueva base de datos en postgresql, si no existiera. Copia el esquema de MyMovieBook en ella"
 
 #~ msgid "I can't create '{}' database because it already exists."
 #~ msgstr "No puede crear la base de datos '{}' porque ya existe."
