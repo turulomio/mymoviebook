@@ -49,6 +49,8 @@ def main(parameters=None):
 
     mem=Mem()
         
+    if mem.args.debug is True:
+        print(settings.DATABASES)
     if mem.args.updatedb is True:
         from django.core import management 
         print(db_info)
@@ -60,9 +62,6 @@ def main(parameters=None):
         print(db_info)
         print(_("Your database needs to be updated, please run mymoviebook --updatedb"))
         exit(1)
-    
-    
-
     
     if mem.args.insert==True:# insertar
         add_movies_to_database(mem)
