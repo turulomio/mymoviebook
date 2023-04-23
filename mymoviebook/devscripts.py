@@ -1,28 +1,58 @@
+from gettext import translation
+from importlib.resources import files
 from mymoviebook import __version__
-from os import system
+from mymoviebook.reusing.github import download_from_github
+from os import system, environ
+from sys import argv
+
+try:
+    t=translation('mymoviebook', files("mymoviebook") / "locale")
+    _=t.gettext
+except:
+    _=str
+def reusing():
+    """
+        Actualiza directorio reusing
+        poe reusing
+        poe reusing --local
+    """
+    local=False
+    if len(argv)==2 and argv[1]=="--local":
+        local=True
+        print("Update code in local without downloading was selected with --local")
+    if local==False:
+        download_from_github("turulomio", "reusingcode", "python/casts.py", "mymoviebook/reusing")
+        download_from_github("turulomio", "reusingcode", "python/github.py", "mymoviebook/reusing")
+        download_from_github("turulomio", "reusingcode", "python/text_inputs.py", "mymoviebook/reusing")
+
+def django_manage():
+    """
+        Allos to use django manage.py
+    """
+    environ.setdefault("DJANGO_SETTINGS_MODULE", "mymoviebook.settings")
+
+    from django.core.management import execute_from_command_line
+
+    execute_from_command_line(argv)
 
 
 def release():
-        print("""Nueva versión:
-  * Cambiar la versión y la fecha en commons.py
-  * Modificar el Changelog en README
-  * python setup.py translate
-  * linguist
-  * python setup.py translate
-  * python setup.py uninstall; python setup.py install
-  * python setup.py documentation
-  * python setup.py doxygen
-  * git commit -a -m 'mymoviebook-{0}'
-  * git push
-  * Hacer un nuevo tag en GitHub
-  * python setup.py sdist
-  * twine upload dist/mymoviebook-{0}.tar.gz 
-  * python setup.py uninstall
-  * Crea un nuevo ebuild de UNOGENERATOR Gentoo con la nueva versión
-  * Subelo al repositorio del portage
-
-""".format(__version__))
-
+        print(_("New Release:"))
+        print(_("  * Change version and date in __init__.py"))
+        print(_("  * Change version and date in pyproject.toml"))
+        print(_("  * Edit Changelog in README"))
+        print("  * poe translate")
+        print("  * mcedit mymoviebook/locale/es.po")
+        print("  * poe translate")
+        print("  * poetry install")
+#        print("  * python setup.py doxygen")
+        print("  * git commit -a -m 'mymoviebook-{}'".format(__version__))
+        print("  * git push")
+        print(_("  * Make a new tag in github"))
+        print("  * poetry build")
+        print("  * poetry publish --username turulomio --password")
+        print(_("  * Create a new gentoo ebuild with the new version"))
+        print(_("  * Upload to portage repository")) 
 
 def translate():
         #es
@@ -65,53 +95,6 @@ def translate():
 #        os.system(command)
 #        os.chdir("..")
 #
-#
-#class Procedure(Command):
-#    description = "Create/update doxygen documentation in doc/html"
-#    user_options = []
-#
-#    def initialize_options(self):
-#        pass
-#
-#    def finalize_options(self):
-#        pass
-#
-#    def run(self):
-#        print(_("New Release:"))
-#        print(_("  * Change version and date in version.py"))
-#        print(_("  * Edit Changelog in README"))
-#        print("  * python setup.py doc")
-#        print("  * mcedit locale/es.po")
-#        print("  * python setup.py doc")
-#        print("  * python setup.py install")
-#        print("  * python setup.py doxygen")
-#        print("  * git commit -a -m 'mymoviebook-{}'".format(__version__))
-#        print("  * git push")
-#        print(_("  * Make a new tag in github"))
-#        print("  * python setup.py sdist")
-#        print("  * twine upload dist/mymoviebook-{0}.tar.gz".format(__version__))
-#        print("  * python setup.py uninstall")
-#        print(_("  * Create a new gentoo ebuild with the new version"))
-#        print(_("  * Upload to portage repository")) 
-#
-#class Uninstall(Command):
-#    description = "Uninstall installed files with install"
-#    user_options = []
-#
-#    def initialize_options(self):
-#        pass
-#
-#    def finalize_options(self):
-#        pass
-#
-#    def run(self):
-#        if platform_system()=="Linux":
-#            os.system("rm -Rf {}/mymoviebook*".format(site.getsitepackages()[0]))
-#            os.system("rm /usr/bin/mymoviebook")
-#            os.system("rm /usr/share/man/man1/mymoviebook.1")
-#            os.system("rm /usr/share/man/es/man1/mymoviebook.1")
-#        else:
-#            print(_("Uninstall command only works in Linux"))
 #
 #class Doc(Command):
 #    description = "Update man pages and translations"
@@ -241,6 +224,10 @@ def translate():
 #        replace_in_file("mymoviebook/reusing/libmanagers.py","from datetime_functions","from .datetime_functions")
 #        replace_in_file("mymoviebook/reusing/libmanagers.py","from call_by_name","from .call_by_name")
 #
+
+
+
+
 #class Video(Command):
 #    description = "Create video/GIF from console ouput"
 #    user_options = ['--compile']
@@ -261,51 +248,3 @@ def translate():
 #    ########################################################################
 #
 #
-### Version of modele captured from version to avoid problems with package dependencies
-#__version__= None
-#with open('mymoviebook/version.py', encoding='utf-8') as f:
-#    for line in f.readlines():
-#        if line.find("__version__ =")!=-1:
-#            __version__=line.split("'")[1]
-#
-#if platform_system()=="Linux":
-#    data_files=[('/usr/share/man/man1/', ['man/man1/mymoviebook.1']), 
-#                ('/usr/share/man/es/man1/', ['man/es/man1/mymoviebook.1'])
-#               ]
-#else:
-#    data_files=[]
-#
-#setup(name='mymoviebook',
-#    version=__version__,
-#    description='Generate your own personal movie collection book',
-#    long_description="Project web page is in https://github.com/turulomio/mymoviebook",
-#    long_description_content_type='text/markdown',
-#    classifiers=['Development Status :: 4 - Beta',
-#                 'Intended Audience :: System Administrators',
-#                 'Topic :: System :: Systems Administration',
-#                 'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
-#                 'Programming Language :: Python :: 3',
-#                ],
-#    keywords='movie collection book',
-#    url='https://github.com/Turulomio/mymoviebook',
-#    author='Turulomio',
-#    author_email='turulomio@yahoo.es',
-#    license='GPL-3',
-#    packages=['mymoviebook'],
-#    entry_points = {'console_scripts': ['mymoviebook=mymoviebook.mymoviebook:main',
-#                                       ],
-#                   },
-#    install_requires=['colorama','setuptools'],
-#    data_files=data_files,
-#    cmdclass={ 'doxygen': Doxygen,
-#               'doc': Doc,
-#               'uninstall': Uninstall,
-#               'video': Video,
-#               'procedure': Procedure,
-#               'reusing': Reusing,
-#             },
-#    zip_safe=False,
-#    include_package_data=True
-#    )
-#
-#_=gettext.gettext#To avoid warnings

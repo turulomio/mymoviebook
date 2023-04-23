@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RecPermissions\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-22 08:38+0200\n"
+"POT-Creation-Date: 2023-04-22 18:17+0200\n"
 "PO-Revision-Date: 2018-10-22 18:51+0100\n"
 "Last-Translator: root <turulomio@yahoo.es>\n"
 "Language-Team: Spanish\n"
@@ -18,6 +18,27 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgid "New Release:"
+msgstr "Nueva versión:"
+
+msgid "  * Change version and date in __init__.py"
+msgstr ""
+
+msgid "  * Change version and date in pyproject.toml"
+msgstr ""
+
+msgid "  * Edit Changelog in README"
+msgstr "  * Modificar el Changelog en README"
+
+msgid "  * Make a new tag in github"
+msgstr "  * Hacer un nuevo tag en GitHub"
+
+msgid "  * Create a new gentoo ebuild with the new version"
+msgstr "  * Crea un nuevo ebuild de Gentoo con la nueva versión"
+
+msgid "  * Upload to portage repository"
+msgstr "  * Subelo al repositorio del portage"
+
 msgid "You pressed 'Ctrl+C', exiting..."
 msgstr "Se ha pulsado 'Ctrl+C', saliendo..."
 
@@ -26,6 +47,9 @@ msgstr "Genera tu libro de colección de películas"
 
 msgid "Developed by Mariano Muñoz 2012-{}"
 msgstr "Desarrollado por Mariano Muñoz 2012-{}"
+
+msgid "Debug mode"
+msgstr "Modo depuración"
 
 msgid "Insert films from current numbered directory"
 msgstr "Añade las películas del directorio numerado actual"
@@ -42,32 +66,144 @@ msgstr "Otros parámetros"
 msgid "select output format. Default is PDF"
 msgstr "Selecciona un formato de salida. Por defecto es PDF"
 
-msgid "I can't create '{}' database because it already exists."
-msgstr "No puede crear la base de datos '{}' porque ya existe."
+msgid "Postgres database connection parameters"
+msgstr ""
 
-msgid "MyMovieBook it's ready for use"
-msgstr "MyMovieBook está preparada para ser usada"
+msgid "Postgresql user"
+msgstr ""
+
+msgid "Postgresql server port"
+msgstr ""
+
+msgid "Postgresql server address"
+msgstr ""
+
+msgid "Postgresql database"
+msgstr ""
+
+msgid "Current directory is not numeric"
+msgstr "El directorio actual no es numérico"
+
+msgid "The id of the directory to add is '{}'. Do you want to continue?"
+msgstr "El identificador del directorio a añadir es '{}'. ¿Quieres continuar?"
+
+msgid "Checking that the movies have the correct format..."
+msgstr "Comprobando que las películas tienen el formato correcto..."
+
+msgid "There isn't a movie with the same name '{}'"
+msgstr "No hay una película con el mismo nombre '{}'"
+
+msgid "Checking the number of films in the directory..."
+msgstr "Comprobando el número de películas en el directorio..."
+
+msgid "There are more than 6 films in this directory. Please fix it."
+msgstr "Hay más de 6 películas en este directorio. Por favor corrígelo."
+
+msgid "Do you want to overwrite the information of directory '{}'?"
+msgstr "¿Quieres sobreescribir la información del directorio '{}'?"
+
+msgid "Deleting information..."
+msgstr "Borrando la información..."
+
+msgid "Adding movies to the database"
+msgstr "Añadiendo películas a la base de datos"
+
+msgid "Creating your movie book..."
+msgstr "Creando tu libro de películas..."
 
 msgid "Getting images"
 msgstr "Extrayendo las imágenes"
 
-#~ msgid "New Release:"
-#~ msgstr "Nueva versión:"
+msgid "My movie book"
+msgstr "Mi libro de películas"
+
+msgid "Title"
+msgstr "Título"
+
+msgid "This movie book has been generated using version {} of MyMovieBook."
+msgstr "Este libro de películas ha sido generado usando la versión {} de MyMovieBook."
+
+msgid "It's an opensource application published under GPL-3 license."
+msgstr "Es una aplicación de código abierto publicada bajo licencia GPL-3."
+
+msgid "The main page of the project is in \\href{https://github.com/turulomio/mymoviebook}{GitHub}."
+msgstr "La página principal del proyecto se encuentra en \\href{https://github.com/turulomio/mymoviebook}{GitHub}."
+
+msgid "This book has {} movies and it was generated at {}."
+msgstr "Este libro tiene {} películas y se generó a las {}."
+
+msgid "If you make click over a film cover, you'll be redirected to FilmAffinity portal to try to get information of the movie."
+msgstr "Si haces click sobre una carátula, serás redirigido al portal de FilmAffinity para intentar conseguir información de la película."
+
+msgid "List by index"
+msgstr "Listado por índice"
+
+msgid "Big covers"
+msgstr "Carátulas grandes"
+
+msgid "Index"
+msgstr "Índice"
+
+msgid "  - Films list with small covers"
+msgstr "  - Listado de películas con carátulas pequeñas"
+
+msgid "Small covers"
+msgstr "Pequeñas carátulas"
+
+msgid "  - Films list ordered by title"
+msgstr "  - Listado de películas ordenadas por título"
+
+msgid "Order by movie title"
+msgstr "Ordenadas por el título de la película"
+
+msgid "  - Ordered by year films list"
+msgstr "  - Listado de películas ordenadas por año"
+
+msgid "Order by movie year"
+msgstr "Ordenadas por el año de la película"
+
+msgid "Year"
+msgstr "Año"
+
+msgid "There is only one collection film in this year:"
+msgstr "Hay solo una película de la colección en este año:"
+
+msgid "There are {} collection films in this year:"
+msgstr "Hay {} películas de la colección en este año:"
+
+msgid "  - Films without year list"
+msgstr "  - Listado de películas sin año"
+
+msgid "Films without year"
+msgstr "Películas sin año"
+
+msgid "There are {} collection films without year."
+msgstr "Hay {} películas sin año en la colección."
+
+msgid "  - Duplicated films list"
+msgstr "  - Listado de películas duplicadas"
+
+msgid "Duplicated films"
+msgstr "Películas duplicadas"
+
+msgid "There are {} collection films duplicated."
+msgstr "Hay {} películas duplicadas en la colección."
+
+msgid "Writing PDF"
+msgstr "Generando el PDF"
+
+#, python-brace-format
+msgid "Process took: {0}"
+msgstr "El proceso tardó: {0}"
+
+#~ msgid "I can't create '{}' database because it already exists."
+#~ msgstr "No puede crear la base de datos '{}' porque ya existe."
+
+#~ msgid "MyMovieBook it's ready for use"
+#~ msgstr "MyMovieBook está preparada para ser usada"
 
 #~ msgid "  * Change version and date in version.py"
 #~ msgstr "  * Cambiar la versión y la fecha en version.py"
-
-#~ msgid "  * Edit Changelog in README"
-#~ msgstr "  * Modificar el Changelog en README"
-
-#~ msgid "  * Make a new tag in github"
-#~ msgstr "  * Hacer un nuevo tag en GitHub"
-
-#~ msgid "  * Create a new gentoo ebuild with the new version"
-#~ msgstr "  * Crea un nuevo ebuild de Gentoo con la nueva versión"
-
-#~ msgid "  * Upload to portage repository"
-#~ msgstr "  * Subelo al repositorio del portage"
 
 #~ msgid "Uninstall command only works in Linux"
 #~ msgstr "El comando 'uninstall' solo funciona en Linux"
@@ -126,78 +262,6 @@ msgstr "Extrayendo las imágenes"
 #~ msgid "You need ttyrecgenerator installed to generate videos"
 #~ msgstr "Necesitas instalar 'ttyrecgenerator' para generar videos"
 
-#~ msgid "My movie book"
-#~ msgstr "Mi libro de películas"
-
-#~ msgid "Title"
-#~ msgstr "Título"
-
-#~ msgid "This movie book has been generated using version {} of MyMovieBook."
-#~ msgstr "Este libro de películas ha sido generado usando la versión {} de MyMovieBook."
-
-#~ msgid "It's an opensource application published under GPL-3 license."
-#~ msgstr "Es una aplicación de código abierto publicada bajo licencia GPL-3."
-
-#~ msgid "The main page of the project is in \\href{https://github.com/turulomio/mymoviebook}{GitHub}."
-#~ msgstr "La página principal del proyecto se encuentra en \\href{https://github.com/turulomio/mymoviebook}{GitHub}."
-
-#~ msgid "This book has {} movies and it was generated at {}."
-#~ msgstr "Este libro tiene {} películas y se generó a las {}."
-
-#~ msgid "If you make click over a film cover, you'll be redirected to FilmAffinity portal to try to get information of the movie."
-#~ msgstr "Si haces click sobre una carátula, serás redirigido al portal de FilmAffinity para intentar conseguir información de la película."
-
-#~ msgid "List by index"
-#~ msgstr "Listado por índice"
-
-#~ msgid "Big covers"
-#~ msgstr "Carátulas grandes"
-
-#~ msgid "Index"
-#~ msgstr "Índice"
-
-#~ msgid "  - Films list with small covers"
-#~ msgstr "  - Listado de películas con carátulas pequeñas"
-
-#~ msgid "Small covers"
-#~ msgstr "Pequeñas carátulas"
-
-#~ msgid "  - Films list ordered by title"
-#~ msgstr "  - Listado de películas ordenadas por título"
-
-#~ msgid "Order by movie title"
-#~ msgstr "Ordenadas por el título de la película"
-
-#~ msgid "Order by movie year"
-#~ msgstr "Ordenadas por el año de la película"
-
-#~ msgid "Year"
-#~ msgstr "Año"
-
-#~ msgid "There is only one collection film in this year:"
-#~ msgstr "Hay solo una película de la colección en este año:"
-
-#~ msgid "There are {} collection films in this year:"
-#~ msgstr "Hay {} películas de la colección en este año:"
-
-#~ msgid "  - Films without year list"
-#~ msgstr "  - Listado de películas sin año"
-
-#~ msgid "Films without year"
-#~ msgstr "Películas sin año"
-
-#~ msgid "There are {} collection films without year."
-#~ msgstr "Hay {} películas sin año en la colección."
-
-#~ msgid "  - Duplicated films list"
-#~ msgstr "  - Listado de películas duplicadas"
-
-#~ msgid "Duplicated films"
-#~ msgstr "Películas duplicadas"
-
-#~ msgid "There are {} collection films duplicated."
-#~ msgstr "Hay {} películas duplicadas en la colección."
-
 #~ msgid "Movie list"
 #~ msgstr "Listado de películas"
 
@@ -218,30 +282,3 @@ msgstr "Extrayendo las imágenes"
 
 #~ msgid "Year {}"
 #~ msgstr "Año {}"
-
-#~ msgid "Current directory is not numeric"
-#~ msgstr "El directorio actual no es numérico"
-
-#~ msgid "The id of the directory to add is '{}'. Do you want to continue?"
-#~ msgstr "El identificador del directorio a añadir es '{}'. ¿Quieres continuar?"
-
-#~ msgid "Checking that the movies have the correct format..."
-#~ msgstr "Comprobando que las películas tienen el formato correcto..."
-
-#~ msgid "There isn't a movie with the same name '{}'"
-#~ msgstr "No hay una película con el mismo nombre '{}'"
-
-#~ msgid "Checking the number of films in the directory..."
-#~ msgstr "Comprobando el número de películas en el directorio..."
-
-#~ msgid "There are more than 6 films in this directory. Please fix it."
-#~ msgstr "Hay más de 6 películas en este directorio. Por favor corrígelo."
-
-#~ msgid "Do you want to overwrite the information of directory '{}'?"
-#~ msgstr "¿Quieres sobreescribir la información del directorio '{}'?"
-
-#~ msgid "Deleting information..."
-#~ msgstr "Borrando la información..."
-
-#~ msgid "Adding movies to the database"
-#~ msgstr "Añadiendo películas a la base de datos"

@@ -1,4 +1,4 @@
 from datetime import date
 
-__versiondate__ = date(2022, 11, 13)
-__version__ = '1.9.0'
+__versiondate__ = date(2023, 4, 22)
+__version__ = '1.10.0'
