@@ -1,24 +1,31 @@
-#import os
-#
-## This defines the base dir for all relative imports for our project, put the file in your root folder so the
-## base_dir points to the root folder
-#BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-#print("settings", __file__)
+from decouple import AutoConfig
+from dj_database_url import parse as db_url
+from os import path, makedirs
+from platformdirs import user_config_dir, user_data_dir
 
-# According to your data file, you can change the engine, like mysql, postgresql, mongodb etc make sure your data is
-# directly placed in the same folder as this file, if it is not, please direct the 'NAME' field to its actual path.
+## This file uses django-decouple and dj-database-url projects
+
+BASE_DIR = path.dirname(path.abspath(__file__))
+
+#Search for fileconfig and create it if it doesn't exist
+fileconfig=f"{user_config_dir('mymoviebook')}/settings.ini"
+makedirs(path.dirname(fileconfig), exist_ok=True)
+
+data_dir=user_data_dir("mymoviebook")
+makedirs(data_dir, exist_ok=True)
+
+if not path.exists(fileconfig):
+    with open(fileconfig, "w") as f:
+        f.write(f"""[settings]
+DEBUG = False
+DATABASE_URL = sqlite:///{data_dir}/mymoviebook.db
+""")
+
+config = AutoConfig(search_path=fileconfig)
+db=db_url(config("DATABASE_URL"), conn_max_age=600, conn_health_checks=True)
+# Database is defined using parse (db_url) from dj_database_url project
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': "mymoviebook",
-        'USER': 'postgres',
-        'PASSWORD': '',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
-
-    }
-
-
+    'default': db, 
 }
 
 #Since we only have one app which we use
@@ -28,4 +35,7 @@ INSTALLED_APPS = (
 
 DEFAULT_AUTO_FIELD ='django.db.models.BigAutoField'
 
-DEBUG=False #To see connection.queries
+DEBUG=config("DEBUG", default=False,  cast=bool) #To see connection.queries
+
+
+

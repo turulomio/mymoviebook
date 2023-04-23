@@ -1,5 +1,7 @@
 from mymoviebook.mem import Mem
 from datetime import datetime, date
+from django.conf import settings
+from django.db import connection
 from gettext import translation
 from glob import glob
 from importlib.resources import files
@@ -11,13 +13,29 @@ from subprocess import run
 from tempfile import TemporaryDirectory
 from tqdm import tqdm
 
+
+
 try:
     t=translation('mymoviebook', files("mymoviebook") / "locale")
     _=t.gettext
 except:
     _=str
 
-from django.db import connection
+    
+
+
+def is_database_synchronized():
+    """
+    Function Checks if there are pendent migrations
+    """
+    from django.db.migrations.executor import MigrationExecutor
+    from django.db import connections, DEFAULT_DB_ALIAS
+    connection = connections[DEFAULT_DB_ALIAS]
+    connection.prepare_database()
+    executor = MigrationExecutor(connection)
+    targets = executor.loader.graph.leaf_nodes()
+    return not executor.migration_plan(targets)
+    
     
 ### MAIN SCRIPT ###
 def main(parameters=None):
@@ -26,7 +44,25 @@ def main(parameters=None):
     from django.core.wsgi import get_wsgi_application
     #instantiate a web sv for django which is a wsgi
     get_wsgi_application()    
+    
+    db_info=_("Your database uses '{0}' and is called '{1}'.").format(settings.DATABASES["default"]["ENGINE"], settings.DATABASES["default"]["NAME"])
+
     mem=Mem()
+        
+    if mem.args.updatedb is True:
+        from django.core import management 
+        print(db_info)
+        management.call_command("migrate")
+        exit(0)
+
+    # Usage example.
+    if not is_database_synchronized():
+        print(db_info)
+        print(_("Your database needs to be updated, please run mymoviebook --updatedb"))
+        exit(1)
+    
+    
+
     
     if mem.args.insert==True:# insertar
         add_movies_to_database(mem)
@@ -67,38 +103,38 @@ def add_movies_to_database(mem):
         cwd=getcwd().split("/")
         id=int(cwd[len(cwd)-1])
     except:
-        print (mem._("Current directory is not numeric"))
+        print (_("Current directory is not numeric"))
         exit(100)
 
-    if input_YN(mem._("The id of the directory to add is '{}'. Do you want to continue?").format(id))==False:
+    if input_YN(_("The id of the directory to add is '{}'. Do you want to continue?").format(id))==False:
         exit(100)
 
-    print ("+ " + mem._("Checking that the movies have the correct format..."))
+    print ("+ " + _("Checking that the movies have the correct format..."))
     
     number_images=0
     for file in glob( getcwd()+ "/*.jpg" ):
         if path.exists(file[:-3]+"avi")==False and path.exists(file[:-3]+"mpg")==False and path.exists(file[:-3]+"mkv")==False:
-            print (mem._("There isn't a movie with the same name '{}'").format(file[:-3]))
+            print (_("There isn't a movie with the same name '{}'").format(file[:-3]))
             exit(100)
         number_images=number_images+1
         
     #Check if there are more than 6 images
-    print ("+ " + mem._("Checking the number of films in the directory..."))
+    print ("+ " + _("Checking the number of films in the directory..."))
     if number_images>6:
-        print(mem._("There are more than 6 films in this directory. Please fix it."))
+        print(_("There are more than 6 films in this directory. Please fix it."))
         exit(100)
         
 
     # "Chequeando si hay registros en la base de datos del dispositivo " + str(id)
     qs=models.Films.objects.filter(dvd=id)
     if qs.count()>0:
-        if input_YN("+ " + mem._("Do you want to overwrite the information of directory '{}'?").format(id))==False:
+        if input_YN("+ " + _("Do you want to overwrite the information of directory '{}'?").format(id))==False:
             exit(100)
         else:
-            print ("   - " + mem._("Deleting information..."))
+            print ("   - " + _("Deleting information..."))
             qs.delete()
             
-    print ("+ "+ mem._("Adding movies to the database"))
+    print ("+ "+ _("Adding movies to the database"))
     for file in glob( getcwd()+ "/*.jpg" ):
         film=models.Films()
         film.savedate=date.today()
