@@ -1,18 +1,19 @@
-from mymoviebook.mem import Mem
+from argparse import ArgumentParser, RawTextHelpFormatter
 from datetime import datetime, date
 from django.conf import settings
 from django.db import connection
 from gettext import translation
 from glob import glob
 from importlib.resources import files
+from mymoviebook import __version__, __versiondate__
 from mymoviebook.reusing.casts import string2tex
 from mymoviebook.reusing.text_inputs import input_YN
-from mymoviebook import __version__
 from os import environ, chdir, getcwd, system, path
+from signal import signal, SIGINT
 from subprocess import run
+from sys import exit
 from tempfile import TemporaryDirectory
 from tqdm import tqdm
-
 
 
 try:
@@ -21,8 +22,9 @@ try:
 except:
     _=str
 
-    
-
+def signal_handler( signal, frame):
+        print(_("You pressed 'Ctrl+C', exiting..."))
+        exit(1)
 
 def is_database_synchronized():
     """
@@ -39,6 +41,7 @@ def is_database_synchronized():
     
 ### MAIN SCRIPT ###
 def main(parameters=None):
+    signal(SIGINT, signal_handler)
     #Before any django import
     environ.setdefault("DJANGO_SETTINGS_MODULE", "mymoviebook.settings")
     from django.core.wsgi import get_wsgi_application
@@ -47,11 +50,27 @@ def main(parameters=None):
     
     db_info=_("Your database uses '{0}' and is called '{1}'.").format(settings.DATABASES["default"]["ENGINE"], settings.DATABASES["default"]["NAME"]) + "\n" +_("You can change this settings in '{0}'").format(settings.FILECONFIG)
 
-    mem=Mem()
         
-    if mem.args.debug is True:
+    parser=ArgumentParser(prog='mymoviebook', description=_('Generate your personal movie collection book'), epilog=_("Developed by Mariano Muñoz 2012-{}".format(__versiondate__.year) + " \xa9"), formatter_class=RawTextHelpFormatter)
+    parser.add_argument('--version', action='version', version=__version__)
+    parser.add_argument('--debug', help=_('Overrides debug mode'), action="store_true", default=False)
+
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument('--insert', help=_('Insert films from current numbered directory'), action="store_true", default=False)
+    group.add_argument('--report', help=_('Films report is generated in this path. Can be called several times'), action="append", default=[])
+    group.add_argument('--updatedb', help=_("Updates database"), action="store_true", default=False)
+    group_generate=parser.add_argument_group(_("Other parameters"))
+    group_generate.add_argument('--format', help=_("select output format. Default is PDF"), action="store", choices=['PDF'],  default='PDF')
+            #Validations
+    args=parser.parse_args(parameters)
+    for file in args.report:
+        if path.isdir(file)==True:
+            print("--report parameter can't be a directory ({})".format(file))
+            exit(1)
+    settings.DEBUG=args.debug
+    if args.debug is True:
         print(settings.DATABASES)
-    if mem.args.updatedb is True:
+    if args.updatedb is True:
         from django.core import management 
         print(db_info)
         management.call_command("migrate")
@@ -63,15 +82,15 @@ def main(parameters=None):
         print(_("Your database needs to be updated, please run mymoviebook --updatedb"))
         exit(1)
     
-    if mem.args.insert==True:# insertar
-        add_movies_to_database(mem)
+    if args.insert==True:# insertar
+        add_movies_to_database(args)
 
 
-    elif len(mem.args.report)>0:## Report arg
-        if mem.args.format=="PDF":
-            generate_pdf(mem)
+    elif len(args.report)>0:## Report arg
+        if args.format=="PDF":
+            generate_pdf(args)
     else:
-        mem.parser.print_help()
+        parser.print_help()
 
 
 ## Returns a FilmManager with the films duplicated in the database
@@ -96,7 +115,7 @@ def show_queries_function():
  
         
 ## Function to add movies to a database from console
-def add_movies_to_database(mem):
+def add_movies_to_database(args):
     from mymoviebook import models
     try:
         cwd=getcwd().split("/")
@@ -149,7 +168,7 @@ def add_movies_to_database(mem):
 
 
 
-def generate_pdf(mem):
+def generate_pdf(args):
     start=datetime.now()
     
     from mymoviebook import models
@@ -319,16 +338,16 @@ def generate_pdf(mem):
         cwd=getcwd()
         chdir(tmpdirname)
         for i in tqdm(range(3), desc="  - " + _("Writing PDF")):
-            if mem.args.debug is True:
+            if args.debug is True:
                 system(f"pdflatex {tmpdirname}/mymoviebook.tex")
             else:
                 run(f"pdflatex {tmpdirname}/mymoviebook.tex", shell=True, capture_output=True)
         
         chdir(cwd)
-        for output in mem.args.report:
+        for output in args.report:
             system(f"cp {tmpdirname}/mymoviebook.pdf {output}")
         
-        if mem.args.debug is True:
+        if args.debug is True:
             show_queries_function()
             
         print(_("Process took: {0}").format(datetime.now()-start))
