@@ -15,6 +15,21 @@ from sys import exit
 from tempfile import TemporaryDirectory
 from tqdm import tqdm
 
+def signal_handler( signal, frame):
+        print(_("You pressed 'Ctrl+C', exiting..."))
+        exit(1)
+
+signal(SIGINT, signal_handler)
+#Before any django import
+environ.setdefault("DJANGO_SETTINGS_MODULE", "mymoviebook.settings")
+from django.core.wsgi import get_wsgi_application
+#instantiate a web sv for django which is a wsgi
+get_wsgi_application()    
+
+from django.db.migrations.executor import MigrationExecutor
+from django.db import connections, DEFAULT_DB_ALIAS
+from mymoviebook import models
+
 
 try:
     t=translation('mymoviebook', files("mymoviebook") / "locale")
@@ -22,16 +37,11 @@ try:
 except:
     _=str
 
-def signal_handler( signal, frame):
-        print(_("You pressed 'Ctrl+C', exiting..."))
-        exit(1)
 
 def is_database_synchronized():
     """
     Function Checks if there are pendent migrations
     """
-    from django.db.migrations.executor import MigrationExecutor
-    from django.db import connections, DEFAULT_DB_ALIAS
     connection = connections[DEFAULT_DB_ALIAS]
     connection.prepare_database()
     executor = MigrationExecutor(connection)
@@ -41,12 +51,7 @@ def is_database_synchronized():
     
 ### MAIN SCRIPT ###
 def main(parameters=None):
-    signal(SIGINT, signal_handler)
-    #Before any django import
-    environ.setdefault("DJANGO_SETTINGS_MODULE", "mymoviebook.settings")
-    from django.core.wsgi import get_wsgi_application
-    #instantiate a web sv for django which is a wsgi
-    get_wsgi_application()    
+
     
     db_info=_("Your database uses '{0}' and is called '{1}'.").format(settings.DATABASES["default"]["ENGINE"], settings.DATABASES["default"]["NAME"]) + "\n" +_("You can change this settings in '{0}'").format(settings.FILECONFIG)
 
@@ -119,7 +124,6 @@ def show_queries_function():
         
 ## Function to add movies to a database from console
 def add_movies_to_database(args):
-    from mymoviebook import models
     try:
         cwd=getcwd().split("/")
         id=int(cwd[len(cwd)-1])
@@ -174,7 +178,6 @@ def add_movies_to_database(args):
 def generate_pdf(args):
     start=datetime.now()
     
-    from mymoviebook import models
     print(_("Creating your movie book..."))
     
     with TemporaryDirectory() as tmpdirname:
