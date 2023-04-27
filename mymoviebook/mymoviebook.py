@@ -62,6 +62,7 @@ def main(parameters=None):
 
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument('--insert', help=_('Insert films from current numbered directory'), action="store_true", default=False)
+    group.add_argument('--delete', help=_("Delete films from a id"), action="store", type=int, default=None)
     group.add_argument('--report', help=_('Films report is generated in this path. Can be called several times'), action="append", default=[])
     group.add_argument('--updatedb', help=_("Updates database"), action="store_true", default=False)
     group_generate=parser.add_argument_group(_("Other parameters"))
@@ -93,6 +94,13 @@ def main(parameters=None):
     
     if args.insert==True:# insertar
         add_movies_to_database(args)
+        exit(0)
+        
+    if args.delete is not None:
+        qs=models.Films.objects.filter(dvd=args.delete)
+        if input_YN(_("There are {0} films with '{1}' directory id. Do you want to delete them?").format(qs.count(), args.delete), default="N") is True:
+            qs.delete()
+            print(_("Films have been deleted"))
         exit(0)
         
     if len(args.report)>0:## Report arg
@@ -138,7 +146,7 @@ def add_movies_to_database(args):
     
     number_images=0
     for file in glob( getcwd()+ "/*.jpg" ):
-        if path.exists(file[:-3]+"avi")==False and path.exists(file[:-3]+"mpg")==False and path.exists(file[:-3]+"mkv")==False:
+        if path.exists(file[:-3]+"avi")==False and path.exists(file[:-3]+"mpg")==False and path.exists(file[:-3]+"mkv")==False and path.exists(file[:-3]+"mp4")==False:
             print (_("There isn't a movie with the same name '{}'").format(file[:-3]))
             exit(100)
         number_images=number_images+1
