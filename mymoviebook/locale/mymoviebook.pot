@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-23 07:54+0200\n"
+"POT-Creation-Date: 2023-04-27 05:37+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -61,6 +61,9 @@ msgstr ""
 msgid "Insert films from current numbered directory"
 msgstr ""
 
+msgid "Delete films from a id"
+msgstr ""
+
 msgid "Films report is generated in this path. Can be called several times"
 msgstr ""
 
@@ -74,6 +77,13 @@ msgid "select output format. Default is PDF"
 msgstr ""
 
 msgid "Your database needs to be updated, please run mymoviebook --updatedb"
+msgstr ""
+
+#, python-brace-format
+msgid "There are {0} films with '{1}' directory id. Do you want to delete them?"
+msgstr ""
+
+msgid "Films have been deleted"
 msgstr ""
 
 msgid "Current directory is not numeric"

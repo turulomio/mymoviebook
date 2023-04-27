@@ -74,15 +74,15 @@ we get our movie collection book. This is the ![demo movie book](https://raw.git
 
 Links
 =====
-
-Doxygen documentation:
-    https://coolnewton.mooo.com/doxygen/mymoviebook/
-
 Pypi web page:
     https://pypi.org/project/mymoviebook/
 
 Changelog
 =========
+1.11.0 (2023-04-27)
+-------------------
+- Added --delete feature to delete films with a directory id
+
 1.10.0 (2023-04-22)
 -------------------
 - Code is now based in a standalone django process

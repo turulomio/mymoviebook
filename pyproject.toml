@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "mymoviebook"
-version = "1.10.0"
+version = "1.11.0"
 description = "Generate your personal movie collection book"
 authors = ["turulomio <turulomio@yahoo.es>"]
 license = "GPL-3.0 license"

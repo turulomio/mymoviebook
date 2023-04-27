@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RecPermissions\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-23 07:51+0200\n"
+"POT-Creation-Date: 2023-04-27 05:35+0200\n"
 "PO-Revision-Date: 2018-10-22 18:51+0100\n"
 "Last-Translator: root <turulomio@yahoo.es>\n"
 "Language-Team: Spanish\n"
@@ -22,10 +22,10 @@ msgid "New Release:"
 msgstr "Nueva versión:"
 
 msgid "  * Change version and date in __init__.py"
-msgstr ""
+msgstr "  * Cambiar la versión y la fecha en __init__.py"
 
 msgid "  * Change version and date in pyproject.toml"
-msgstr ""
+msgstr "  * Cambiar la version y la fecha en pyproject.toml"
 
 msgid "  * Edit Changelog in README"
 msgstr "  * Modificar el Changelog en README"
@@ -62,6 +62,9 @@ msgstr "Fuerza el modo de depuración"
 msgid "Insert films from current numbered directory"
 msgstr "Añade las películas del directorio numerado actual"
 
+msgid "Delete films from a id"
+msgstr "Borrar películas desde un id"
+
 msgid "Films report is generated in this path. Can be called several times"
 msgstr "El informe de las películas es generado en esta ruta. Puede ser llamado varias veces"
 
@@ -76,6 +79,13 @@ msgstr "Selecciona un formato de salida. Por defecto es PDF"
 
 msgid "Your database needs to be updated, please run mymoviebook --updatedb"
 msgstr "Tu base de datos necesita ser actualizada, por favor ejecuta mymoviebook --updatedb"
+
+#, python-brace-format
+msgid "There are {0} films with '{1}' directory id. Do you want to delete them?"
+msgstr "Hay {0} peliculas con el id de directorio '{1}'. ¿Quieres borrarlas?"
+
+msgid "Films have been deleted"
+msgstr "Las películas han sido borradas"
 
 msgid "Current directory is not numeric"
 msgstr "El directorio actual no es numérico"
@@ -191,96 +201,3 @@ msgstr "Generando el PDF"
 #, python-brace-format
 msgid "Process took: {0}"
 msgstr "El proceso tardó: {0}"
-
-#~ msgid "Debug mode"
-#~ msgstr "Modo depuración"
-
-#~ msgid "Creates a new postgresql database, checking if already exists. Copy MyMovieBook schema on it"
-#~ msgstr "Crea una nueva base de datos en postgresql, si no existiera. Copia el esquema de MyMovieBook en ella"
-
-#~ msgid "I can't create '{}' database because it already exists."
-#~ msgstr "No puede crear la base de datos '{}' porque ya existe."
-
-#~ msgid "MyMovieBook it's ready for use"
-#~ msgstr "MyMovieBook está preparada para ser usada"
-
-#~ msgid "  * Change version and date in version.py"
-#~ msgstr "  * Cambiar la versión y la fecha en version.py"
-
-#~ msgid "Uninstall command only works in Linux"
-#~ msgstr "El comando 'uninstall' solo funciona en Linux"
-
-#~ msgid "DESCRIPTION"
-#~ msgstr "DESCRIPCIÓN"
-
-#~ msgid "Change files and directories owner and permissions recursively."
-#~ msgstr "Cambia el propietario y los permisos de ficheros y directorios recursivamente."
-
-#~ msgid "This app has the following mandatory parameters:"
-#~ msgstr "Esta aplicación tiene los siguientes parámetros obligatorios"
-
-#~ msgid "Inserts a directory with movies with the index of the last directory numeric name."
-#~ msgstr "Añade un directorio con películas cuyo índice es el nombre numérico del último directorio."
-
-#~ msgid "Generates the movie collection document"
-#~ msgstr "Genera el documento con la colección de películas"
-
-#~ msgid "Path where the movie book it's going to be generated. You can use this parameter as many times as you want."
-#~ msgstr "Ruta donde se va a crear el libro de películas. Puedes usar este parámetro tantas veces como quieras."
-
-#~ msgid "Postgresql database connection parameters:"
-#~ msgstr "Parámetros de conexión a la base de datos Postgresql"
-
-#~ msgid "User of the database. By default 'postgres'."
-#~ msgstr "Usuario de la base de datos. Por defecto 'postgres'."
-
-#~ msgid "Database port. By default '5432'"
-#~ msgstr "Puerto de la base de datos. Por defecto '5432'"
-
-#~ msgid "Database server. By default '127.0.0.1'."
-#~ msgstr "Servidor de la base de datos. Por defecto '127.0.0.1'"
-
-#~ msgid "Database name. By default 'mymoviebook'."
-#~ msgstr "Nombre de la base de datos. Por defecto 'mymoviebook'"
-
-#~ msgid "You can choose PDF or ODT arguments. PDF is used by default."
-#~ msgstr "Puedes elegir PDF ó ODT como argumentos. PDF es usado por defecto."
-
-#~ msgid "EXAMPLES"
-#~ msgstr "EJEMPLOS"
-
-#~ msgid "Insert movies with index 23"
-#~ msgstr "Añade películas con el índice 23"
-
-#~ msgid "This command insert in database all movies (up to 6) in 23 directory. Each film must have it's cover with the same filename."
-#~ msgstr "Este comando añade a la base de datos hasta 6 películas del directorio 23. Cada película debe tener su carátula con el mismo nombre."
-
-#~ msgid "Generate a book with all movies in the database in two different directories"
-#~ msgstr "Genera un libro con todas las películas de la base de datos en dos directorios diferentes"
-
-#~ msgid "This command generates your movie book in the report path."
-#~ msgstr "Este comando crea tu libro de películas en la ruta"
-
-#~ msgid "You need ttyrecgenerator installed to generate videos"
-#~ msgstr "Necesitas instalar 'ttyrecgenerator' para generar videos"
-
-#~ msgid "Movie list"
-#~ msgstr "Listado de películas"
-
-#~ msgid "This list has {} films and was generated at {} with MyMovieBook-{}"
-#~ msgstr "Este listado tiene {} películas y ha sido generado a las {} con MyMovieBook-{}"
-
-#~ msgid "Index {}"
-#~ msgstr "Índice {}"
-
-#~ msgid "Order by name"
-#~ msgstr "Ordenado por nombre"
-
-#~ msgid "Order by year"
-#~ msgstr "Ordenado por año"
-
-#~ msgid "Unknown year"
-#~ msgstr "Año desconocido"
-
-#~ msgid "Year {}"
-#~ msgstr "Año {}"

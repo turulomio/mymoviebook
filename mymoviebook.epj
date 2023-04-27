@@ -2,7 +2,7 @@
   "header": {
     "comment": "eric project file for project mymoviebook",
     "copyright": "Copyright (C) 2023 , ",
-    "saved": "2023-04-23, 08:15:35"
+    "saved": "2023-04-27, 05:33:24"
   },
   "project": {
     "AUTHOR": "",
@@ -72,7 +72,6 @@
     "SOURCES": [
       "mymoviebook/__init__.py",
       "mymoviebook/devscripts.py",
-      "mymoviebook/mem.py",
       "mymoviebook/models.py",
       "mymoviebook/mymoviebook.py",
       "mymoviebook/reusing/casts.py",
