@@ -79,6 +79,10 @@ Pypi web page:
 
 Changelog
 =========
+1.12.0 (2023-12-02)
+-------------------
+- Fixed problem with python dependencies
+
 1.11.0 (2023-04-27)
 -------------------
 - Added --delete feature to delete films with a directory id
